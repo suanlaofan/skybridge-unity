@@ -1,0 +1,19 @@
+{
+  "name": "Skybridge.Runtime",
+  "rootNamespace": "Skybridge",
+  "references": [
+    "ByteDance.PICO.XR",
+    "Unity.XR.CoreUtils",
+    "Unity.InputSystem",
+    "Unity.UGUI"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
