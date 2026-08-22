@@ -12,7 +12,8 @@ namespace Skybridge.Tests
         {
             var cameraObject = new GameObject("CameraParityTest");
             var camera = cameraObject.AddComponent<Camera>();
-            camera.aspect = 16f / 9f;
+            var renderTexture = new RenderTexture(1600, 900, 0);
+            camera.targetTexture = renderTexture;
             camera.fieldOfView = SkybridgeWorldView.SceneFieldOfView;
             var orbit = cameraObject.AddComponent<OrbitCameraController>();
             orbit.Initialize(false, true);
@@ -31,6 +32,8 @@ namespace Skybridge.Tests
             var desiredDistance = (float)desiredDistanceField.GetValue(orbit);
             Assert.That(camera.farClipPlane, Is.EqualTo(Mathf.Max(150f, desiredDistance * 4f)).Within(0.01f));
 
+            camera.targetTexture = null;
+            Object.DestroyImmediate(renderTexture);
             Object.DestroyImmediate(cameraObject);
         }
 
@@ -39,7 +42,8 @@ namespace Skybridge.Tests
         {
             var cameraObject = new GameObject("PortraitCameraParityTest");
             var camera = cameraObject.AddComponent<Camera>();
-            camera.aspect = 0.75f;
+            var renderTexture = new RenderTexture(675, 900, 0);
+            camera.targetTexture = renderTexture;
             camera.fieldOfView = SkybridgeWorldView.SceneFieldOfView;
             var orbit = cameraObject.AddComponent<OrbitCameraController>();
             orbit.Initialize(false, true);
@@ -55,6 +59,8 @@ namespace Skybridge.Tests
             var actualTarget = (Vector3)targetField.GetValue(orbit);
             Assert.That(Vector3.Distance(actualTarget, expectedTarget), Is.LessThan(0.0001f));
 
+            camera.targetTexture = null;
+            Object.DestroyImmediate(renderTexture);
             Object.DestroyImmediate(cameraObject);
         }
 

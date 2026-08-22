@@ -13,6 +13,12 @@ namespace Skybridge.UI
     {
         private const float TopbarHeight = 58f;
         private static readonly Vector2 HudReferenceResolution = new(1280f, 720f);
+        private const float PicoHudBaseWidthMeters = 1.28f;
+        private const float PicoTopbarVerticalOffset = 220f;
+        private const float PicoCommandRailInset = 14f;
+        private const float PicoTopbarToCommandRailGap = 12f;
+        private const string PicoForegroundMaterialResourcePath = "SkybridgePicoHeadLockedUi";
+        private const int PicoHudSortingOrder = 30000;
 
         private enum HudIcon
         {
@@ -43,8 +49,11 @@ namespace Skybridge.UI
         private readonly Dictionary<PieceType, Image> componentSelectionBars = new();
         private readonly Dictionary<Button, Image> buttonIcons = new();
         private readonly Dictionary<HudIcon, Sprite> iconSprites = new();
+        private readonly List<RaycastResult> picoRaycastResults = new();
 
         private Canvas canvas;
+        private CanvasScaler canvasScaler;
+        private GraphicRaycaster graphicRaycaster;
         private Font font;
         private Sprite panelSprite;
         private RectTransform topbar;
@@ -91,7 +100,9 @@ namespace Skybridge.UI
         private Button nextButton;
         private Toggle reducedMotionToggle;
         private Toggle autoFocusToggle;
+        private Material picoForegroundMaterial;
         private bool muted;
+        private bool picoPresentation;
         private float statusHideAt;
         private bool layoutDirty = true;
         private int cachedScreenWidth;
@@ -166,6 +177,105 @@ namespace Skybridge.UI
             BuildResult();
             BuildSettings();
             ApplyResponsiveLayout();
+        }
+
+        /// <summary>
+        /// Presents the existing full HUD as a head-locked world-space panel.
+        /// Only the HUD follows the XR Camera; the world and camera stay independent.
+        /// </summary>
+        public void ConfigurePicoPresentation(Camera xrCamera, Transform headTransform, float distance)
+        {
+            if (canvas == null || xrCamera == null || headTransform == null) return;
+
+            picoPresentation = true;
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = xrCamera;
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = PicoHudSortingOrder;
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+            canvasScaler.scaleFactor = 1f;
+
+            var canvasRect = canvas.GetComponent<RectTransform>();
+            canvasRect.anchorMin = new Vector2(0.5f, 0.5f);
+            canvasRect.anchorMax = new Vector2(0.5f, 0.5f);
+            canvasRect.pivot = new Vector2(0.5f, 0.5f);
+            canvasRect.sizeDelta = HudReferenceResolution;
+
+            canvas.transform.SetParent(headTransform, false);
+            canvas.transform.localPosition = new Vector3(0f, -0.18f, distance);
+            canvas.transform.localRotation = Quaternion.identity;
+            canvas.transform.localScale = Vector3.one * (PicoHudBaseWidthMeters / HudReferenceResolution.x);
+            ApplyPicoForegroundMaterialToHud();
+
+            cachedScreenWidth = 0;
+            cachedScreenHeight = 0;
+            layoutDirty = true;
+            ApplyResponsiveLayout();
+        }
+
+        internal void ApplyPicoForegroundMaterial(Graphic graphic)
+        {
+            if (!picoPresentation || picoForegroundMaterial == null || graphic == null) return;
+            graphic.material = picoForegroundMaterial;
+        }
+
+        private void ApplyPicoForegroundMaterialToHud()
+        {
+            picoForegroundMaterial = Resources.Load<Material>(PicoForegroundMaterialResourcePath);
+            if (picoForegroundMaterial == null)
+            {
+                Debug.LogWarning("PICO head-locked HUD material is unavailable.");
+                return;
+            }
+
+            foreach (var graphic in GetComponentsInChildren<Graphic>(true))
+            {
+                graphic.material = picoForegroundMaterial;
+            }
+        }
+
+        /// <summary>
+        /// Converts a right-controller world ray into the same UGUI click
+        /// events used by the desktop HUD.
+        /// </summary>
+        public bool TryHandlePicoRay(Ray ray)
+        {
+            if (!picoPresentation || canvas == null || graphicRaycaster == null || canvas.worldCamera == null) return false;
+            var eventSystem = EventSystem.current;
+            if (eventSystem == null) return false;
+
+            var canvasTransform = canvas.transform;
+            var canvasPlane = new Plane(canvasTransform.forward, canvasTransform.position);
+            if (!canvasPlane.Raycast(ray, out var hitDistance) || hitDistance <= 0f) return false;
+
+            var hitPoint = ray.GetPoint(hitDistance);
+            var viewportPoint = canvas.worldCamera.WorldToViewportPoint(hitPoint);
+            if (viewportPoint.z <= 0f || viewportPoint.x < 0f || viewportPoint.x > 1f || viewportPoint.y < 0f || viewportPoint.y > 1f)
+            {
+                return false;
+            }
+
+            var screenPoint = canvas.worldCamera.WorldToScreenPoint(hitPoint);
+            var eventData = new PointerEventData(eventSystem)
+            {
+                button = PointerEventData.InputButton.Left,
+                position = screenPoint,
+                pressPosition = screenPoint,
+            };
+            picoRaycastResults.Clear();
+            graphicRaycaster.Raycast(eventData, picoRaycastResults);
+            foreach (var result in picoRaycastResults)
+            {
+                var selectable = result.gameObject.GetComponentInParent<Selectable>();
+                if (selectable != null && !selectable.IsInteractable()) continue;
+                var target = selectable != null ? selectable.gameObject : result.gameObject;
+                eventData.pointerCurrentRaycast = result;
+                eventData.pointerPressRaycast = result;
+                ExecuteEvents.Execute(target, eventData, ExecuteEvents.pointerClickHandler);
+                return true;
+            }
+
+            return false;
         }
 
         public void SetLevel(LevelDefinition definition)
@@ -334,15 +444,13 @@ namespace Skybridge.UI
             canvas = gameObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 50;
-            var scaler = gameObject.AddComponent<CanvasScaler>();
-            // Keep the authored 1280x720 layout legible when the Game view or
-            // a Retina display renders at a higher backing resolution.
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = HudReferenceResolution;
-            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            scaler.matchWidthOrHeight = 0.5f;
-            scaler.referencePixelsPerUnit = 100f;
-            gameObject.AddComponent<GraphicRaycaster>();
+            canvasScaler = gameObject.AddComponent<CanvasScaler>();
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            canvasScaler.referenceResolution = HudReferenceResolution;
+            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            canvasScaler.matchWidthOrHeight = 0.5f;
+            canvasScaler.referencePixelsPerUnit = 100f;
+            graphicRaycaster = gameObject.AddComponent<GraphicRaycaster>();
         }
 
         private void BuildTopbar()
@@ -1096,7 +1204,8 @@ namespace Skybridge.UI
             // CanvasScaler changes the logical canvas width on high-DPI and
             // narrow displays. Breakpoints remain tied to the actual viewport
             // so the existing desktop/tablet/phone composition stays stable.
-            var breakpointWidth = Screen.width;
+            var breakpointWidth = picoPresentation ? HudReferenceResolution.x : Screen.width;
+            var viewportHeight = picoPresentation ? HudReferenceResolution.y : Screen.height;
             var medium = breakpointWidth <= 880f;
             var compact = breakpointWidth <= 680f;
             var tiny = breakpointWidth <= 430f;
@@ -1165,6 +1274,7 @@ namespace Skybridge.UI
             }
 
             ConfigureCommandRail(medium, compact);
+            if (picoPresentation) ConfigurePicoHeadLockedLayout();
             ConfigureBuildDock(compact);
             ConfigureVolumeControls(compact, tiny);
             statusPanel.anchoredPosition = new Vector2(0f, !medium ? -70f : compact ? -106f : -108f);
@@ -1178,7 +1288,7 @@ namespace Skybridge.UI
             if (resultPanel != null)
             {
                 var resultWidth = Mathf.Max(1f, Mathf.Min(380f, width - 40f));
-                resultPanel.sizeDelta = new Vector2(resultWidth, Mathf.Min(386f, Mathf.Max(260f, Screen.height - 40f)));
+                resultPanel.sizeDelta = new Vector2(resultWidth, Mathf.Min(386f, Mathf.Max(260f, viewportHeight - 40f)));
                 var resultInnerWidth = Mathf.Max(1f, resultWidth - 40f);
                 var metrics = resultPanel.Find("Metrics") as RectTransform;
                 if (metrics != null)
@@ -1251,6 +1361,17 @@ namespace Skybridge.UI
             commandRailLayout.cellSize = new Vector2(40f, 40f);
             commandRailLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             commandRailLayout.constraintCount = 1;
+        }
+
+        private void ConfigurePicoHeadLockedLayout()
+        {
+            topbar.anchoredPosition = new Vector2(0f, PicoTopbarVerticalOffset);
+
+            commandRail.anchorMin = commandRail.anchorMax = new Vector2(0f, 1f);
+            commandRail.pivot = new Vector2(0f, 1f);
+            commandRail.anchoredPosition = new Vector2(
+                PicoCommandRailInset,
+                PicoTopbarVerticalOffset - TopbarHeight - PicoTopbarToCommandRailGap);
         }
 
         private void ConfigureBuildDock(bool compact)
@@ -1432,7 +1553,9 @@ namespace Skybridge.UI
             RectTransformUtility.ScreenPointToLocalPointInRectangle(Canvas.transform as RectTransform, eventData.position, Canvas.worldCamera, out var local);
             rect.anchoredPosition = local + Vector2.up * 18f;
             rect.sizeDelta = new Vector2(Mathf.Clamp(Message.Length * 13f + 16f, 54f, 150f), 28f);
-            tooltip.GetComponent<Image>().color = SkybridgePalette.Mechanical;
+            var tooltipImage = tooltip.GetComponent<Image>();
+            tooltipImage.color = SkybridgePalette.Mechanical;
+            Canvas.GetComponent<SkybridgeHud>()?.ApplyPicoForegroundMaterial(tooltipImage);
             var labelObject = new GameObject("Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
             labelObject.transform.SetParent(tooltip.transform, false);
             var labelRect = labelObject.GetComponent<RectTransform>();
@@ -1447,6 +1570,7 @@ namespace Skybridge.UI
             text.alignment = TextAnchor.MiddleCenter;
             text.color = SkybridgePalette.Environment;
             text.raycastTarget = false;
+            Canvas.GetComponent<SkybridgeHud>()?.ApplyPicoForegroundMaterial(text);
         }
 
         public void OnPointerExit(PointerEventData eventData)

@@ -22,6 +22,8 @@ namespace Skybridge.Game
         private bool rightSecondaryWasHeld;
         private bool leftPrimaryWasHeld;
         private bool leftSecondaryWasHeld;
+        private bool rightGripWasHeld;
+        private bool leftGripWasHeld;
         private float nextStickActionAt;
 
         public void Initialize(SkybridgeGameController controller, Camera camera)
@@ -69,10 +71,12 @@ namespace Skybridge.Game
 
         private void HandleButtons()
         {
-            HandleEdge(right, CommonUsages.primaryButton, ref rightPrimaryWasHeld, game.PicoToggleTest);
-            HandleEdge(right, CommonUsages.secondaryButton, ref rightSecondaryWasHeld, game.PicoCancel);
+            HandleEdge(right, CommonUsages.primaryButton, ref rightPrimaryWasHeld, game.PicoPrimaryAction);
+            HandleEdge(right, CommonUsages.secondaryButton, ref rightSecondaryWasHeld, game.PicoSecondaryAction);
             HandleEdge(left, CommonUsages.primaryButton, ref leftPrimaryWasHeld, game.PicoUndo);
             HandleEdge(left, CommonUsages.secondaryButton, ref leftSecondaryWasHeld, game.PicoRedo);
+            HandleEdge(right, CommonUsages.gripButton, ref rightGripWasHeld, () => game.PicoCycleTool(1));
+            HandleEdge(left, CommonUsages.gripButton, ref leftGripWasHeld, () => game.PicoCycleTool(-1));
         }
 
         private void HandleLeftStick()

@@ -142,6 +142,61 @@ namespace Skybridge.Tests
         }
 
         [UnityTest]
+        public IEnumerator PicoHeadLockedHudKeepsTheFullToolSelectionBar()
+        {
+            var hud = game.Hud;
+            var originalParent = hud.transform.parent;
+            var picoCameraObject = new GameObject("PicoHeadLockedHudTestCamera");
+            var picoCamera = picoCameraObject.AddComponent<Camera>();
+
+            try
+            {
+                hud.ConfigurePicoPresentation(picoCamera, picoCamera.transform, 0.92f);
+                yield return null;
+                Canvas.ForceUpdateCanvases();
+
+                var canvas = hud.GetComponent<Canvas>();
+                var inventory = FindDescendant(hud.transform, "Inventory");
+                var topbar = FindDescendant(hud.transform, "Topbar") as RectTransform;
+                var commandRail = FindDescendant(hud.transform, "CommandRail") as RectTransform;
+                Assert.That(canvas.renderMode, Is.EqualTo(RenderMode.WorldSpace));
+                Assert.That(canvas.worldCamera, Is.EqualTo(picoCamera));
+                Assert.That(hud.transform.parent, Is.EqualTo(picoCamera.transform));
+                AssertVector3Approximately(new Vector3(0f, -0.18f, 0.92f), hud.transform.localPosition, "head-locked HUD local position");
+                AssertVector3Approximately(
+                    Vector3.one * (1.28f / 1280f),
+                    hud.transform.localScale,
+                    "head-locked HUD base scale");
+                Assert.That(Vector3.Dot(hud.transform.forward, picoCamera.transform.forward), Is.GreaterThan(0.999f));
+                Assert.That(topbar, Is.Not.Null);
+                Assert.That(commandRail, Is.Not.Null);
+                AssertVector2Approximately(new Vector2(0f, 220f), topbar.anchoredPosition, "PICO topbar position");
+                AssertVector2Approximately(new Vector2(0f, 1f), commandRail.anchorMin, "PICO command rail anchor min");
+                AssertVector2Approximately(new Vector2(0f, 1f), commandRail.anchorMax, "PICO command rail anchor max");
+                AssertVector2Approximately(new Vector2(0f, 1f), commandRail.pivot, "PICO command rail pivot");
+                AssertVector2Approximately(new Vector2(14f, 150f), commandRail.anchoredPosition, "PICO command rail position");
+                Assert.That(inventory, Is.Not.Null);
+                Assert.That(inventory.gameObject.activeSelf, Is.True);
+                foreach (var toolName in new[] { "Deck", "Ramp", "Pier", "Truss" })
+                {
+                    Assert.That(FindDescendant(inventory, toolName), Is.Not.Null, toolName);
+                }
+
+                picoCamera.transform.SetPositionAndRotation(new Vector3(2f, 1.5f, -3f), Quaternion.Euler(0f, 35f, 0f));
+                yield return null;
+                AssertVector3Approximately(
+                    picoCamera.transform.TransformPoint(new Vector3(0f, -0.18f, 0.92f)),
+                    hud.transform.position,
+                    "head-locked HUD world position");
+            }
+            finally
+            {
+                hud.transform.SetParent(originalParent, false);
+                Object.Destroy(picoCameraObject);
+            }
+        }
+
+        [UnityTest]
         public IEnumerator EmptyBridgeIsRejectedWithoutStartingVehicle()
         {
             Assert.That(game.LoadLevel(LevelId.Level1, true), Is.True);
@@ -337,6 +392,40 @@ namespace Skybridge.Tests
                 Assert.That(game.LastTestOutcome, Is.EqualTo(TestOutcome.Success), definition.Id.ToString());
                 Assert.That(game.World.IsVehicleFullyInGoal(), Is.True, definition.Id.ToString());
             }
+        }
+
+        [UnityTest]
+        public IEnumerator PicoLikeTiltedScaledRootStillCompletesGoal()
+        {
+            Assert.That(game.LoadLevel(LevelId.Level1, true), Is.True);
+            Assert.That(game.ApplyReferenceSolution(), Is.True);
+
+            var picoWorldRoot = new GameObject("PicoLikeWorldRoot").transform;
+            picoWorldRoot.position = new Vector3(0.18f, 1.4f, 0.92f);
+            picoWorldRoot.rotation = Quaternion.Euler(22f, 180f, 0f);
+            picoWorldRoot.localScale = Vector3.one * 0.055f;
+            var originalParent = game.World.transform.parent;
+            // Match the runtime hierarchy: World stays identity-local beneath
+            // the tilted, scaled PICO WorldRoot rather than preserving its
+            // desktop world transform during the reparent.
+            game.World.transform.SetParent(picoWorldRoot, false);
+            try
+            {
+                var path = BridgeRules.FindRoadPath(
+                    game.CurrentLevel.ReferenceSolution.Layout.Roads,
+                    game.CurrentLevel.StartAnchor,
+                    game.CurrentLevel.GoalAnchor);
+                Assert.That(path, Is.Not.Null);
+                game.World.SetVehicleGridPath(path.Nodes);
+                game.World.SetVehicleProgress(1f);
+                Assert.That(game.World.IsVehicleFullyInGoal(), Is.True);
+            }
+            finally
+            {
+                game.World.transform.SetParent(originalParent, false);
+                Object.Destroy(picoWorldRoot.gameObject);
+            }
+            yield return null;
         }
 
         [UnityTest]
@@ -701,6 +790,12 @@ namespace Skybridge.Tests
             Assert.That(actual.x, Is.EqualTo(expected.x).Within(0.0001f), $"{label}.x");
             Assert.That(actual.y, Is.EqualTo(expected.y).Within(0.0001f), $"{label}.y");
             Assert.That(actual.z, Is.EqualTo(expected.z).Within(0.0001f), $"{label}.z");
+        }
+
+        private static void AssertVector2Approximately(Vector2 expected, Vector2 actual, string label)
+        {
+            Assert.That(actual.x, Is.EqualTo(expected.x).Within(0.0001f), $"{label}.x");
+            Assert.That(actual.y, Is.EqualTo(expected.y).Within(0.0001f), $"{label}.y");
         }
 
         private static void AssertChildrenContained(RectTransform parent)

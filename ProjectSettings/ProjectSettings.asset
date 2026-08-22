@@ -692,6 +692,7 @@ PlayerSettings:
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
     Android: ENABLE_PICO_XR_SDK;PICO_SPATIALIZER
+    Standalone: PICO_SPATIALIZER;ENABLE_PICO_XR_SDK
   additionalCompilerArguments: {}
   platformArchitecture:
     Standalone: 2

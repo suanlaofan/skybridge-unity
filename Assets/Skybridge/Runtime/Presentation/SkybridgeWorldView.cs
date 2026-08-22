@@ -283,7 +283,7 @@ namespace Skybridge.Presentation
                 ? CreateTrussModel(from, to, true)
                 : CreateRoadModel(from, to, type, true);
             ghost.name = "PlacementGhost";
-            ghost.transform.SetParent(ghostRoot, true);
+            ghost.transform.SetParent(ghostRoot, false);
             ApplyGhostMaterial(ghost, valid);
         }
 
@@ -292,7 +292,7 @@ namespace Skybridge.Presentation
             HideGhost();
             var ghost = CreatePierModel(top, true);
             ghost.name = "PlacementGhost";
-            ghost.transform.SetParent(ghostRoot, true);
+            ghost.transform.SetParent(ghostRoot, false);
             ApplyGhostMaterial(ghost, valid);
         }
 
@@ -426,14 +426,14 @@ namespace Skybridge.Presentation
         {
             ClearSelection();
             if (string.IsNullOrEmpty(pieceId) || !pieceObjects.TryGetValue(pieceId, out var piece)) return;
-            var bounds = CalculateBounds(piece);
+            var bounds = CalculateBoundsInSpace(piece, effectsRoot);
             selectionFrame = ProceduralFactory.FrameBox(
                 "SelectionHighlight",
                 effectsRoot,
                 bounds.size + Vector3.one * 0.12f,
                 targetMaterial,
                 0.055f);
-            selectionFrame.transform.position = bounds.center;
+            selectionFrame.transform.localPosition = bounds.center;
         }
 
         public void SelectTarget(int targetIndex)
@@ -442,14 +442,14 @@ namespace Skybridge.Presentation
             var target = targetsRoot.GetComponentsInChildren<SkybridgePickable>(false)
                 .FirstOrDefault(candidate => candidate.Kind == PickKind.RoadTarget && candidate.Index == targetIndex);
             if (target == null) return;
-            var bounds = CalculateBounds(target.gameObject);
+            var bounds = CalculateBoundsInSpace(target.gameObject, effectsRoot);
             selectionFrame = ProceduralFactory.FrameBox(
                 "TargetIssueHighlight",
                 effectsRoot,
                 bounds.size + Vector3.one * 0.12f,
                 ghostInvalidMaterial,
                 0.065f);
-            selectionFrame.transform.position = bounds.center;
+            selectionFrame.transform.localPosition = bounds.center;
         }
 
         public void ClearSelection()
@@ -613,7 +613,7 @@ namespace Skybridge.Presentation
             EmitSparks(breakPosition, reducedMotion ? 5 : 14);
             EmitDust(breakPosition + Vector3.down * 0.12f, reducedMotion ? 4 : 12);
             Time.timeScale = 0.35f;
-            MinimumBreakVehicleY = vehicle != null ? vehicle.transform.position.y : float.PositiveInfinity;
+            MinimumBreakVehicleY = vehicle != null ? GetContentPosition(vehicle.transform).y : float.PositiveInfinity;
             var dynamicObjects = new List<Rigidbody>();
             foreach (var id in fallingPieceIds)
             {
@@ -645,8 +645,9 @@ namespace Skybridge.Presentation
                 slowMotionElapsed += Time.unscaledDeltaTime;
                 if (vehicle != null)
                 {
-                    MinimumBreakVehicleY = Mathf.Min(MinimumBreakVehicleY, vehicle.transform.position.y);
-                    if (!failureSent && vehicleFailureZone.Contains(vehicle.transform.position))
+                    var vehiclePosition = GetContentPosition(vehicle.transform);
+                    MinimumBreakVehicleY = Mathf.Min(MinimumBreakVehicleY, vehiclePosition.y);
+                    if (!failureSent && vehicleFailureZone.Contains(vehiclePosition))
                     {
                         failureSent = true;
                         onFailureZoneEntered?.Invoke();
@@ -664,11 +665,15 @@ namespace Skybridge.Presentation
             while (elapsed < remainingRecoverySeconds)
             {
                 elapsed += Time.unscaledDeltaTime;
-                if (vehicle != null) MinimumBreakVehicleY = Mathf.Min(MinimumBreakVehicleY, vehicle.transform.position.y);
-                if (!failureSent && vehicle != null && vehicleFailureZone.Contains(vehicle.transform.position))
+                if (vehicle != null)
                 {
-                    failureSent = true;
-                    onFailureZoneEntered?.Invoke();
+                    var vehiclePosition = GetContentPosition(vehicle.transform);
+                    MinimumBreakVehicleY = Mathf.Min(MinimumBreakVehicleY, vehiclePosition.y);
+                    if (!failureSent && vehicleFailureZone.Contains(vehiclePosition))
+                    {
+                        failureSent = true;
+                        onFailureZoneEntered?.Invoke();
+                    }
                 }
                 yield return null;
             }
@@ -677,7 +682,10 @@ namespace Skybridge.Presentation
         public bool IsVehicleFullyInGoal()
         {
             if (vehicle == null || VehicleProgress < 0.999f) return false;
-            var bounds = CalculateBounds(vehicle);
+            var collider = vehicle.GetComponent<BoxCollider>();
+            var bounds = collider != null
+                ? CalculateBoxColliderBoundsInSpace(collider, transform)
+                : CalculateBoundsInSpace(vehicle, transform);
             return goalZone.Contains(bounds.min) && goalZone.Contains(bounds.max);
         }
 
@@ -692,10 +700,10 @@ namespace Skybridge.Presentation
             var after = SampleVehiclePath(Mathf.Min(vehiclePathLength, distance + window));
             var tangent = (after - before).normalized;
             var suspension = reducedMotion ? 0f : Mathf.Sin(VehicleProgress * Mathf.PI * 12f) * 0.012f;
-            vehicle.transform.position = position + Vector3.up * suspension;
+            vehicle.transform.localPosition = position + Vector3.up * suspension;
             if (tangent.sqrMagnitude > 0.001f)
             {
-                vehicle.transform.rotation = DirectionQuaternion(tangent);
+                vehicle.transform.localRotation = DirectionQuaternion(tangent);
             }
             if (reducedMotion) return;
             foreach (var wheel in vehicleWheels)
@@ -722,6 +730,11 @@ namespace Skybridge.Presentation
                 (point.X - centerX) * GridUnit,
                 RoadBaseY + point.Y * HeightUnit,
                 (point.Z - centerZ) * GridUnit);
+        }
+
+        public Vector3 WorldToContentPoint(Vector3 worldPoint)
+        {
+            return transform.InverseTransformPoint(worldPoint);
         }
 
         private void BuildRoots()
@@ -828,10 +841,13 @@ namespace Skybridge.Presentation
             {
                 WorldCamera.clearFlags = CameraClearFlags.SolidColor;
                 WorldCamera.backgroundColor = SkybridgePalette.SceneBackground;
-                // Three.js starts with PerspectiveCamera far=150.  Focus()
-                // expands this dynamically for the large fifth level.
-                WorldCamera.farClipPlane = 150f;
-                WorldCamera.fieldOfView = SceneFieldOfView;
+                if (Application.platform != RuntimePlatform.Android)
+                {
+                    // Desktop uses its original perspective and focus envelope.
+                    // PICO owns its XR projection and clipping contract.
+                    WorldCamera.farClipPlane = 150f;
+                    WorldCamera.fieldOfView = SceneFieldOfView;
+                }
             }
         }
 
@@ -1008,8 +1024,8 @@ namespace Skybridge.Presentation
         {
             var endpoint = levelRoot.Find(objectName);
             if (endpoint == null) return;
-            endpoint.position = position;
-            endpoint.rotation = DirectionQuaternion(direction);
+            endpoint.localPosition = position;
+            endpoint.localRotation = DirectionQuaternion(direction);
         }
 
         /// <summary>
@@ -1084,8 +1100,8 @@ namespace Skybridge.Presentation
         {
             var group = new GameObject(name);
             group.transform.SetParent(levelRoot, false);
-            group.transform.position = position;
-            group.transform.rotation = DirectionQuaternion(direction);
+            group.transform.localPosition = position;
+            group.transform.localRotation = DirectionQuaternion(direction);
             if (!TryCreateImportedModel(
                     group.transform,
                     IslandModelResource,
@@ -1103,8 +1119,8 @@ namespace Skybridge.Presentation
         {
             var group = new GameObject(goal ? "GoalAnchor" : "StartAnchor");
             group.transform.SetParent(levelRoot, false);
-            group.transform.position = position;
-            group.transform.rotation = DirectionQuaternion(direction);
+            group.transform.localPosition = position;
+            group.transform.localRotation = DirectionQuaternion(direction);
             ProceduralFactory.Box("Plate", group.transform, new Vector3(0f, -0.12f, 0f), new Vector3(0.58f, 0.22f, 1.82f), mechanicalMaterial);
             ProceduralFactory.Box("Cap", group.transform, new Vector3(goal ? 0.19f : -0.19f, -0.05f, 0f), new Vector3(0.16f, 0.26f, 1.96f), accentMaterial);
         }
@@ -1114,7 +1130,7 @@ namespace Skybridge.Presentation
             var group = new GameObject($"Foundation:{point.Key}");
             group.transform.SetParent(levelRoot, false);
             var position = GridToWorld(point);
-            group.transform.position = new Vector3(position.x, TableTopY + 0.12f, position.z);
+            group.transform.localPosition = new Vector3(position.x, TableTopY + 0.12f, position.z);
             ProceduralFactory.Cylinder("Pad", group.transform, Vector3.zero, 0.94f, 0.28f, environmentMaterial, 8);
             ProceduralFactory.Cylinder("Socket", group.transform, Vector3.up * 0.2f, 0.45f, 0.16f, mechanicalMaterial, 16);
             var ring = ProceduralFactory.Cylinder("CyanRing", group.transform, Vector3.up * 0.31f, 0.54f, 0.055f, trussMaterial, 24);
@@ -1130,8 +1146,8 @@ namespace Skybridge.Presentation
         {
             var group = new GameObject("GoalGate");
             group.transform.SetParent(levelRoot, false);
-            group.transform.position = position;
-            group.transform.rotation = DirectionQuaternion(direction);
+            group.transform.localPosition = position;
+            group.transform.localRotation = DirectionQuaternion(direction);
             if (!TryCreateImportedModel(
                     group.transform,
                     GoalGateModelResource,
@@ -1149,8 +1165,8 @@ namespace Skybridge.Presentation
         {
             vehicle = new GameObject("UnmannedRescueVehicle");
             vehicle.transform.SetParent(levelRoot, false);
-            vehicle.transform.position = position;
-            vehicle.transform.rotation = DirectionQuaternion(direction);
+            vehicle.transform.localPosition = position;
+            vehicle.transform.localRotation = DirectionQuaternion(direction);
             if (!TryCreateImportedModel(
                     vehicle.transform,
                     RescueVehicleModelResource,
@@ -1436,8 +1452,8 @@ namespace Skybridge.Presentation
             var start = GridToWorld(from);
             var end = GridToWorld(to);
             var delta = end - start;
-            group.transform.position = (start + end) * 0.5f;
-            group.transform.rotation = DirectionQuaternion(delta);
+            group.transform.localPosition = (start + end) * 0.5f;
+            group.transform.localRotation = DirectionQuaternion(delta);
             var length = delta.magnitude * 0.94f;
             ProceduralFactory.Box("DeckSurface", group.transform, new Vector3(0f, -0.11f, 0f), new Vector3(length, 0.22f, RoadWidth), roadMaterial, true);
             ProceduralFactory.Box("Underlay", group.transform, new Vector3(0f, -0.245f, 0f), new Vector3(length * 0.96f, 0.09f, RoadWidth * 0.86f), roadEdgeMaterial);
@@ -1457,7 +1473,7 @@ namespace Skybridge.Presentation
             var group = new GameObject("Pier");
             group.transform.SetParent(ghost ? ghostRoot : piecesRoot, false);
             var position = GridToWorld(top);
-            group.transform.position = new Vector3(position.x, 0f, position.z);
+            group.transform.localPosition = new Vector3(position.x, 0f, position.z);
             var topY = RoadBaseY + top.Y * HeightUnit - 0.22f;
             var bottomY = TableTopY + 0.45f;
             var height = Mathf.Max(0.4f, topY - bottomY);
@@ -1475,8 +1491,8 @@ namespace Skybridge.Presentation
             var start = GridToWorld(from);
             var end = GridToWorld(to);
             var delta = end - start;
-            group.transform.position = (start + end) * 0.5f;
-            group.transform.rotation = DirectionQuaternion(delta);
+            group.transform.localPosition = (start + end) * 0.5f;
+            group.transform.localRotation = DirectionQuaternion(delta);
             var half = delta.magnitude * 0.46f;
             foreach (var side in new[] { -1f, 1f })
             {
@@ -1502,10 +1518,10 @@ namespace Skybridge.Presentation
             pickable.PieceType = type.ToString();
             if (piece.GetComponentInChildren<Collider>() == null)
             {
-                var bounds = CalculateBounds(piece);
+                var bounds = CalculateLocalBounds(piece.transform);
                 var collider = piece.AddComponent<BoxCollider>();
-                collider.center = piece.transform.InverseTransformPoint(bounds.center);
-                collider.size = piece.transform.InverseTransformVector(bounds.size);
+                collider.center = bounds.center;
+                collider.size = bounds.size;
             }
         }
 
@@ -1514,8 +1530,8 @@ namespace Skybridge.Presentation
             var start = GridToWorld(from);
             var end = GridToWorld(to);
             var delta = end - start;
-            target.transform.position = (start + end) * 0.5f + Vector3.up * (truss ? -0.44f : 0.07f);
-            target.transform.rotation = DirectionQuaternion(delta);
+            target.transform.localPosition = (start + end) * 0.5f + Vector3.up * (truss ? -0.44f : 0.07f);
+            target.transform.localRotation = DirectionQuaternion(delta);
             var length = delta.magnitude * 0.92f;
             ProceduralFactory.FrameBox("TargetFrame", target.transform, new Vector3(length, 0.06f, RoadWidth * 1.08f), targetMaterial, 0.04f);
             var collider = target.AddComponent<BoxCollider>();
@@ -1526,7 +1542,7 @@ namespace Skybridge.Presentation
         private void CreateFoundationTarget(GameObject target, GridPoint point)
         {
             var position = GridToWorld(point);
-            target.transform.position = new Vector3(position.x, TableTopY + 0.34f, position.z);
+            target.transform.localPosition = new Vector3(position.x, TableTopY + 0.34f, position.z);
             ProceduralFactory.FrameBox("FoundationFrame", target.transform, new Vector3(1.35f, 0.06f, 1.35f), targetMaterial, 0.045f);
             var collider = target.AddComponent<BoxCollider>();
             collider.size = new Vector3(1.55f, 0.55f, 1.55f);
@@ -1547,8 +1563,8 @@ namespace Skybridge.Presentation
         {
             var group = new GameObject($"Joint:{index}");
             group.transform.SetParent(levelRoot, false);
-            group.transform.position = GridToWorld(point) + Vector3.down * 0.18f;
-            group.transform.rotation = DirectionQuaternion(direction);
+            group.transform.localPosition = GridToWorld(point) + Vector3.down * 0.18f;
+            group.transform.localRotation = DirectionQuaternion(direction);
             foreach (var side in new[] { -1f, 1f })
             {
                 var joint = ProceduralFactory.Cylinder("Lock", group.transform, new Vector3(0f, 0f, side * (RoadWidth * 0.5f + 0.03f)), 0.18f, 0.12f, mechanicalMaterial, 20);
@@ -1601,7 +1617,7 @@ namespace Skybridge.Presentation
                 {
                     var pair = particles[index];
                     pair.Velocity += Vector3.down * (4.2f * delta);
-                    pair.Object.transform.position += pair.Velocity * delta;
+                    pair.Object.transform.localPosition += pair.Velocity * delta;
                     pair.Object.transform.localScale = Vector3.one * 0.055f * (1f - elapsed / 0.32f);
                     particles[index] = pair;
                 }
@@ -1643,7 +1659,7 @@ namespace Skybridge.Presentation
                 {
                     var particle = particles[index];
                     particle.Velocity += Vector3.down * (0.65f * delta);
-                    particle.Object.transform.position += particle.Velocity * delta;
+                    particle.Object.transform.localPosition += particle.Velocity * delta;
                     particle.Object.transform.localScale = Vector3.one * particle.BaseScale * Mathf.Lerp(0.28f, 1f, remaining);
                     particles[index] = particle;
                 }
@@ -1700,7 +1716,7 @@ namespace Skybridge.Presentation
                 var to = new GridPoint(cell + 1, 0);
                 var group = CreateTrussModel(from, to, true);
                 group.name = "TrussGuide";
-                group.transform.SetParent(levelRoot, true);
+                group.transform.SetParent(levelRoot, false);
                 ApplyGhostMaterial(group, true);
             }
         }
@@ -1816,13 +1832,64 @@ namespace Skybridge.Presentation
             return bounds;
         }
 
+        private Vector3 GetContentPosition(Transform target)
+        {
+            return target == null ? Vector3.zero : WorldToContentPoint(target.position);
+        }
+
+        private static Bounds CalculateBoundsInSpace(GameObject gameObject, Transform space)
+        {
+            var renderers = gameObject.GetComponentsInChildren<Renderer>();
+            if (renderers.Length == 0)
+            {
+                return new Bounds(space.InverseTransformPoint(gameObject.transform.position), Vector3.one);
+            }
+
+            var worldBounds = renderers[0].bounds;
+            for (var index = 1; index < renderers.Length; index++) worldBounds.Encapsulate(renderers[index].bounds);
+            return ConvertWorldBoundsToSpace(worldBounds, space);
+        }
+
+        private static Bounds CalculateBoxColliderBoundsInSpace(BoxCollider collider, Transform space)
+        {
+            var halfSize = collider.size * 0.5f;
+            var center = collider.center;
+            var localBounds = new Bounds();
+            var initialized = false;
+            foreach (var x in new[] { -1f, 1f })
+            {
+                foreach (var y in new[] { -1f, 1f })
+                {
+                    foreach (var z in new[] { -1f, 1f })
+                    {
+                        var corner = center + Vector3.Scale(halfSize, new Vector3(x, y, z));
+                        var contentCorner = space.InverseTransformPoint(collider.transform.TransformPoint(corner));
+                        if (!initialized)
+                        {
+                            localBounds = new Bounds(contentCorner, Vector3.zero);
+                            initialized = true;
+                        }
+                        else
+                        {
+                            localBounds.Encapsulate(contentCorner);
+                        }
+                    }
+                }
+            }
+            return localBounds;
+        }
+
         private static Bounds CalculateLocalBounds(Transform root)
         {
             var renderers = root.GetComponentsInChildren<Renderer>(true);
             if (renderers.Length == 0) return new Bounds(Vector3.zero, Vector3.zero);
-            var first = renderers[0].bounds;
-            var worldBounds = first;
+            var worldBounds = renderers[0].bounds;
             for (var index = 1; index < renderers.Length; index++) worldBounds.Encapsulate(renderers[index].bounds);
+            return ConvertWorldBoundsToSpace(worldBounds, root);
+        }
+
+        private static Bounds ConvertWorldBoundsToSpace(Bounds worldBounds, Transform space)
+        {
             var corners = new Vector3[8];
             var min = worldBounds.min;
             var max = worldBounds.max;
@@ -1834,8 +1901,8 @@ namespace Skybridge.Presentation
             corners[5] = new Vector3(max.x, min.y, max.z);
             corners[6] = new Vector3(max.x, max.y, min.z);
             corners[7] = new Vector3(max.x, max.y, max.z);
-            var local = new Bounds(root.InverseTransformPoint(corners[0]), Vector3.zero);
-            for (var index = 1; index < corners.Length; index++) local.Encapsulate(root.InverseTransformPoint(corners[index]));
+            var local = new Bounds(space.InverseTransformPoint(corners[0]), Vector3.zero);
+            for (var index = 1; index < corners.Length; index++) local.Encapsulate(space.InverseTransformPoint(corners[index]));
             return local;
         }
 

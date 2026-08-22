@@ -11,8 +11,11 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using UnityEngine.SpatialTracking;
+using Unity.XR.CoreUtils;
 using ByteDance.PICO.XR;
 using Skybridge.Core;
+using Skybridge.Game;
 using Skybridge.Presentation;
 
 namespace Skybridge.Editor
@@ -29,6 +32,8 @@ namespace Skybridge.Editor
         private const string RendererPath = SettingsFolder + "/SkybridgeRenderer.asset";
         private const string PipelinePath = SettingsFolder + "/SkybridgeURP.asset";
         private const string ShaderAnchorPath = ResourcesFolder + "/SkybridgeShaderAnchor.mat";
+        private const string PicoHeadLockedHudMaterialPath = ResourcesFolder + "/SkybridgePicoHeadLockedUi.mat";
+        private const string PicoHeadLockedHudShaderName = "Skybridge/UI/HeadLockedNoZTest";
         private const string ProjectSettingsPath = "ProjectSettings/ProjectSettings.asset";
         private const string ModelAuthoringRootName = "SkybridgeModelAuthoring";
         private const string ModelPreviewRootName = "SceneModelPreviews";
@@ -42,6 +47,11 @@ namespace Skybridge.Editor
         private const string IslandMaterialPath = ModelMaterialsFolder + "/IslandModel.mat";
         private const string RescueVehicleMaterialPath = ModelMaterialsFolder + "/RescueVehicleModel.mat";
         private const string GoalGateMaterialPath = ModelMaterialsFolder + "/GoalGateModel.mat";
+        private const string PicoOriginName = "PICO XR Origin";
+        private const string PicoCameraOffsetName = "Camera Offset";
+        private const string PicoCameraName = "XR Camera";
+        private const string PicoWorldRootName = "PICO WorldRoot";
+        private const string PicoHudRootName = "PICO HUD";
 
         [MenuItem("Skybridge/Project/Configure Project")]
         public static void ConfigureProject()
@@ -179,6 +189,15 @@ namespace Skybridge.Editor
             Debug.Log($"SKYBRIDGE_PICO_BUILD_PASS:{report.summary.outputPath}:{report.summary.totalSize}");
         }
 
+        [MenuItem("Skybridge/PICO/Configure Camera Rig")]
+        public static void ConfigurePicoCameraRig()
+        {
+            EnsurePicoCameraRig();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            Debug.Log("SKYBRIDGE_PICO_CAMERA_RIG_PASS");
+        }
+
         [MenuItem("Skybridge/PICO/Validate Android Configuration")]
         public static void ValidatePicoAndroidConfiguration()
         {
@@ -212,11 +231,21 @@ namespace Skybridge.Editor
             {
                 errors.Add("PICO settings must use Unity XR rendering mode.");
             }
+            else if (picoSettings.stereoRenderingModeAndroid != PXR_Settings.StereoRenderingModeAndroid.Multiview)
+            {
+                errors.Add("PICO stereo rendering mode must be Multiview.");
+            }
             var picoProject = PXR_ProjectSetting.GetProjectConfig();
             if (picoProject == null || picoProject.handTracking || picoProject.videoSeeThrough || picoProject.arFoundation)
             {
                 errors.Add("The first PICO slice must be controller-only and cannot enable hand tracking, VST, or AR Foundation.");
             }
+            var picoHudMaterial = AssetDatabase.LoadAssetAtPath<Material>(PicoHeadLockedHudMaterialPath);
+            if (picoHudMaterial == null || picoHudMaterial.shader == null || picoHudMaterial.shader.name != PicoHeadLockedHudShaderName)
+            {
+                errors.Add("PICO head-locked HUD foreground material is missing or uses the wrong shader.");
+            }
+            ValidatePicoCameraRig(errors);
             if (errors.Count > 0) throw new BuildFailedException(string.Join(Environment.NewLine, errors));
             Debug.Log("SKYBRIDGE_PICO_VALIDATE_PASS");
         }
@@ -238,6 +267,7 @@ namespace Skybridge.Editor
             SetActiveInputHandler(1);
             ConfigurePicoLoader();
             ConfigurePicoAssets();
+            EnsurePicoCameraRig();
             EnsureBuildSettings();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
@@ -336,6 +366,8 @@ namespace Skybridge.Editor
             projectSettings.environmentDepth = false;
             projectSettings.lightEstimation = false;
             projectSettings.openMRC = false;
+            projectSettings.foveationLevel = FoveationLevel.None;
+            projectSettings.enableETFR = false;
             EditorUtility.SetDirty(projectSettings);
 
             const string picoSettingsPath = "Assets/XR/Settings/PXR_Settings.asset";
@@ -353,6 +385,285 @@ namespace Skybridge.Editor
             picoSettings.optimizeBufferDiscards = true;
             EditorBuildSettings.AddConfigObject("ByteDance.PICO.XR.Settings", picoSettings, true);
             EditorUtility.SetDirty(picoSettings);
+            EnsurePicoHeadLockedHudMaterial();
+        }
+
+        private static void EnsurePicoHeadLockedHudMaterial()
+        {
+            var shader = Shader.Find(PicoHeadLockedHudShaderName);
+            if (shader == null)
+            {
+                throw new BuildFailedException("PICO head-locked HUD shader is unavailable.");
+            }
+
+            var material = AssetDatabase.LoadAssetAtPath<Material>(PicoHeadLockedHudMaterialPath);
+            if (material == null)
+            {
+                material = new Material(shader) { name = "SkybridgePicoHeadLockedUi" };
+                AssetDatabase.CreateAsset(material, PicoHeadLockedHudMaterialPath);
+            }
+            else if (material.shader != shader)
+            {
+                material.shader = shader;
+            }
+
+            EditorUtility.SetDirty(material);
+        }
+
+        private static void EnsurePicoCameraRig()
+        {
+            var scene = SceneManager.GetSceneByPath(MainScenePath);
+            var closeAfter = !scene.isLoaded;
+            if (closeAfter) scene = EditorSceneManager.OpenScene(MainScenePath, OpenSceneMode.Additive);
+
+            try
+            {
+                var sceneRoot = scene.GetRootGameObjects().FirstOrDefault(root => root.name == MainRootName);
+                if (sceneRoot == null)
+                {
+                    throw new BuildFailedException("Missing SkybridgeMain scene root for PICO XR rig setup.");
+                }
+
+                var originObject = sceneRoot.transform.Find(PicoOriginName)?.gameObject;
+                if (originObject == null)
+                {
+                    originObject = new GameObject(PicoOriginName);
+                    SceneManager.MoveGameObjectToScene(originObject, scene);
+                    originObject.transform.SetParent(sceneRoot.transform, false);
+                }
+                originObject.SetActive(true);
+
+                var origin = originObject.GetComponent<XROrigin>() ?? originObject.AddComponent<XROrigin>();
+                origin.RequestedTrackingOriginMode = XROrigin.TrackingOriginMode.Floor;
+                origin.CameraYOffset = 0f;
+                origin.Origin = originObject;
+
+                var manager = originObject.GetComponent<PXR_Manager>() ?? originObject.AddComponent<PXR_Manager>();
+                manager.openMRC = false;
+                manager.eyeTracking = false;
+                manager.faceTracking = false;
+                manager.lipsyncTracking = false;
+                manager.bodyTracking = false;
+                manager.adaptiveResolution = false;
+                manager.foveationLevel = FoveationLevel.None;
+                manager.eyeFoveationLevel = FoveationLevel.None;
+
+                var offsetObject = originObject.transform.Find(PicoCameraOffsetName)?.gameObject;
+                if (offsetObject == null)
+                {
+                    offsetObject = new GameObject(PicoCameraOffsetName);
+                    offsetObject.transform.SetParent(originObject.transform, false);
+                }
+
+                var camera = offsetObject.GetComponentInChildren<Camera>(true);
+                if (camera == null)
+                {
+                    var cameraObject = new GameObject(PicoCameraName);
+                    cameraObject.transform.SetParent(offsetObject.transform, false);
+                    camera = cameraObject.AddComponent<Camera>();
+                }
+                else
+                {
+                    camera.transform.SetParent(offsetObject.transform, false);
+                }
+
+                camera.gameObject.name = PicoCameraName;
+                camera.gameObject.tag = "MainCamera";
+                camera.enabled = true;
+                camera.orthographic = false;
+                camera.nearClipPlane = SkybridgeGameController.PicoNearClipPlane;
+                camera.farClipPlane = SkybridgeGameController.PicoFarClipPlane;
+                camera.fieldOfView = SkybridgeGameController.PicoVerticalFieldOfView;
+                camera.ResetAspect();
+                camera.stereoTargetEye = StereoTargetEyeMask.Both;
+                camera.clearFlags = CameraClearFlags.SolidColor;
+                camera.backgroundColor = SkybridgePalette.Hex("DFE5E4");
+
+                var serializedCamera = new SerializedObject(camera);
+                var aspect = serializedCamera.FindProperty("m_Aspect");
+                if (aspect != null)
+                {
+                    aspect.floatValue = 0f;
+                    serializedCamera.ApplyModifiedPropertiesWithoutUndo();
+                }
+
+                var orbitCamera = camera.GetComponent<OrbitCameraController>();
+                if (orbitCamera != null) UnityEngine.Object.DestroyImmediate(orbitCamera);
+                if (camera.GetComponent<AudioListener>() == null) camera.gameObject.AddComponent<AudioListener>();
+
+                var poseDriver = camera.GetComponent<TrackedPoseDriver>() ?? camera.gameObject.AddComponent<TrackedPoseDriver>();
+                poseDriver.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRDevice, TrackedPoseDriver.TrackedPose.Head);
+                poseDriver.trackingType = TrackedPoseDriver.TrackingType.RotationAndPosition;
+                poseDriver.updateType = TrackedPoseDriver.UpdateType.UpdateAndBeforeRender;
+                poseDriver.UseRelativeTransform = false;
+
+                origin.Camera = camera;
+                origin.CameraFloorOffsetObject = offsetObject;
+
+                var worldRoot = originObject.transform.Find(PicoWorldRootName);
+                if (worldRoot == null)
+                {
+                    worldRoot = new GameObject(PicoWorldRootName).transform;
+                    worldRoot.SetParent(originObject.transform, false);
+                }
+                worldRoot.localPosition = Vector3.zero;
+                worldRoot.localRotation = Quaternion.identity;
+                worldRoot.localScale = Vector3.one * 0.055f;
+
+                var hudRoot = originObject.transform.Find(PicoHudRootName);
+                if (hudRoot == null)
+                {
+                    hudRoot = new GameObject(PicoHudRootName).transform;
+                    hudRoot.SetParent(originObject.transform, false);
+                }
+                hudRoot.localPosition = Vector3.zero;
+                hudRoot.localRotation = Quaternion.identity;
+                hudRoot.localScale = Vector3.one;
+
+                if (originObject.GetComponent<SkybridgePicoControllerInput>() == null)
+                {
+                    originObject.AddComponent<SkybridgePicoControllerInput>();
+                }
+
+                foreach (var sceneCamera in scene.GetRootGameObjects()
+                             .SelectMany(root => root.GetComponentsInChildren<Camera>(true)))
+                {
+                    if (sceneCamera != camera && sceneCamera.CompareTag("MainCamera")) sceneCamera.tag = "Untagged";
+                }
+
+                EditorUtility.SetDirty(origin);
+                EditorUtility.SetDirty(manager);
+                EditorUtility.SetDirty(camera);
+                EditorUtility.SetDirty(poseDriver);
+                EditorSceneManager.MarkSceneDirty(scene);
+                if (!EditorSceneManager.SaveScene(scene))
+                {
+                    throw new BuildFailedException("Failed to save the PICO XR camera scene.");
+                }
+            }
+            finally
+            {
+                if (closeAfter) EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+
+        private static void ValidatePicoCameraRig(List<string> errors)
+        {
+            var scene = SceneManager.GetSceneByPath(MainScenePath);
+            var closeAfter = !scene.isLoaded;
+            if (closeAfter) scene = EditorSceneManager.OpenScene(MainScenePath, OpenSceneMode.Additive);
+
+            try
+            {
+                var origins = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<XROrigin>(true))
+                    .ToArray();
+                if (origins.Length != 1)
+                {
+                    errors.Add($"PICO scene must contain exactly one XR Origin; found {origins.Length}.");
+                    return;
+                }
+
+                var origin = origins[0];
+                var camera = origin.Camera;
+                if (camera == null)
+                {
+                    errors.Add("PICO XR Origin must reference an XR Camera.");
+                    return;
+                }
+
+                if (camera.gameObject.name != PicoCameraName)
+                {
+                    errors.Add($"PICO camera must be named '{PicoCameraName}', not '{camera.gameObject.name}'.");
+                }
+                if (Mathf.Abs(camera.fieldOfView - SkybridgeGameController.PicoVerticalFieldOfView) > 0.001f)
+                {
+                    errors.Add("PICO XR Camera vertical FOV must be 92 degrees.");
+                }
+                if (Mathf.Abs(camera.nearClipPlane - SkybridgeGameController.PicoNearClipPlane) > 0.0001f)
+                {
+                    errors.Add("PICO XR Camera near clip plane must be 0.03.");
+                }
+                if (Mathf.Abs(camera.farClipPlane - SkybridgeGameController.PicoFarClipPlane) > 0.001f)
+                {
+                    errors.Add("PICO XR Camera far clip plane must be 1000.");
+                }
+                if (camera.stereoTargetEye != StereoTargetEyeMask.Both)
+                {
+                    errors.Add("PICO XR Camera stereo target eye must be Both.");
+                }
+                var serializedCamera = new SerializedObject(camera);
+                var aspect = serializedCamera.FindProperty("m_Aspect");
+                if (aspect != null && Mathf.Abs(aspect.floatValue) > 0.0001f)
+                {
+                    errors.Add("PICO XR Camera Aspect must remain automatic (0).");
+                }
+                if (camera.GetComponent<TrackedPoseDriver>() == null)
+                {
+                    errors.Add("PICO XR Camera must use Tracked Pose Driver.");
+                }
+                if (camera.GetComponent<OrbitCameraController>() != null)
+                {
+                    errors.Add("Desktop OrbitCameraController must not be attached to the PICO XR Camera.");
+                }
+                var cameraOffset = origin.CameraFloorOffsetObject;
+                if (cameraOffset == null || cameraOffset.name != PicoCameraOffsetName)
+                {
+                    errors.Add("PICO XR Origin must use the Camera Offset object.");
+                }
+                else
+                {
+                    if (cameraOffset.transform.parent != origin.transform)
+                    {
+                        errors.Add("PICO Camera Offset must be a direct child of XR Origin.");
+                    }
+                    if (camera.transform.parent != cameraOffset.transform)
+                    {
+                        errors.Add("PICO XR Camera must be a direct child of Camera Offset.");
+                    }
+                }
+
+                var worldRoot = origin.transform.Find(PicoWorldRootName);
+                if (worldRoot == null)
+                {
+                    errors.Add("PICO XR Origin is missing PICO WorldRoot.");
+                }
+                else if (worldRoot.parent != origin.transform || camera.transform.IsChildOf(worldRoot))
+                {
+                    errors.Add("PICO WorldRoot must remain a sibling of the XR Camera, never a camera child.");
+                }
+
+                var hudRoot = origin.transform.Find(PicoHudRootName);
+                if (hudRoot == null)
+                {
+                    errors.Add("PICO XR Origin is missing PICO HUD.");
+                }
+                else if (hudRoot.parent != origin.transform || camera.transform.IsChildOf(hudRoot))
+                {
+                    errors.Add("PICO HUD must remain a sibling of the XR Camera, never a camera child.");
+                }
+                if (origin.GetComponent<PXR_Manager>() == null)
+                {
+                    errors.Add("PICO XR Origin must include PXR_Manager.");
+                }
+                if (origin.GetComponent<SkybridgePicoControllerInput>() == null)
+                {
+                    errors.Add("PICO XR Origin must include controller-only PICO input.");
+                }
+
+                var taggedCameras = scene.GetRootGameObjects()
+                    .SelectMany(root => root.GetComponentsInChildren<Camera>(true))
+                    .Where(candidate => candidate.CompareTag("MainCamera"))
+                    .ToArray();
+                if (taggedCameras.Length != 1 || taggedCameras[0] != camera)
+                {
+                    errors.Add("The only MainCamera tag must belong to the XR Camera.");
+                }
+            }
+            finally
+            {
+                if (closeAfter) EditorSceneManager.CloseScene(scene, true);
+            }
         }
 
         private static void ConfigureProjectInternal()

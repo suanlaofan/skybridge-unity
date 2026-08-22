@@ -1,10 +1,12 @@
 {
   "name": "Skybridge.Editor",
   "rootNamespace": "Skybridge.Editor",
-  "references": [
-    "ByteDance.PICO.XR",
-    "Skybridge.Runtime",
-    "Unity.RenderPipelines.Core.Runtime",
+    "references": [
+        "ByteDance.PICO.XR",
+        "Skybridge.Runtime",
+        "Unity.XR.CoreUtils",
+        "UnityEngine.SpatialTracking",
+        "Unity.RenderPipelines.Core.Runtime",
     "Unity.RenderPipelines.Universal.Runtime",
     "Unity.RenderPipelines.Universal.Editor"
   ],

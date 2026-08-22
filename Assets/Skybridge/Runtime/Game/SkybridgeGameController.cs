@@ -21,10 +21,15 @@ namespace Skybridge.Game
         private const float GoalStableSeconds = TestTimings.GoalStableMilliseconds / 1000f;
         private const float StallTimeoutSeconds = TestTimings.StallTimeoutMilliseconds / 1000f;
 
+        public const float PicoVerticalFieldOfView = 92f;
+        public const float PicoNearClipPlane = 0.03f;
+        public const float PicoFarClipPlane = 1000f;
+
         private Camera worldCamera;
         private OrbitCameraController orbitCamera;
         private bool picoRuntime;
         private Transform picoWorldRoot;
+        private Transform picoHudRoot;
         private SkybridgeWorldView world;
         private SkybridgeHud hud;
         private SkybridgeAudioEngine audioEngine;
@@ -111,7 +116,7 @@ namespace Skybridge.Game
             world.SetReducedMotion(settings.ReducedMotion);
 
             var hudObject = new GameObject("HUD");
-            hudObject.transform.SetParent(transform, false);
+            hudObject.transform.SetParent(picoRuntime ? picoHudRoot : transform, false);
             hud = hudObject.AddComponent<SkybridgeHud>();
             hud.Initialize();
             BindHudEvents();
@@ -124,16 +129,46 @@ namespace Skybridge.Game
 
             initialized = true;
             LoadLevel(LevelId.Level1, true);
+            if (picoRuntime) StartCoroutine(PlacePicoPresentationAfterTracking());
             StartCoroutine(ProcessAutomationArguments());
         }
 
         private void CreateCamera()
         {
+            var picoOrigin = FindAnyObjectByType<XROrigin>(FindObjectsInactive.Include);
             if (picoRuntime)
             {
-                CreatePicoCamera();
+                if (picoOrigin == null || picoOrigin.Camera == null)
+                {
+                    throw new InvalidOperationException(
+                        "PICO Android requires a scene XR Origin with an assigned XR Camera.");
+                }
+
+                picoOrigin.gameObject.SetActive(true);
+                worldCamera = picoOrigin.Camera;
+                picoWorldRoot = picoOrigin.transform.Find("PICO WorldRoot");
+                if (picoWorldRoot == null)
+                {
+                    throw new InvalidOperationException(
+                        "PICO Android requires PICO WorldRoot under XR Origin.");
+                }
+                picoHudRoot = picoOrigin.transform.Find("PICO HUD");
+                if (picoHudRoot == null)
+                {
+                    throw new InvalidOperationException(
+                        "PICO Android requires PICO HUD under XR Origin.");
+                }
+
+                if (picoOrigin.GetComponent<PXR_Manager>() == null)
+                {
+                    picoOrigin.gameObject.AddComponent<PXR_Manager>();
+                }
+                var picoInput = picoOrigin.GetComponent<SkybridgePicoControllerInput>() ??
+                                picoOrigin.gameObject.AddComponent<SkybridgePicoControllerInput>();
+                picoInput.Initialize(this, worldCamera);
                 return;
             }
+            if (picoOrigin != null) picoOrigin.gameObject.SetActive(false);
             worldCamera = Camera.main != null ? Camera.main : FindAnyObjectByType<Camera>();
             if (worldCamera == null)
             {
@@ -150,34 +185,25 @@ namespace Skybridge.Game
             orbitCamera.Initialize(settings.ReducedMotion, settings.AutoFocus);
         }
 
-        private void CreatePicoCamera()
+        private IEnumerator PlacePicoPresentationAfterTracking()
         {
-            var originObject = new GameObject("PICO XR Origin");
-            originObject.transform.SetParent(transform, false);
-            var origin = originObject.AddComponent<XROrigin>();
-            origin.RequestedTrackingOriginMode = XROrigin.TrackingOriginMode.Floor;
-            originObject.AddComponent<PXR_Manager>();
+            if (!picoRuntime || picoWorldRoot == null || worldCamera == null) yield break;
+            yield return null;
+            yield return new WaitForEndOfFrame();
+            if (picoWorldRoot == null || worldCamera == null || world == null || level == null) yield break;
 
-            var offsetObject = new GameObject("Camera Offset");
-            offsetObject.transform.SetParent(originObject.transform, false);
-            var cameraObject = new GameObject("Main Camera");
-            cameraObject.tag = "MainCamera";
-            cameraObject.transform.SetParent(offsetObject.transform, false);
-            worldCamera = cameraObject.AddComponent<Camera>();
-            worldCamera.nearClipPlane = 0.03f;
-            worldCamera.farClipPlane = 100f;
-            worldCamera.clearFlags = CameraClearFlags.SolidColor;
-            worldCamera.backgroundColor = SkybridgePalette.Hex("DFE5E4");
-            cameraObject.AddComponent<AudioListener>();
-            origin.Camera = worldCamera;
-            origin.CameraFloorOffsetObject = offsetObject;
+            var cameraTransform = worldCamera.transform;
+            var forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up);
+            if (forward.sqrMagnitude < 0.0001f) forward = Vector3.forward;
+            forward.Normalize();
 
-            picoWorldRoot = new GameObject("PICO WorldRoot").transform;
-            picoWorldRoot.SetParent(originObject.transform, false);
-            picoWorldRoot.localPosition = new Vector3(0f, 0.82f, 1.25f);
-            picoWorldRoot.localRotation = Quaternion.Euler(0f, 180f, 0f);
-            picoWorldRoot.localScale = Vector3.one * 0.04f;
-            originObject.AddComponent<SkybridgePicoControllerInput>().Initialize(this, worldCamera);
+            var focus = (world.GridToWorld(level.StartAnchor) + world.GridToWorld(level.GoalAnchor)) * 0.5f;
+            var rootRotation = Quaternion.LookRotation(forward, Vector3.up) * Quaternion.Euler(0f, 180f, 0f);
+            var desiredFocus = cameraTransform.position + forward * 0.95f - Vector3.up * 0.08f;
+            picoWorldRoot.rotation = rootRotation;
+            picoWorldRoot.position = desiredFocus - rootRotation * Vector3.Scale(focus, picoWorldRoot.localScale);
+
+            hud.ConfigurePicoPresentation(worldCamera, cameraTransform, 0.92f);
         }
 
         private void BindHudEvents()
@@ -221,6 +247,7 @@ namespace Skybridge.Game
             LastStatusMessage = string.Empty;
             world.LoadLevel(level);
             world.SetLayout(builder.GetLayout());
+            if (picoRuntime && !builder.ActiveTool.HasValue) builder.SelectTool(PieceType.Deck);
             if (!picoRuntime)
             {
                 orbitCamera.SetReducedMotion(settings.ReducedMotion);
@@ -340,9 +367,7 @@ namespace Skybridge.Game
         {
             if (picoRuntime)
             {
-                picoWorldRoot.localPosition = new Vector3(0f, 0.82f, 1.25f);
-                picoWorldRoot.localRotation = Quaternion.Euler(0f, 180f, 0f);
-                picoWorldRoot.localScale = Vector3.one * 0.04f;
+                StartCoroutine(PlacePicoPresentationAfterTracking());
                 return;
             }
             if (world != null) orbitCamera.ResetTo(
@@ -644,7 +669,7 @@ namespace Skybridge.Game
             if (action.Changed)
             {
                 var after = builder.GetLayout();
-                world.EmitSparks(point, settings.ReducedMotion ? 4 : 9);
+                world.EmitSparks(world.WorldToContentPoint(point), settings.ReducedMotion ? 4 : 9);
                 audioEngine.PlayLock();
                 ShowStatus(action.Message, SkybridgePalette.Valid, 0.9f);
                 SyncAll();
@@ -935,6 +960,7 @@ namespace Skybridge.Game
         /// </summary>
         public void HandlePicoRay(Ray ray)
         {
+            if (hud != null && hud.TryHandlePicoRay(ray)) return;
             if (!CanEdit() || world == null) return;
             var preferBuildTargets = builder.ActiveTool.HasValue || !string.IsNullOrEmpty(builder.SelectedPieceId);
             world.TryPick(ray, preferBuildTargets, out var pickable, out var point);
@@ -951,8 +977,41 @@ namespace Skybridge.Game
 
         public void PicoRotate(int direction) => Rotate(direction);
         public void PicoChangeLayer(int delta) => ChangeLayer(delta);
-        public void PicoToggleTest() => ToggleTest();
-        public void PicoCancel() => CancelBuildSelection();
+        public void PicoPrimaryAction()
+        {
+            if (phase == GamePhase.Success)
+            {
+                NextLevel();
+                return;
+            }
+            ToggleTest();
+        }
+
+        public void PicoSecondaryAction()
+        {
+            if (phase == GamePhase.Success)
+            {
+                CloseResult();
+                return;
+            }
+            CancelBuildSelection();
+        }
+
+        public void PicoCycleTool(int direction)
+        {
+            if (!CanEdit() || builder == null || level == null) return;
+            var tools = new[] { PieceType.Deck, PieceType.Ramp, PieceType.Pier, PieceType.Truss };
+            var currentIndex = builder.ActiveTool.HasValue ? Array.IndexOf(tools, builder.ActiveTool.Value) : -1;
+            for (var offset = 1; offset <= tools.Length; offset++)
+            {
+                var index = (currentIndex + direction * offset + tools.Length * 2) % tools.Length;
+                var tool = tools[index];
+                if (level.Inventory[tool] <= 0 && builder.GetInventoryRemaining()[tool] <= 0) continue;
+                SelectComponent(tool);
+                return;
+            }
+        }
+
         public void PicoUndo() => Undo();
         public void PicoRedo() => Redo();
 
