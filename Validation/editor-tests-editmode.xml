@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="73" result="Passed" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-07 11:16:08Z" end-time="2026-09-07 11:16:11Z" duration="2.4493405">
+  <test-suite type="TestSuite" id="1053" name="SkybridgeUnity" fullname="SkybridgeUnity" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-07 11:16:08Z" end-time="2026-09-07 11:16:11Z" duration="2.449341" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1138" name="Skybridge.Tests.EditMode.dll" fullname="Library/ScriptAssemblies/Skybridge.Tests.EditMode.dll" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:11Z" duration="2.253069" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="1774" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1139" name="Skybridge" fullname="Skybridge" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:11Z" duration="2.053276" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1140" name="Tests" fullname="Skybridge.Tests" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:11Z" duration="1.852951" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1056" name="BridgeRulesTests" fullname="Skybridge.Tests.BridgeRulesTests" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.125289" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1066" name="DisconnectedRoadBlocksTesting" fullname="Skybridge.Tests.BridgeRulesTests.DisconnectedRoadBlocksTesting" methodname="DisconnectedRoadBlocksTesting" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="794905645" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.003126" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1059" name="FiveContinuouslyConnectedTrussModulesAreSafe" fullname="Skybridge.Tests.BridgeRulesTests.FiveContinuouslyConnectedTrussModulesAreSafe" methodname="FiveContinuouslyConnectedTrussModulesAreSafe" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="876824161" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000987" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1074" name="FiveReferencesValidateWithMatchingCostsAndGoldThresholds" fullname="Skybridge.Tests.BridgeRulesTests.FiveReferencesValidateWithMatchingCostsAndGoldThresholds" methodname="FiveReferencesValidateWithMatchingCostsAndGoldThresholds" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="390862030" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.002046" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1058" name="FourOrdinaryBoardsHaveOneFixedCentralBreakJoint" fullname="Skybridge.Tests.BridgeRulesTests.FourOrdinaryBoardsHaveOneFixedCentralBreakJoint" methodname="FourOrdinaryBoardsHaveOneFixedCentralBreakJoint" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="834909524" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.003060" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1063" name="IncompleteOrDetachedTrussRowsAreRejected" fullname="Skybridge.Tests.BridgeRulesTests.IncompleteOrDetachedTrussRowsAreRejected" methodname="IncompleteOrDetachedTrussRowsAreRejected" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1902684275" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.001145" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1075" name="LevelFiveIsSafeTenByTenByTenOpenVolumeRoute" fullname="Skybridge.Tests.BridgeRulesTests.LevelFiveIsSafeTenByTenByTenOpenVolumeRoute" methodname="LevelFiveIsSafeTenByTenByTenOpenVolumeRoute" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="520529179" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.003037" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1064" name="MultipleWeakPointsAreOrderedByVehicleTravel" fullname="Skybridge.Tests.BridgeRulesTests.MultipleWeakPointsAreOrderedByVehicleTravel" methodname="MultipleWeakPointsAreOrderedByVehicleTravel" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="677379685" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000873" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1065" name="OddLengthTieBreaksTowardGoal" fullname="Skybridge.Tests.BridgeRulesTests.OddLengthTieBreaksTowardGoal" methodname="OddLengthTieBreaksTowardGoal" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1230053573" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000218" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1069" name="OneLevelOverheadObstacleBlocksButTwoLevelsClear" fullname="Skybridge.Tests.BridgeRulesTests.OneLevelOverheadObstacleBlocksButTwoLevelsClear" methodname="OneLevelOverheadObstacleBlocksButTwoLevelsClear" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="385203308" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000840" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1068" name="OrthogonalTurnsRequireExplicitLevelOptIn" fullname="Skybridge.Tests.BridgeRulesTests.OrthogonalTurnsRequireExplicitLevelOptIn" methodname="OrthogonalTurnsRequireExplicitLevelOptIn" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1861728126" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000335" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1071" name="ParallelSideRoadOneLaneAwayIsAccepted" fullname="Skybridge.Tests.BridgeRulesTests.ParallelSideRoadOneLaneAwayIsAccepted" methodname="ParallelSideRoadOneLaneAwayIsAccepted" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1266106461" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000139" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1062" name="PierDetachedFromFoundationPadDoesNotCountAsSupport" fullname="Skybridge.Tests.BridgeRulesTests.PierDetachedFromFoundationPadDoesNotCountAsSupport" methodname="PierDetachedFromFoundationPadDoesNotCountAsSupport" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1402573749" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000931" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1067" name="RampBeyondOneUnitSlopeBlocksTesting" fullname="Skybridge.Tests.BridgeRulesTests.RampBeyondOneUnitSlopeBlocksTesting" methodname="RampBeyondOneUnitSlopeBlocksTesting" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="2016388714" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000142" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1076" name="RatingUsesOnlySuccessAndCost" fullname="Skybridge.Tests.BridgeRulesTests.RatingUsesOnlySuccessAndCost" methodname="RatingUsesOnlySuccessAndCost" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1978409002" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000187" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1070" name="SameLevelPerpendicularBranchBlocksVehiclePath" fullname="Skybridge.Tests.BridgeRulesTests.SameLevelPerpendicularBranchBlocksVehiclePath" methodname="SameLevelPerpendicularBranchBlocksVehiclePath" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="346740633" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000282" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1073" name="SameStructureAlwaysReturnsSameRouteAndBreakPoint" fullname="Skybridge.Tests.BridgeRulesTests.SameStructureAlwaysReturnsSameRouteAndBreakPoint" methodname="SameStructureAlwaysReturnsSameRouteAndBreakPoint" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="28257446" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.002199" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1072" name="SideClearanceObstructionIsIndependentOfInsertionOrder" fullname="Skybridge.Tests.BridgeRulesTests.SideClearanceObstructionIsIndependentOfInsertionOrder" methodname="SideClearanceObstructionIsIndependentOfInsertionOrder" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="815751681" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000294" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1060" name="SixFullyTrussedBoardsHaveOneFixedCentralBreakJoint" fullname="Skybridge.Tests.BridgeRulesTests.SixFullyTrussedBoardsHaveOneFixedCentralBreakJoint" methodname="SixFullyTrussedBoardsHaveOneFixedCentralBreakJoint" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1158148947" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000289" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1057" name="ThreeOrdinaryBoardsBetweenHardSupportsAreSafe" fullname="Skybridge.Tests.BridgeRulesTests.ThreeOrdinaryBoardsBetweenHardSupportsAreSafe" methodname="ThreeOrdinaryBoardsBetweenHardSupportsAreSafe" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="1809346621" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000923" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1061" name="ValidCentralPierSplitsSixBoardsIntoTwoSafeSpans" fullname="Skybridge.Tests.BridgeRulesTests.ValidCentralPierSplitsSixBoardsIntoTwoSafeSpans" methodname="ValidCentralPierSplitsSixBoardsIntoTwoSafeSpans" classname="Skybridge.Tests.BridgeRulesTests" runstate="Runnable" seed="225671590" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:09Z" duration="0.000545" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1077" name="BuildControllerTests" fullname="Skybridge.Tests.BuildControllerTests" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-07 11:16:09Z" end-time="2026-09-07 11:16:10Z" duration="0.185267" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1078" name="FirstLevelBuildsWithoutTutorialOnlyState" fullname="Skybridge.Tests.BuildControllerTests.FirstLevelBuildsWithoutTutorialOnlyState" methodname="FirstLevelBuildsWithoutTutorialOnlyState" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="1104985139" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000652" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1084" name="HorizontalBoardTurnedOneHundredEightyDegreesUsesSameEdge" fullname="Skybridge.Tests.BuildControllerTests.HorizontalBoardTurnedOneHundredEightyDegreesUsesSameEdge" methodname="HorizontalBoardTurnedOneHundredEightyDegreesUsesSameEdge" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="1280226870" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000317" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1085" name="LevelFiveBuildsOneEditableHeightLayerAtATime" fullname="Skybridge.Tests.BuildControllerTests.LevelFiveBuildsOneEditableHeightLayerAtATime" methodname="LevelFiveBuildsOneEditableHeightLayerAtATime" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="1458449617" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001539" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1087" name="LevelFiveSupportsDescendingTurnsAndPiersAtArbitraryCells" fullname="Skybridge.Tests.BuildControllerTests.LevelFiveSupportsDescendingTurnsAndPiersAtArbitraryCells" methodname="LevelFiveSupportsDescendingTurnsAndPiersAtArbitraryCells" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="703189636" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.002158" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1080" name="LevelTwoPierConvertsWeakSpanToTwoSafeSpans" fullname="Skybridge.Tests.BuildControllerTests.LevelTwoPierConvertsWeakSpanToTwoSafeSpans" methodname="LevelTwoPierConvertsWeakSpanToTwoSafeSpans" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="1035412857" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001809" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1086" name="PlacedRampFollowsDestinationLayerAndBoundaryGridsStayUsable" fullname="Skybridge.Tests.BuildControllerTests.PlacedRampFollowsDestinationLayerAndBoundaryGridsStayUsable" methodname="PlacedRampFollowsDestinationLayerAndBoundaryGridsStayUsable" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="1615774454" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001941" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1083" name="QuarterTurnOnHorizontalEdgeIsRejected" fullname="Skybridge.Tests.BuildControllerTests.QuarterTurnOnHorizontalEdgeIsRejected" methodname="QuarterTurnOnHorizontalEdgeIsRejected" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="781400970" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000180" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1079" name="RampOnFlatSlotIsRejectedWithGeometricReason" fullname="Skybridge.Tests.BuildControllerTests.RampOnFlatSlotIsRejectedWithGeometricReason" methodname="RampOnFlatSlotIsRejectedWithGeometricReason" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="1161175793" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000160" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1082" name="RoadPreviewRotatesOntoAdjacentGridLane" fullname="Skybridge.Tests.BuildControllerTests.RoadPreviewRotatesOntoAdjacentGridLane" methodname="RoadPreviewRotatesOntoAdjacentGridLane" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="1505013032" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000300" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1081" name="UndoRedoSelectionAndDeletionAreDeterministic" fullname="Skybridge.Tests.BuildControllerTests.UndoRedoSelectionAndDeletionAreDeterministic" methodname="UndoRedoSelectionAndDeletionAreDeterministic" classname="Skybridge.Tests.BuildControllerTests" runstate="Runnable" seed="619124125" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000585" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1088" name="GameSessionRulesTests" fullname="Skybridge.Tests.GameSessionRulesTests" classname="Skybridge.Tests.GameSessionRulesTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.092618" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1089" name="BridgeEditsAreAllowedOnlyInBuildState" fullname="Skybridge.Tests.GameSessionRulesTests.BridgeEditsAreAllowedOnlyInBuildState" methodname="BridgeEditsAreAllowedOnlyInBuildState" classname="Skybridge.Tests.GameSessionRulesTests" runstate="Runnable" seed="225792628" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000729" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1092" name="FailurePresentationFitsTwoSecondTarget" fullname="Skybridge.Tests.GameSessionRulesTests.FailurePresentationFitsTwoSecondTarget" methodname="FailurePresentationFitsTwoSecondTarget" classname="Skybridge.Tests.GameSessionRulesTests" runstate="Runnable" seed="999159345" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000099" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1090" name="SnapshotRestoresPositionsInventoryUndoAndRedoAsIsolatedCopies" fullname="Skybridge.Tests.GameSessionRulesTests.SnapshotRestoresPositionsInventoryUndoAndRedoAsIsolatedCopies" methodname="SnapshotRestoresPositionsInventoryUndoAndRedoAsIsolatedCopies" classname="Skybridge.Tests.GameSessionRulesTests" runstate="Runnable" seed="504417044" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001762" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1091" name="SuccessLocksAndLateFallCannotOverwriteIt" fullname="Skybridge.Tests.GameSessionRulesTests.SuccessLocksAndLateFallCannotOverwriteIt" methodname="SuccessLocksAndLateFallCannotOverwriteIt" classname="Skybridge.Tests.GameSessionRulesTests" runstate="Runnable" seed="253305166" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000106" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1093" name="OrbitCameraParityTests" fullname="Skybridge.Tests.OrbitCameraParityTests" classname="Skybridge.Tests.OrbitCameraParityTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.099302" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1094" name="FocusUsesThreeJsDiagonalDirectionAndClipEnvelope" fullname="Skybridge.Tests.OrbitCameraParityTests.FocusUsesThreeJsDiagonalDirectionAndClipEnvelope" methodname="FocusUsesThreeJsDiagonalDirectionAndClipEnvelope" classname="Skybridge.Tests.OrbitCameraParityTests" runstate="Runnable" seed="1673250986" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001529" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1095" name="FocusUsesThreeJsPortraitOffsetsAndDirection" fullname="Skybridge.Tests.OrbitCameraParityTests.FocusUsesThreeJsPortraitOffsetsAndDirection" methodname="FocusUsesThreeJsPortraitOffsetsAndDirection" classname="Skybridge.Tests.OrbitCameraParityTests" runstate="Runnable" seed="1951466705" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000421" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1096" name="SaveDataTests" fullname="Skybridge.Tests.SaveDataTests" classname="Skybridge.Tests.SaveDataTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.200107" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1099" name="ExistingFourLevelV1SaveMigratesWithEmptyLevelFive" fullname="Skybridge.Tests.SaveDataTests.ExistingFourLevelV1SaveMigratesWithEmptyLevelFive" methodname="ExistingFourLevelV1SaveMigratesWithEmptyLevelFive" classname="Skybridge.Tests.SaveDataTests" runstate="Runnable" seed="285146589" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001120" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1097" name="HighestRatingAndLowestCostPersistAcrossReload" fullname="Skybridge.Tests.SaveDataTests.HighestRatingAndLowestCostPersistAcrossReload" methodname="HighestRatingAndLowestCostPersistAcrossReload" classname="Skybridge.Tests.SaveDataTests" runstate="Runnable" seed="1528585223" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000376" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1100" name="LevelFiveUnlocksAfterLevelFourAndRecordsResult" fullname="Skybridge.Tests.SaveDataTests.LevelFiveUnlocksAfterLevelFourAndRecordsResult" methodname="LevelFiveUnlocksAfterLevelFourAndRecordsResult" classname="Skybridge.Tests.SaveDataTests" runstate="Runnable" seed="1643571663" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000103" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1098" name="MalformedOrForeignSchemaFallsBackSafely" fullname="Skybridge.Tests.SaveDataTests.MalformedOrForeignSchemaFallsBackSafely" methodname="MalformedOrForeignSchemaFallsBackSafely" classname="Skybridge.Tests.SaveDataTests" runstate="Runnable" seed="1565380323" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000277" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1101" name="SavedProgressCanBeCleared" fullname="Skybridge.Tests.SaveDataTests.SavedProgressCanBeCleared" methodname="SavedProgressCanBeCleared" classname="Skybridge.Tests.SaveDataTests" runstate="Runnable" seed="1319363183" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000127" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1102" name="SkybridgeTutorialDirectorTests" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.407542" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1121" name="BridgePierLessonMustActuallyRemoveWeakSpanBeforeTesting" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.BridgePierLessonMustActuallyRemoveWeakSpanBeforeTesting" methodname="BridgePierLessonMustActuallyRemoveWeakSpanBeforeTesting" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1368362861" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.002325" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1114" name="CompleteBasicLessonRequiresRealStartedTestAndMatchingSuccess" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.CompleteBasicLessonRequiresRealStartedTestAndMatchingSuccess" methodname="CompleteBasicLessonRequiresRealStartedTestAndMatchingSuccess" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="129459164" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001121" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1118" name="CompletedTutorialStillAllowsResultAndAdjustmentExit" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.CompletedTutorialStillAllowsResultAndAdjustmentExit" methodname="CompletedTutorialStillAllowsResultAndAdjustmentExit" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="144251820" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000858" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1116" name="EveryStepKeepsEscapeAndHelpAvailableIncludingDuringTest" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.EveryStepKeepsEscapeAndHelpAvailableIncludingDuringTest" methodname="EveryStepKeepsEscapeAndHelpAvailableIncludingDuringTest" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="483271046" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000924" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1115" name="FailureOrStopReturnsToTestReadyWithoutGrantingCompletion" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.FailureOrStopReturnsToTestReadyWithoutGrantingCompletion" methodname="FailureOrStopReturnsToTestReadyWithoutGrantingCompletion" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="320302673" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001353" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1104" name="FirstPlacementMustBeActualDeckBesideStart" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.FirstPlacementMustBeActualDeckBesideStart" methodname="FirstPlacementMustBeActualDeckBesideStart" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1200061863" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000597" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1110" name="HintAndRetryDoNotChangeLayoutInventoryOrMastery" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.HintAndRetryDoNotChangeLayoutInventoryOrMastery" methodname="HintAndRetryDoNotChangeLayoutInventoryOrMastery" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="2142562430" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000664" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1105" name="OptionalDeletionAndUndoKeepInventoryAndReturnToBuilding" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.OptionalDeletionAndUndoKeepInventoryAndReturnToBuilding" methodname="OptionalDeletionAndUndoKeepInventoryAndReturnToBuilding" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1686452802" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000821" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1106" name="OptionalSelectionNeverAddsARequiredDeletionStep" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.OptionalSelectionNeverAddsARequiredDeletionStep" methodname="OptionalSelectionNeverAddsARequiredDeletionStep" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1025902791" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000575" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1124" name="PartialTrussProgressResetsStallTimerWithoutCompletingStep" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.PartialTrussProgressResetsStallTimerWithoutCompletingStep" methodname="PartialTrussProgressResetsStallTimerWithoutCompletingStep" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1015335980" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001005" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1109" name="PausedTimeAndInvalidDeltasNeverEscalateHelpOrAdvance" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.PausedTimeAndInvalidDeltasNeverEscalateHelpOrAdvance" methodname="PausedTimeAndInvalidDeltasNeverEscalateHelpOrAdvance" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1423325258" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000234" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1122" name="RampLessonStartsWithGapAndRequiresNewLegalRamp" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.RampLessonStartsWithGapAndRequiresNewLegalRamp" methodname="RampLessonStartsWithGapAndRequiresNewLegalRamp" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1889086540" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001544" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1120" name="ReplayUsesFreshStepStateAndDoesNotErasePreviouslyEarnedMastery" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.ReplayUsesFreshStepStateAndDoesNotErasePreviouslyEarnedMastery" methodname="ReplayUsesFreshStepStateAndDoesNotErasePreviouslyEarnedMastery" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="216856823" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000850" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1119" name="RootSelectSemanticFromWorldPickAdvancesSelectionWithoutPlacementEvent" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.RootSelectSemanticFromWorldPickAdvancesSelectionWithoutPlacementEvent" methodname="RootSelectSemanticFromWorldPickAdvancesSelectionWithoutPlacementEvent" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="180176467" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000455" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1117" name="RootWorkbenchActionsAllowAdjustmentAndModalReturnDuringSpatialLesson" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.RootWorkbenchActionsAllowAdjustmentAndModalReturnDuringSpatialLesson" methodname="RootWorkbenchActionsAllowAdjustmentAndModalReturnDuringSpatialLesson" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="759952167" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000478" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1113" name="SkipOrPrematureCompletedArgumentCannotGrantMastery" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.SkipOrPrematureCompletedArgumentCannotGrantMastery" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.186018" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1111" name="SkipOrPrematureCompletedArgumentCannotGrantMastery(False)" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.SkipOrPrematureCompletedArgumentCannotGrantMastery(False)" methodname="SkipOrPrematureCompletedArgumentCannotGrantMastery" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="26151119" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000615" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1112" name="SkipOrPrematureCompletedArgumentCannotGrantMastery(True)" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.SkipOrPrematureCompletedArgumentCannotGrantMastery(True)" methodname="SkipOrPrematureCompletedArgumentCannotGrantMastery" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="696411797" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000133" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1126" name="SpatialLessonChecksActualRotationLayerSlopeAndPlacementBeforeAdjustment" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.SpatialLessonChecksActualRotationLayerSlopeAndPlacementBeforeAdjustment" methodname="SpatialLessonChecksActualRotationLayerSlopeAndPlacementBeforeAdjustment" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="858491736" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001853" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1123" name="TrussLessonDoesNotAcceptPartialCoverageAndRollsBackWhenUndone" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.TrussLessonDoesNotAcceptPartialCoverageAndRollsBackWhenUndone" methodname="TrussLessonDoesNotAcceptPartialCoverageAndRollsBackWhenUndone" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="93042556" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.002503" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1108" name="UndoAfterConnectingReturnsToBuildAndRedoRestoresTestReadiness" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.UndoAfterConnectingReturnsToBuildAndRedoRestoresTestReadiness" methodname="UndoAfterConnectingReturnsToBuildAndRedoRestoresTestReadiness" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1401134343" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001025" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1107" name="UndoOfRequiredFirstBoardReturnsToPlacementAndCanRecoverWithRedo" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.UndoOfRequiredFirstBoardReturnsToPlacementAndCanRecoverWithRedo" methodname="UndoOfRequiredFirstBoardReturnsToPlacementAndCanRecoverWithRedo" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1061658587" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000434" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1125" name="UndoOfSeedIsExplicitlyRecoverableWithoutHiddenLayoutWrites" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.UndoOfSeedIsExplicitlyRecoverableWithoutHiddenLayoutWrites" methodname="UndoOfSeedIsExplicitlyRecoverableWithoutHiddenLayoutWrites" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="75991848" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000565" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1127" name="UndoSpatialRampAtBottomLayerReturnsToReachableLayerStepAndRedoRecovers" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.UndoSpatialRampAtBottomLayerReturnsToReachableLayerStepAndRedoRecovers" methodname="UndoSpatialRampAtBottomLayerReturnsToReachableLayerStepAndRedoRecovers" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="559698830" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.001812" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1103" name="WrongEventOrUnchangedBuilderCannotAdvancePlacement" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.WrongEventOrUnchangedBuilderCannotAdvancePlacement" methodname="WrongEventOrUnchangedBuilderCannotAdvancePlacement" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="1658717629" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000237" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1128" name="WrongPracticeLevelCannotAdvanceCurrentLesson" fullname="Skybridge.Tests.SkybridgeTutorialDirectorTests.WrongPracticeLevelCannotAdvanceCurrentLesson" methodname="WrongPracticeLevelCannotAdvanceCurrentLesson" classname="Skybridge.Tests.SkybridgeTutorialDirectorTests" runstate="Runnable" seed="55894580" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:10Z" duration="0.000195" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1129" name="SkybridgeVisualParityTests" fullname="Skybridge.Tests.SkybridgeVisualParityTests" classname="Skybridge.Tests.SkybridgeVisualParityTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-07 11:16:10Z" end-time="2026-09-07 11:16:11Z" duration="0.189543" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1130" name="IslandVariantsMatchAuthoredThreeJsMapping" fullname="Skybridge.Tests.SkybridgeVisualParityTests.IslandVariantsMatchAuthoredThreeJsMapping" methodname="IslandVariantsMatchAuthoredThreeJsMapping" classname="Skybridge.Tests.SkybridgeVisualParityTests" runstate="Runnable" seed="63555456" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.000385" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1131" name="SkybridgeXrWorkbenchTests" fullname="Skybridge.Tests.SkybridgeXrWorkbenchTests" classname="Skybridge.Tests.SkybridgeXrWorkbenchTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.352911" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1133" name="HidingTutorialKeepsOriginalDockVisible" fullname="Skybridge.Tests.SkybridgeXrWorkbenchTests.HidingTutorialKeepsOriginalDockVisible" methodname="HidingTutorialKeepsOriginalDockVisible" classname="Skybridge.Tests.SkybridgeXrWorkbenchTests" runstate="Runnable" seed="1797995185" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.034455" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1135" name="OriginalHudWorldPoseDoesNotFollowHead" fullname="Skybridge.Tests.SkybridgeXrWorkbenchTests.OriginalHudWorldPoseDoesNotFollowHead" methodname="OriginalHudWorldPoseDoesNotFollowHead" classname="Skybridge.Tests.SkybridgeXrWorkbenchTests" runstate="Runnable" seed="522117755" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.024589" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1136" name="TrackingLossDisablesControlsWithoutLosingTutorial" fullname="Skybridge.Tests.SkybridgeXrWorkbenchTests.TrackingLossDisablesControlsWithoutLosingTutorial" methodname="TrackingLossDisablesControlsWithoutLosingTutorial" classname="Skybridge.Tests.SkybridgeXrWorkbenchTests" runstate="Runnable" seed="939171928" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.022150" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1137" name="TutorialBackgroundBlocksRayButTextDoesNot" fullname="Skybridge.Tests.SkybridgeXrWorkbenchTests.TutorialBackgroundBlocksRayButTextDoesNot" methodname="TutorialBackgroundBlocksRayButTextDoesNot" classname="Skybridge.Tests.SkybridgeXrWorkbenchTests" runstate="Runnable" seed="936721274" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.025066" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1132" name="TutorialPreservesOriginalGameControls" fullname="Skybridge.Tests.SkybridgeXrWorkbenchTests.TutorialPreservesOriginalGameControls" methodname="TutorialPreservesOriginalGameControls" classname="Skybridge.Tests.SkybridgeXrWorkbenchTests" runstate="Runnable" seed="1738883036" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.023370" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1134" name="UpdatedTutorialActionsDoNotRetainOldCallbacks" fullname="Skybridge.Tests.SkybridgeXrWorkbenchTests.UpdatedTutorialActionsDoNotRetainOldCallbacks" methodname="UpdatedTutorialActionsDoNotRetainOldCallbacks" classname="Skybridge.Tests.SkybridgeXrWorkbenchTests" runstate="Runnable" seed="1437296539" result="Passed" start-time="2026-09-07 11:16:11Z" end-time="2026-09-07 11:16:11Z" duration="0.022311" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[<b><color=#2EA3FF>MCP-FOR-UNITY</color></b>: [TestRunnerNoThrottle] Restored Interaction Mode after test run.
+Saving results to: editor-tests-editmode.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

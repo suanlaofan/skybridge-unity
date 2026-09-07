@@ -16,7 +16,7 @@ using ByteDance.PICO.XR;
 namespace Skybridge.Game
 {
     [DefaultExecutionOrder(-1000)]
-    public sealed class SkybridgeGameController : MonoBehaviour
+    public sealed partial class SkybridgeGameController : MonoBehaviour
     {
         private const float GoalStableSeconds = TestTimings.GoalStableMilliseconds / 1000f;
         private const float StallTimeoutSeconds = TestTimings.StallTimeoutMilliseconds / 1000f;
@@ -28,6 +28,7 @@ namespace Skybridge.Game
         private Camera worldCamera;
         private OrbitCameraController orbitCamera;
         private bool picoRuntime;
+        private bool picoSimulator;
         private Transform picoWorldRoot;
         private Transform picoHudRoot;
         private SkybridgeWorldView world;
@@ -96,6 +97,13 @@ namespace Skybridge.Game
         {
             if (initialized) return;
             picoRuntime = Application.platform == RuntimePlatform.Android;
+            if (picoRuntime)
+            {
+                using var androidBuild = new AndroidJavaClass("android.os.Build");
+                var hardware = androidBuild.GetStatic<string>("HARDWARE");
+                picoSimulator = hardware == "ranchu" || hardware == "goldfish";
+                if (picoSimulator) Debug.Log("SKYBRIDGE_PICO_SIMULATOR_POINTER_ENABLED: mouse/touch screen rays; hardware=" + hardware);
+            }
             Application.targetFrameRate = picoRuntime ? 90 : 60;
             Application.runInBackground = true;
             settings = SkybridgeSettingsService.Load();
@@ -129,7 +137,12 @@ namespace Skybridge.Game
 
             initialized = true;
             LoadLevel(LevelId.Level1, true);
-            if (picoRuntime) StartCoroutine(PlacePicoPresentationAfterTracking());
+            if (picoRuntime)
+            {
+                InitializeXrPresentation();
+                StartCoroutine(PlacePicoPresentationAfterTracking());
+            }
+            if (!picoRuntime) EnableXrPreview();
             StartCoroutine(ProcessAutomationArguments());
         }
 
@@ -182,6 +195,7 @@ namespace Skybridge.Game
             worldCamera.nearClipPlane = 0.1f;
             worldCamera.depth = 0f;
             orbitCamera = worldCamera.GetComponent<OrbitCameraController>() ?? worldCamera.gameObject.AddComponent<OrbitCameraController>();
+            orbitCamera.enabled = true;
             orbitCamera.Initialize(settings.ReducedMotion, settings.AutoFocus);
         }
 
@@ -192,35 +206,24 @@ namespace Skybridge.Game
             yield return new WaitForEndOfFrame();
             if (picoWorldRoot == null || worldCamera == null || world == null || level == null) yield break;
 
-            var cameraTransform = worldCamera.transform;
-            var forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up);
-            if (forward.sqrMagnitude < 0.0001f) forward = Vector3.forward;
-            forward.Normalize();
-
-            var focus = (world.GridToWorld(level.StartAnchor) + world.GridToWorld(level.GoalAnchor)) * 0.5f;
-            var rootRotation = Quaternion.LookRotation(forward, Vector3.up) * Quaternion.Euler(0f, 180f, 0f);
-            var desiredFocus = cameraTransform.position + forward * 0.95f - Vector3.up * 0.08f;
-            picoWorldRoot.rotation = rootRotation;
-            picoWorldRoot.position = desiredFocus - rootRotation * Vector3.Scale(focus, picoWorldRoot.localScale);
-
-            hud.ConfigurePicoPresentation(worldCamera, cameraTransform, 0.92f);
+            ResetXrWorkspace();
         }
 
         private void BindHudEvents()
         {
-            hud.ComponentSelected += SelectComponent;
-            hud.LevelSelected += selected => LoadLevel(selected);
+            hud.ComponentSelected += type => { if (UsesXrPresentation) XrDispatch("tool", (int)type); else SelectComponent(type); };
+            hud.LevelSelected += selected => { if (UsesXrPresentation) XrDispatch("level", (int)selected); else LoadLevel(selected); };
             hud.UndoRequested += Undo;
             hud.RedoRequested += Redo;
             hud.RotateRequested += Rotate;
             hud.LayerChangeRequested += ChangeLayer;
             hud.RampDeltaRequested += SetRampDelta;
             hud.DeleteRequested += RemoveSelected;
-            hud.ResetRequested += ResetBuild;
-            hud.TestRequested += ToggleTest;
+            hud.ResetRequested += () => { if (UsesXrPresentation) XrDispatch("reset"); else ResetBuild(); };
+            hud.TestRequested += () => { if (UsesXrPresentation) XrDispatch(IsTestPhase(phase) ? "stop" : "test"); else ToggleTest(); };
             hud.RestartTestRequested += RestartCurrentTest;
             hud.CameraResetRequested += ResetCamera;
-            hud.NextLevelRequested += NextLevel;
+            hud.NextLevelRequested += () => { if (UsesXrPresentation) XrDispatch("next"); else NextLevel(); };
             hud.CloseResultRequested += CloseResult;
             hud.MutedChanged += SetMuted;
             hud.ReducedMotionChanged += SetReducedMotion;
@@ -248,7 +251,7 @@ namespace Skybridge.Game
             world.LoadLevel(level);
             world.SetLayout(builder.GetLayout());
             if (picoRuntime && !builder.ActiveTool.HasValue) builder.SelectTool(PieceType.Deck);
-            if (!picoRuntime)
+            if (UsesDesktopCamera)
             {
                 orbitCamera.SetReducedMotion(settings.ReducedMotion);
                 orbitCamera.SetAutoFocus(
@@ -259,7 +262,7 @@ namespace Skybridge.Game
             }
             SetPhase(GamePhase.Build);
             SyncAll();
-            if (!picoRuntime && settings.AutoFocus)
+            if (UsesDesktopCamera && settings.AutoFocus)
             {
                 orbitCamera.Focus(
                     world.GetSceneBounds(),
@@ -296,10 +299,12 @@ namespace Skybridge.Game
         private void SelectComponent(PieceType type)
         {
             if (!CanEdit()) return;
+            xrMovingSelection = false;
             builder.SelectTool(type);
             world.ClearSelection();
             SyncBuildTargets();
             SyncUi();
+            ObserveXrTutorial("tool");
         }
 
         private void Undo()
@@ -307,6 +312,7 @@ namespace Skybridge.Game
             if (!CanEdit() || !builder.Undo()) return;
             audioEngine.PlayDelete();
             SyncAll();
+            ObserveXrTutorial("undo");
         }
 
         private void Redo()
@@ -314,6 +320,7 @@ namespace Skybridge.Game
             if (!CanEdit() || !builder.Redo()) return;
             audioEngine.PlayLock();
             SyncAll();
+            ObserveXrTutorial("redo");
         }
 
         private void Rotate(int direction)
@@ -322,6 +329,7 @@ namespace Skybridge.Game
             builder.Rotate(direction < 0 ? -1 : 1);
             SyncBuildTargets();
             SyncUi();
+            ObserveXrTutorial("rotate");
         }
 
         private void ChangeLayer(int delta)
@@ -330,6 +338,7 @@ namespace Skybridge.Game
             world.ClearSelection();
             SyncBuildTargets();
             SyncUi();
+            ObserveXrTutorial("layer");
         }
 
         private void SetRampDelta(int delta)
@@ -337,6 +346,7 @@ namespace Skybridge.Game
             if (!CanEdit() || !builder.SetRampDelta(delta < 0 ? -1 : 1)) return;
             SyncBuildTargets();
             SyncUi();
+            ObserveXrTutorial("ramp");
         }
 
         private void RemoveSelected()
@@ -353,6 +363,7 @@ namespace Skybridge.Game
             audioEngine.PlayDelete();
             ShowStatus("组件已解锁。", SkybridgePalette.Mechanical, 1.1f);
             SyncAll();
+            ObserveXrTutorial("delete");
         }
 
         private void ResetBuild()
@@ -365,9 +376,9 @@ namespace Skybridge.Game
 
         private void ResetCamera()
         {
-            if (picoRuntime)
+            if (XrUsesWorldSpace)
             {
-                StartCoroutine(PlacePicoPresentationAfterTracking());
+                ResetXrWorkspace(true);
                 return;
             }
             if (world != null) orbitCamera.ResetTo(
@@ -378,7 +389,8 @@ namespace Skybridge.Game
 
         private bool CanEdit()
         {
-            return builder != null && GameSessionRules.CanEditBridge(phase);
+            return builder != null && GameSessionRules.CanEditBridge(phase) &&
+                   (!UsesXrPresentation || !XrInteractionBlocked);
         }
 
         private void ToggleTest()
@@ -394,6 +406,8 @@ namespace Skybridge.Game
         public bool StartCurrentTest()
         {
             if (phase != GamePhase.Build || testRoutine != null) return false;
+            if (UsesXrPresentation && XrInteractionBlocked) return false;
+            LastTestOutcome = TestOutcome.Pending;
             var token = ++testToken;
             testRoutine = StartCoroutine(RunTest(token));
             return true;
@@ -408,6 +422,7 @@ namespace Skybridge.Game
             SetPhase(GamePhase.Build);
             audioEngine.SetTestMode(false);
             ShowStatus("测试已停止。", SkybridgePalette.Mechanical, 1.1f);
+            ObserveXrTutorial("stop");
         }
 
         public void RestartCurrentTest()
@@ -444,7 +459,7 @@ namespace Skybridge.Game
             world.SetVehicleProgress(0f);
             SetPhase(GamePhase.TestPreparing);
             audioEngine.SetTestMode(true);
-            if (!picoRuntime && settings.AutoFocus) orbitCamera.Focus(
+            if (UsesDesktopCamera && settings.AutoFocus) orbitCamera.Focus(
                 world.GetSceneBounds(),
                 world.GridToWorld(level.StartAnchor),
                 world.GridToWorld(level.GoalAnchor));
@@ -458,6 +473,7 @@ namespace Skybridge.Game
             var lastProgress = 0f;
             var lastProgressAt = Time.realtimeSinceStartup;
             SetPhase(GamePhase.VehicleRunning);
+            ObserveXrTutorial("test");
             ShowStatus(
                 weakPoint != null ? "结构可测试，检测到薄弱跨度。" : "结构通过检查。",
                 weakPoint != null ? SkybridgePalette.Warning : SkybridgePalette.Valid,
@@ -557,6 +573,7 @@ namespace Skybridge.Game
                 LastTestOutcome == TestOutcome.Failure ? "方案已恢复。" : "测试未进入失败区，方案已恢复。",
                 LastTestOutcome == TestOutcome.Failure ? SkybridgePalette.Mechanical : SkybridgePalette.Invalid,
                 LastTestOutcome == TestOutcome.Failure ? 1.25f : 2.2f);
+            XrShowRestoredResult();
         }
 
         private IEnumerator RestoreRuntimeFailure(int token, string message)
@@ -572,6 +589,7 @@ namespace Skybridge.Game
             SetPhase(GamePhase.Build);
             audioEngine.SetTestMode(false);
             ShowStatus(message, SkybridgePalette.Invalid, 2.2f);
+            XrShowRestoredResult();
         }
 
         private void CompleteSuccess()
@@ -584,8 +602,11 @@ namespace Skybridge.Game
             var cost = builder.GetCost();
             var medal = BridgeRules.CalculateRating(level, cost, true);
             var previousBest = saveData.Levels[level.Id].LowestCost;
-            saveData = SaveDataService.RecordLevelCompletion(saveData, level.Id, medal, cost);
-            SaveDataService.SaveSaveData(saveData);
+            if (!XrIsTutorialActive)
+            {
+                saveData = SaveDataService.RecordLevelCompletion(saveData, level.Id, medal, cost);
+                SaveDataService.SaveSaveData(saveData);
+            }
             SetPhase(GamePhase.Success);
             audioEngine.SetSilentMode();
             audioEngine.PlaySuccess();
@@ -597,6 +618,8 @@ namespace Skybridge.Game
                 previousBest.HasValue || currentBest.HasValue ? Mathf.RoundToInt((float)(currentBest ?? cost)) : (int?)null,
                 level.Number < LevelCatalog.All.Count);
             TestFinished?.Invoke(LastTestOutcome);
+            ObserveXrTutorial("success");
+            xrWorkbench?.ShowResult(XrIsTutorialActive ? "练习通车成功" : "运输成功", $"小车已安全到达对岸。材料消耗：{cost}", true);
         }
 
         private void CloseResult()
@@ -632,7 +655,7 @@ namespace Skybridge.Game
         {
             settings.ReducedMotion = enabled;
             SkybridgeSettingsService.Save(settings);
-            if (!picoRuntime) orbitCamera.SetReducedMotion(enabled);
+            if (UsesDesktopCamera) orbitCamera.SetReducedMotion(enabled);
             world.SetReducedMotion(enabled);
         }
 
@@ -642,7 +665,7 @@ namespace Skybridge.Game
             SkybridgeSettingsService.Save(settings);
             if (world != null)
             {
-                if (!picoRuntime)
+                if (UsesDesktopCamera)
                 {
                     orbitCamera.SetAutoFocus(
                         enabled,
@@ -664,6 +687,7 @@ namespace Skybridge.Game
             }
 
             var before = builder.GetLayout();
+            if (UsesXrPresentation && !XrPrepareWorldPick(pickable)) return;
             var hit = PickToBuildHit(pickable);
             var action = builder.HandleHit(hit);
             if (action.Changed)
@@ -678,6 +702,8 @@ namespace Skybridge.Game
                     var previous = before.AllPieces().FirstOrDefault(candidate => candidate.Id == placement.Id);
                     if (previous == null || !SamePlacement(previous, placement)) world.AnimatePiecePlacement(placement.Id);
                 }
+                xrMovingSelection = false;
+                ObserveXrTutorial("pick");
                 return;
             }
 
@@ -690,6 +716,7 @@ namespace Skybridge.Game
             else world.ClearSelection();
             SyncBuildTargets();
             SyncUi();
+            ObserveXrTutorial("select");
         }
 
         private BuildHit PickToBuildHit(SkybridgePickable pickable)
@@ -737,6 +764,11 @@ namespace Skybridge.Game
 
         private void UpdateGhost(SkybridgePickable pickable)
         {
+            if (UsesXrPresentation && !builder.ActiveTool.HasValue && !xrMovingSelection)
+            {
+                world.HideGhost();
+                return;
+            }
             if (!CanEdit() || pickable == null || (!builder.ActiveTool.HasValue && string.IsNullOrEmpty(builder.SelectedPieceId)))
             {
                 world.HideGhost();
@@ -843,6 +875,7 @@ namespace Skybridge.Game
                 bounds?.Min ?? 0,
                 bounds?.Max ?? 0,
                 builder.RampDelta);
+            xrWorkbench?.Refresh();
         }
 
         private void SetPhase(GamePhase next)
@@ -873,7 +906,7 @@ namespace Skybridge.Game
             world.SetVehicleProgress(0f);
             SyncBuildTargets();
             world.ClearSelection();
-            if (!picoRuntime && settings.AutoFocus) orbitCamera.Focus(
+            if (UsesDesktopCamera && settings.AutoFocus) orbitCamera.Focus(
                 world.GetSceneBounds(),
                 world.GridToWorld(level.StartAnchor),
                 world.GridToWorld(level.GoalAnchor));
@@ -899,6 +932,7 @@ namespace Skybridge.Game
             world.ClearSelection();
             SyncBuildTargets();
             SyncUi();
+            ObserveXrTutorial("cancel");
         }
 
         private void HighlightIssue(string pieceId)
@@ -934,6 +968,7 @@ namespace Skybridge.Game
         {
             LastStatusMessage = message ?? string.Empty;
             hud.ShowStatus(LastStatusMessage, accent, seconds);
+            xrWorkbench?.Refresh();
         }
 
         private static bool IsTestPhase(GamePhase value)
@@ -949,6 +984,11 @@ namespace Skybridge.Game
         private void Update()
         {
             if (!initialized) return;
+            if (UsesXrPresentation)
+            {
+                UpdateXrPresentation();
+                if (XrUsesWorldSpace) return;
+            }
             if (picoRuntime) return;
             HandleKeyboard();
             HandlePointer();
@@ -960,6 +1000,12 @@ namespace Skybridge.Game
         /// </summary>
         public void HandlePicoRay(Ray ray)
         {
+            if (UsesXrPresentation)
+            {
+                // Compatibility entry point still passes through the single XR router.
+                xrPointer?.ClickForAutomation(ray);
+                return;
+            }
             if (hud != null && hud.TryHandlePicoRay(ray)) return;
             if (!CanEdit() || world == null) return;
             var preferBuildTargets = builder.ActiveTool.HasValue || !string.IsNullOrEmpty(builder.SelectedPieceId);
@@ -969,6 +1015,7 @@ namespace Skybridge.Game
 
         public void PreviewPicoRay(Ray ray)
         {
+            if (UsesXrPresentation) return;
             if (!CanEdit() || world == null) return;
             var preferBuildTargets = builder.ActiveTool.HasValue || !string.IsNullOrEmpty(builder.SelectedPieceId);
             world.TryPick(ray, preferBuildTargets, out var pickable, out _);
@@ -979,6 +1026,11 @@ namespace Skybridge.Game
         public void PicoChangeLayer(int delta) => ChangeLayer(delta);
         public void PicoPrimaryAction()
         {
+            if (UsesXrPresentation)
+            {
+                XrDispatch("help");
+                return;
+            }
             if (phase == GamePhase.Success)
             {
                 NextLevel();
@@ -989,6 +1041,11 @@ namespace Skybridge.Game
 
         public void PicoSecondaryAction()
         {
+            if (UsesXrPresentation)
+            {
+                XrDispatch("cancel");
+                return;
+            }
             if (phase == GamePhase.Success)
             {
                 CloseResult();
@@ -1126,6 +1183,13 @@ namespace Skybridge.Game
 
         private void OnApplicationFocus(bool hasFocus)
         {
+            if (xrPreview)
+            {
+                if (!hasFocus) { xrPointer?.CancelInput(); xrMouseOrbit = xrMousePan = false; ClearPointerTracking(); }
+                return; // Keep preview visuals available, but never consume background desktop clicks.
+            }
+            xrApplicationFocused = hasFocus;
+            if (!hasFocus) xrPointer?.CancelInput();
             if (hasFocus) return;
             ClearPointerTracking();
         }
@@ -1245,6 +1309,7 @@ namespace Skybridge.Game
         {
             if (Instance == this) Instance = null;
             CancelTestAnimation();
+            DisposeXrPresentation();
         }
     }
 }

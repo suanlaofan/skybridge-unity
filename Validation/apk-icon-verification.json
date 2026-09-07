@@ -1,0 +1,19 @@
+{
+  "originalArtworkUnmodified": true,
+  "artworkSha256": "20dcc4c5a347dbcd5adb0c75f20e2d429bdc5ac102f0690632db76d61068bfbd",
+  "androidManifestIcon": "res/Qu.xml",
+  "adaptiveBackground": "mipmap/ic_launcher_background",
+  "adaptiveForeground": "mipmap/ic_launcher_foreground",
+  "adaptiveForegroundResource": "res/as.png",
+  "iconCapture": "Captures/33-apk-game-icon.png",
+  "legacyAndRoundDensities": [
+    "ldpi",
+    "mdpi",
+    "hdpi",
+    "xhdpi",
+    "xxhdpi",
+    "xxxhdpi"
+  ],
+  "apkSha256": "8f1f5d5953c958cf7e88d4c1e9784ccc91388200b4b62c19ade4e852a851aa69",
+  "visuallyVerified": true
+}

@@ -27,8 +27,10 @@ namespace Skybridge.Presentation
         private bool inputEnabled = true;
         private bool rightDragActive;
         private bool middleDragActive;
+        private bool manualViewActive;
 
         public bool AutoFocus { get; private set; } = true;
+        public event System.Action ViewAdjusted;
 
         public void Initialize(bool reduceMotion, bool autoFocus)
         {
@@ -66,6 +68,7 @@ namespace Skybridge.Presentation
         public void SetAutoFocus(bool enabled, Bounds bounds)
         {
             AutoFocus = enabled;
+            if (enabled) manualViewActive = false;
             if (enabled) Focus(bounds);
             else CancelFocusMotion();
         }
@@ -73,12 +76,14 @@ namespace Skybridge.Presentation
         public void SetAutoFocus(bool enabled, Bounds bounds, Vector3 startAnchor, Vector3 goalAnchor)
         {
             AutoFocus = enabled;
+            if (enabled) manualViewActive = false;
             if (enabled) Focus(bounds, startAnchor, goalAnchor);
             else CancelFocusMotion();
         }
 
         public void Focus(Bounds bounds, Vector3 startAnchor, Vector3 goalAnchor, bool immediate = false)
         {
+            if (manualViewActive && !immediate) return;
             if (controlledCamera == null) controlledCamera = GetComponent<Camera>();
             focusBounds = bounds;
             focusStartAnchor = startAnchor;
@@ -145,6 +150,7 @@ namespace Skybridge.Presentation
 
         public void ResetTo(Bounds bounds, Vector3 startAnchor, Vector3 goalAnchor)
         {
+            manualViewActive = false;
             Focus(bounds, startAnchor, goalAnchor, true);
         }
 
@@ -174,7 +180,7 @@ namespace Skybridge.Presentation
             lastScreenWidth = width;
             lastScreenHeight = height;
             lastAspect = aspect;
-            if (AutoFocus && hasFocusContext)
+            if (AutoFocus && hasFocusContext && !manualViewActive)
             {
                 // Three.js recomputes focusAll(0) on every resize while
                 // autofocus is enabled, so the framing follows portrait /
@@ -199,20 +205,24 @@ namespace Skybridge.Presentation
             if (rightDragActive && mouse.rightButton.isPressed)
             {
                 yaw += delta.x * 0.18f;
-                pitch = Mathf.Clamp(pitch - delta.y * 0.14f, 12f, 66f);
+                pitch = Mathf.Clamp(pitch - delta.y * 0.14f, -85f, 85f);
+                if (delta.sqrMagnitude > 0.01f) { manualViewActive = true; ViewAdjusted?.Invoke(); }
             }
             if (middleDragActive && mouse.middleButton.isPressed)
             {
                 var scale = distance * 0.0017f;
                 desiredTarget -= transform.right * delta.x * scale;
                 desiredTarget -= transform.up * delta.y * scale;
+                if (delta.sqrMagnitude > 0.01f) { manualViewActive = true; ViewAdjusted?.Invoke(); }
             }
             if (mouse.rightButton.wasReleasedThisFrame) rightDragActive = false;
             if (mouse.middleButton.wasReleasedThisFrame) middleDragActive = false;
             var scroll = mouse.scroll.ReadValue().y;
             if (!overUi && Mathf.Abs(scroll) > 0.01f)
             {
-                desiredDistance = Mathf.Clamp(desiredDistance * Mathf.Exp(-scroll * 0.0011f), 9f, maximumDistance);
+                desiredDistance = Mathf.Clamp(desiredDistance * Mathf.Exp(-scroll * 0.0011f), 3f, maximumDistance);
+                manualViewActive = true;
+                ViewAdjusted?.Invoke();
             }
         }
 

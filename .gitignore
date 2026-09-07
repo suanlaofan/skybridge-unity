@@ -22,3 +22,11 @@
 *.opendb
 *.VC.db
 .DS_Store
+# Install these local development dependencies as described in Packages/README.md.
+Packages/com.bytedance.pico.xr/
+Packages/com.coplaydev.unity-mcp/
+# Keep intermediate captures local; selected acceptance images are added explicitly.
+Captures/*
+!Captures/18-level-scene-front-2.png
+!Captures/32-pico-release-launch.png
+!Captures/33-apk-game-icon.png

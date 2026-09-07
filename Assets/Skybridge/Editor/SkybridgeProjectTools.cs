@@ -32,8 +32,11 @@ namespace Skybridge.Editor
         private const string RendererPath = SettingsFolder + "/SkybridgeRenderer.asset";
         private const string PipelinePath = SettingsFolder + "/SkybridgeURP.asset";
         private const string ShaderAnchorPath = ResourcesFolder + "/SkybridgeShaderAnchor.mat";
-        private const string PicoHeadLockedHudMaterialPath = ResourcesFolder + "/SkybridgePicoHeadLockedUi.mat";
-        private const string PicoHeadLockedHudShaderName = "Skybridge/UI/HeadLockedNoZTest";
+        private const string WorldSpaceUiMaterialPath = ResourcesFolder + "/SkybridgeWorldSpaceUi.mat";
+        private const string WorldSpaceUiShaderName = "UI/Default";
+        public const string InternalCandidateVersion = "1.1.0";
+        public const int InternalCandidateAndroidVersionCode = 3;
+        public static BuildReport LastPicoAndroidBuildReport { get; private set; }
         private const string ProjectSettingsPath = "ProjectSettings/ProjectSettings.asset";
         private const string ModelAuthoringRootName = "SkybridgeModelAuthoring";
         private const string ModelPreviewRootName = "SceneModelPreviews";
@@ -170,6 +173,7 @@ namespace Skybridge.Editor
         [MenuItem("Skybridge/PICO/Build Android APK")]
         public static void BuildPicoAndroid()
         {
+            LastPicoAndroidBuildReport = null;
             ConfigurePicoAndroidInternal();
             Directory.CreateDirectory(Path.GetDirectoryName(PicoAndroidBuildPath) ?? "Builds/PICO");
             var options = new BuildPlayerOptions
@@ -181,6 +185,7 @@ namespace Skybridge.Editor
                 options = BuildOptions.None,
             };
             var report = BuildPipeline.BuildPlayer(options);
+            LastPicoAndroidBuildReport = report;
             if (report.summary.result != BuildResult.Succeeded)
             {
                 throw new BuildFailedException(
@@ -240,10 +245,14 @@ namespace Skybridge.Editor
             {
                 errors.Add("The first PICO slice must be controller-only and cannot enable hand tracking, VST, or AR Foundation.");
             }
-            var picoHudMaterial = AssetDatabase.LoadAssetAtPath<Material>(PicoHeadLockedHudMaterialPath);
-            if (picoHudMaterial == null || picoHudMaterial.shader == null || picoHudMaterial.shader.name != PicoHeadLockedHudShaderName)
+            var worldUiMaterial = AssetDatabase.LoadAssetAtPath<Material>(WorldSpaceUiMaterialPath);
+            if (worldUiMaterial == null || worldUiMaterial.shader == null || worldUiMaterial.shader.name != WorldSpaceUiShaderName)
             {
-                errors.Add("PICO head-locked HUD foreground material is missing or uses the wrong shader.");
+                errors.Add("World-space UI material must exist and use the depth-tested UI/Default shader.");
+            }
+            if (PlayerSettings.bundleVersion != InternalCandidateVersion || PlayerSettings.Android.bundleVersionCode < InternalCandidateAndroidVersionCode)
+            {
+                errors.Add("Android build must use the 1.1.0 internal candidate version and an increased bundle version code.");
             }
             ValidatePicoCameraRig(errors);
             if (errors.Count > 0) throw new BuildFailedException(string.Join(Environment.NewLine, errors));
@@ -252,6 +261,8 @@ namespace Skybridge.Editor
 
         private static void ConfigurePicoAndroidInternal()
         {
+            ApplyInternalCandidateVersion();
+            SkybridgeReleaseTools.ConfigureApplicationIcons();
             PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, "com.skybridge.pico");
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
@@ -385,22 +396,47 @@ namespace Skybridge.Editor
             picoSettings.optimizeBufferDiscards = true;
             EditorBuildSettings.AddConfigObject("ByteDance.PICO.XR.Settings", picoSettings, true);
             EditorUtility.SetDirty(picoSettings);
-            EnsurePicoHeadLockedHudMaterial();
+            EnsureWorldSpaceUiMaterial();
         }
 
-        private static void EnsurePicoHeadLockedHudMaterial()
+        [MenuItem("Skybridge/XR/Configure Internal Candidate")]
+        public static void ConfigureInternalCandidate()
         {
-            var shader = Shader.Find(PicoHeadLockedHudShaderName);
+            ApplyInternalCandidateVersion();
+            ConfigureWorldUiMaterial();
+            AssetDatabase.SaveAssets();
+            Debug.Log("SKYBRIDGE_INTERNAL_CANDIDATE_CONFIGURED:" + InternalCandidateVersion + ":" + PlayerSettings.Android.bundleVersionCode);
+        }
+
+        private static void ApplyInternalCandidateVersion()
+        {
+            // Version configuration only; publishing remains a separate release operation.
+            PlayerSettings.bundleVersion = InternalCandidateVersion;
+            PlayerSettings.Android.bundleVersionCode = Math.Max(PlayerSettings.Android.bundleVersionCode, InternalCandidateAndroidVersionCode);
+        }
+
+        [MenuItem("Skybridge/XR/Configure World UI Material")]
+        public static void ConfigureWorldUiMaterial()
+        {
+            EnsureAssetFolder("Assets", "Resources");
+            EnsureWorldSpaceUiMaterial();
+            AssetDatabase.SaveAssets();
+            Debug.Log("SKYBRIDGE_WORLD_UI_MATERIAL_PASS");
+        }
+
+        private static void EnsureWorldSpaceUiMaterial()
+        {
+            var shader = Shader.Find(WorldSpaceUiShaderName);
             if (shader == null)
             {
-                throw new BuildFailedException("PICO head-locked HUD shader is unavailable.");
+                throw new BuildFailedException("World-space UI/Default shader is unavailable.");
             }
 
-            var material = AssetDatabase.LoadAssetAtPath<Material>(PicoHeadLockedHudMaterialPath);
+            var material = AssetDatabase.LoadAssetAtPath<Material>(WorldSpaceUiMaterialPath);
             if (material == null)
             {
-                material = new Material(shader) { name = "SkybridgePicoHeadLockedUi" };
-                AssetDatabase.CreateAsset(material, PicoHeadLockedHudMaterialPath);
+                material = new Material(shader) { name = "SkybridgeWorldSpaceUi" };
+                AssetDatabase.CreateAsset(material, WorldSpaceUiMaterialPath);
             }
             else if (material.shader != shader)
             {

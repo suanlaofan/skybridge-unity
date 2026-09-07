@@ -1,0 +1,17 @@
+{
+  "editMode": {
+    "passed": 73,
+    "failed": 0,
+    "skipped": 0
+  },
+  "playMode": {
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0
+  },
+  "postTestChanges": [],
+  "runtimeAndTestSourceUnchanged": true,
+  "deviceValidation": false,
+  "scope": "Original HUD anchored to the same workspace as the bridge. Mouse/controller view changes transform UI with the world. Head movement and help/lesson entry do not relatch UI to the eye. Core, model presentation and tutorial rules unchanged. Accumulated yaw/pitch reconstruct orientation without roll drift. Default scene is upright without the previous 20-degree yaw and 25-degree pitch offsets; table is placed below the eye and framed clear of the material bar. Android emulator hardware (ranchu/goldfish) routes mouse/touch into existing world ray without requiring tracked controllers; real-headset controller path preserved. Simulator native virtual-controller routing is retained; only emulator hardware ignores the absent headset wear sensor. UI displays emulator mode instructions. Emulator screen-driven controller rays originate at the current view to avoid stale controller-position offsets. Final mouse tests use manual Input System updates for deterministic event edges. Screen-pointer beams are hidden to prevent near-plane stripes; physical controller beams remain enabled.",
+  "emulatorValidation": "Final APK installed, running and rendered; native mouse tutorial and component placement checked on the same gameplay code before the beam-only change; user approved publication. Full mouse-to-success run and physical headset unverified."
+}

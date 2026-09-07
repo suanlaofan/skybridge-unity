@@ -1,0 +1,15 @@
+{
+    "stage": "passed",
+    "mode": "editmode",
+    "runId": "3558bfe7-ffbd-4a9b-be98-ad4d94ec9599",
+    "updatedUtc": "2026-09-07T11:16:11.5703410Z",
+    "resultState": "Passed",
+    "xmlPath": "editor-tests-editmode.xml",
+    "message": "",
+    "total": 73,
+    "passed": 73,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0,
+    "durationSeconds": 2.4493405
+}

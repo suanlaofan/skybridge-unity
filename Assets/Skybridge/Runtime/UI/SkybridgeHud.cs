@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Skybridge.UI
 {
-    public sealed class SkybridgeHud : MonoBehaviour, IPointerClickHandler
+    public sealed partial class SkybridgeHud : MonoBehaviour, IPointerClickHandler
     {
         private const float TopbarHeight = 58f;
         private static readonly Vector2 HudReferenceResolution = new(1280f, 720f);
@@ -106,6 +106,7 @@ namespace Skybridge.UI
         private float statusHideAt;
         private bool layoutDirty = true;
         private int cachedScreenWidth;
+        private float cachedCanvasWidth;
         private int cachedScreenHeight;
 
         public event Action<PieceType> ComponentSelected;
@@ -167,6 +168,8 @@ namespace Skybridge.UI
             font = Font.CreateDynamicFontFromOSFont(
                 new[] { "PingFang SC", "Hiragino Sans GB", "Arial Unicode MS", "Arial" },
                 16);
+            if (Application.platform == RuntimePlatform.Android)
+                font = Resources.Load<Font>("Fonts/NotoSansCJKsc-Regular") ?? font;
             panelSprite = CreateRoundedSprite(24, 4f, Color.white);
             BuildCanvas();
             BuildTopbar();
@@ -176,41 +179,15 @@ namespace Skybridge.UI
             BuildStatus();
             BuildResult();
             BuildSettings();
+            BuildTutorialNotes();
             ApplyResponsiveLayout();
         }
 
-        /// <summary>
-        /// Presents the existing full HUD as a head-locked world-space panel.
-        /// Only the HUD follows the XR Camera; the world and camera stay independent.
-        /// </summary>
+        /// <summary>Compatibility camera binding. The scene placement is owned by the workspace.</summary>
         public void ConfigurePicoPresentation(Camera xrCamera, Transform headTransform, float distance)
         {
-            if (canvas == null || xrCamera == null || headTransform == null) return;
-
-            picoPresentation = true;
-            canvas.renderMode = RenderMode.WorldSpace;
+            if (canvas == null || xrCamera == null) return;
             canvas.worldCamera = xrCamera;
-            canvas.overrideSorting = true;
-            canvas.sortingOrder = PicoHudSortingOrder;
-            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-            canvasScaler.scaleFactor = 1f;
-
-            var canvasRect = canvas.GetComponent<RectTransform>();
-            canvasRect.anchorMin = new Vector2(0.5f, 0.5f);
-            canvasRect.anchorMax = new Vector2(0.5f, 0.5f);
-            canvasRect.pivot = new Vector2(0.5f, 0.5f);
-            canvasRect.sizeDelta = HudReferenceResolution;
-
-            canvas.transform.SetParent(headTransform, false);
-            canvas.transform.localPosition = new Vector3(0f, -0.18f, distance);
-            canvas.transform.localRotation = Quaternion.identity;
-            canvas.transform.localScale = Vector3.one * (PicoHudBaseWidthMeters / HudReferenceResolution.x);
-            ApplyPicoForegroundMaterialToHud();
-
-            cachedScreenWidth = 0;
-            cachedScreenHeight = 0;
-            layoutDirty = true;
-            ApplyResponsiveLayout();
         }
 
         internal void ApplyPicoForegroundMaterial(Graphic graphic)
@@ -436,16 +413,18 @@ namespace Skybridge.UI
         private void Update()
         {
             if (statusHideAt > 0f && Time.unscaledTime >= statusHideAt) ClearStatus();
-            if (layoutDirty || cachedScreenWidth != Screen.width || cachedScreenHeight != Screen.height) ApplyResponsiveLayout();
+            if (layoutDirty || cachedScreenWidth != Screen.width || cachedScreenHeight != Screen.height ||
+                Mathf.Abs(canvas.GetComponent<RectTransform>().rect.width - cachedCanvasWidth) > 0.5f) ApplyResponsiveLayout();
         }
 
         private void BuildCanvas()
         {
             canvas = gameObject.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.renderMode = RenderMode.WorldSpace;
             canvas.sortingOrder = 50;
+            canvas.GetComponent<RectTransform>().sizeDelta = HudReferenceResolution;
             canvasScaler = gameObject.AddComponent<CanvasScaler>();
-            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
             canvasScaler.referenceResolution = HudReferenceResolution;
             canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             canvasScaler.matchWidthOrHeight = 0.5f;
@@ -1201,6 +1180,7 @@ namespace Skybridge.UI
             cachedScreenWidth = Screen.width;
             cachedScreenHeight = Screen.height;
             var width = canvas.GetComponent<RectTransform>().rect.width;
+            cachedCanvasWidth = width;
             // CanvasScaler changes the logical canvas width on high-DPI and
             // narrow displays. Breakpoints remain tied to the actual viewport
             // so the existing desktop/tablet/phone composition stays stable.
@@ -1274,7 +1254,7 @@ namespace Skybridge.UI
             }
 
             ConfigureCommandRail(medium, compact);
-            if (picoPresentation) ConfigurePicoHeadLockedLayout();
+            if (picoPresentation && !worldAnchoredPresentation) ConfigurePicoHeadLockedLayout();
             ConfigureBuildDock(compact);
             ConfigureVolumeControls(compact, tiny);
             statusPanel.anchoredPosition = new Vector2(0f, !medium ? -70f : compact ? -106f : -108f);
@@ -1531,7 +1511,7 @@ namespace Skybridge.UI
         {
             if (EventSystem.current != null) return;
             var eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
-            DontDestroyOnLoad(eventSystem);
+            if (Application.isPlaying) DontDestroyOnLoad(eventSystem);
         }
     }
 
@@ -1554,6 +1534,7 @@ namespace Skybridge.UI
             rect.anchoredPosition = local + Vector2.up * 18f;
             rect.sizeDelta = new Vector2(Mathf.Clamp(Message.Length * 13f + 16f, 54f, 150f), 28f);
             var tooltipImage = tooltip.GetComponent<Image>();
+            tooltipImage.raycastTarget = false;
             tooltipImage.color = SkybridgePalette.Mechanical;
             Canvas.GetComponent<SkybridgeHud>()?.ApplyPicoForegroundMaterial(tooltipImage);
             var labelObject = new GameObject("Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));

@@ -1,0 +1,15 @@
+{
+    "stage": "passed",
+    "mode": "playmode",
+    "runId": "3cfdc251-8eeb-4117-aaf0-98a205df991c",
+    "updatedUtc": "2026-09-07T11:28:50.5435270Z",
+    "resultState": "Passed",
+    "xmlPath": "editor-tests-playmode.xml",
+    "message": "",
+    "total": 40,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0,
+    "durationSeconds": 21.1907925
+}

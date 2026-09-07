@@ -1,0 +1,30 @@
+{
+  "verifiedUtc": "2026-09-07T11:34:35.621073+00:00",
+  "avd": "Skybridge_PICO_0_13",
+  "device": "emulator-5562",
+  "package": "com.skybridge.pico",
+  "version": "1.1.0",
+  "versionCode": 3,
+  "apkSha256": "8f1f5d5953c958cf7e88d4c1e9784ccc91388200b4b62c19ade4e852a851aa69",
+  "installed": true,
+  "running": true,
+  "pid": 13492,
+  "startupScreenshot": "Captures/32-pico-release-launch.png",
+  "sceneAndUiUpright": true,
+  "screenPointerNearPlaneStripeRemoved": true,
+  "userConfirmedSimulatorUsability": true,
+  "agentNativeMouseChecks": [
+    "entered basic tutorial",
+    "selected standard deck",
+    "placed three components"
+  ],
+  "nativeMouseChecksBuild": "1.1.0/code3 before final beam-visibility-only correction",
+  "completeBridgeRunValidated": false,
+  "headsetValidated": false,
+  "processCrashEntries": 0,
+  "knownNonfatalSdkLogs": [
+    "AssetPackManager ClassNotFoundException",
+    "VRS unsupported tile size 0x0"
+  ],
+  "acceptanceBoundary": "User accepted simulator usability and requested publication; final icon/beam build installed and rendered. No claim of physical-headset or full mouse-to-success acceptance."
+}

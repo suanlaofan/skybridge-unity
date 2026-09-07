@@ -1,0 +1,89 @@
+{
+  "verifiedDate": "2026-09-07",
+  "headMotionEvidence": {
+    "kind": "Unity PlayMode test",
+    "test": "WorldPanelPoseRemainsFixedWhenCameraMoves",
+    "passed": true,
+    "covers": [
+      "camera translation produces more than 50 pixels of panel parallax",
+      "HUD world pose remains fixed during eye movement",
+      "Help and tutorial entry do not reanchor to the eye"
+    ],
+    "manualObserverScreenshot": false
+  },
+  "rollRegression": {
+    "test": "AlternatingYawAndPitchDoesNotAccumulateRoll",
+    "passed": true
+  },
+  "headsetValidated": false,
+  "canvasRenderMode": "WorldSpace",
+  "parent": {
+    "name": "XR Preview WorldRoot",
+    "instanceID": -4230700,
+    "entityID": "568105589209526740"
+  },
+  "initialWidthMeters": 2.0999999344348907,
+  "frontPose": {
+    "position": {
+      "x": -7.105427357601002e-15,
+      "y": 1.5199999809265137,
+      "z": 1.5
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "eulerAngles": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "right": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "up": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "localPosition": {
+      "x": -4.6625467575722723e-07,
+      "y": 4.016665935516357,
+      "z": 5.333332538604736
+    },
+    "localRotation": {
+      "x": 0.0,
+      "y": -1.0,
+      "z": 0.0,
+      "w": -4.371138828673793e-08
+    },
+    "localScale": {
+      "x": 0.01093749888241291,
+      "y": 0.01093749888241291,
+      "z": 0.01093749888241291
+    }
+  },
+  "uprightScene": {
+    "test": "DefaultAndRecenterKeepBridgeLevelAndStructuresUpright",
+    "passed": true,
+    "checks": [
+      "scene up aligned to world up",
+      "GoalGate up aligned to world up",
+      "Level 1 endpoint screen heights match within 0.5 pixels",
+      "default and explicit recenter both upright"
+    ],
+    "initialExtraYawDegrees": 0,
+    "initialPitchDegrees": 0,
+    "focusBelowEyeMeters": 0.45,
+    "initialFocusDistanceMeters": 2.3
+  },
+  "screenshots": [
+    "Captures/18-level-scene-front-2.png"
+  ],
+  "userConfirmed": true,
+  "supersedes": "Earlier scene yaw20/pitch-25 snapshots 15/16 and initial frame 18 are superseded by the scene-upright framing. Latest accepted front screenshot is 18-level-scene-front-2.png."
+}

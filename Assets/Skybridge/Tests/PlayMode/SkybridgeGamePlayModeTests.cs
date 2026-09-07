@@ -55,8 +55,9 @@ namespace Skybridge.Tests
             Assert.That(game.World.WorldCamera, Is.Not.Null);
             Assert.That(game.World.GetSceneBounds().size.sqrMagnitude, Is.GreaterThan(1f));
             Assert.That(ColorUtility.ToHtmlStringRGB(game.World.WorldCamera.backgroundColor), Is.EqualTo("DFE5E4"));
-            Assert.That(game.World.WorldCamera.fieldOfView, Is.EqualTo(38f).Within(0.001f));
-            Assert.That(RenderSettings.fog, Is.True);
+            Assert.That(game.Hud.HudCanvas.renderMode, Is.EqualTo(RenderMode.WorldSpace));
+            Assert.That(game.Hud.transform.parent, Is.EqualTo(game.XrWorldRoot));
+            Assert.That(RenderSettings.fog, Is.False);
             Assert.That(RenderSettings.fogMode, Is.EqualTo(FogMode.Linear));
             Assert.That(RenderSettings.fogStartDistance, Is.EqualTo(34f).Within(0.001f));
             Assert.That(RenderSettings.fogEndDistance, Is.EqualTo(78f).Within(0.001f));
@@ -88,7 +89,7 @@ namespace Skybridge.Tests
             {
                 var imported = game.World.GetImportedModel(endpoint);
                 Assert.That(imported, Is.Not.Null, endpoint);
-                Assert.That(Vector3.Dot(imported.up, Vector3.up), Is.GreaterThan(0.95f), endpoint);
+                Assert.That(Vector3.Dot(imported.up, game.World.transform.up), Is.GreaterThan(0.95f), endpoint);
                 Assert.That(imported.GetComponentsInChildren<Renderer>(true), Is.Not.Empty, endpoint);
             }
 
@@ -98,15 +99,15 @@ namespace Skybridge.Tests
             // 90-degree FBX axis correction that would stand it on edge.
             foreach (var islandName in new[] { "StartIsland", "GoalIsland" })
             {
-                var islandBounds = game.World.GetImportedModelBounds(islandName);
+                var islandBounds = BoundsInWorkspace(game.World.GetImportedModel(islandName), game.World.transform);
                 Assert.That(islandBounds.size.y,
                     Is.LessThan(Mathf.Min(islandBounds.size.x, islandBounds.size.z) * 0.75f),
                     $"{islandName} must remain a horizontal platform, not a vertical disk.");
             }
 
             var vehicleModel = FindDescendant(vehicle.transform, "ImportedModel").transform;
-            Assert.That(Vector3.Dot(vehicleModel.up, Vector3.up), Is.GreaterThan(0.95f));
-            var vehicleBounds = game.World.GetImportedModelBounds("UnmannedRescueVehicle");
+            Assert.That(Vector3.Dot(vehicleModel.up, game.World.transform.up), Is.GreaterThan(0.95f));
+            var vehicleBounds = BoundsInWorkspace(vehicleModel, game.World.transform);
             Assert.That(vehicleBounds.size.sqrMagnitude, Is.GreaterThan(0.1f));
             Assert.That(vehicleBounds.min.y, Is.GreaterThanOrEqualTo(SkybridgeWorldView.RoadBaseY - 0.02f));
             var gateMaterial = game.World.GetImportedModel("GoalGate")
@@ -132,7 +133,7 @@ namespace Skybridge.Tests
         {
             var scaler = game.Hud.GetComponent<CanvasScaler>();
             Assert.That(scaler, Is.Not.Null);
-            Assert.That(scaler.uiScaleMode, Is.EqualTo(CanvasScaler.ScaleMode.ScaleWithScreenSize));
+            Assert.That(scaler.uiScaleMode, Is.EqualTo(CanvasScaler.ScaleMode.ConstantPixelSize));
             Assert.That(scaler.referenceResolution.x, Is.EqualTo(1280f).Within(0.001f));
             Assert.That(scaler.referenceResolution.y, Is.EqualTo(720f).Within(0.001f));
             Assert.That(scaler.screenMatchMode, Is.EqualTo(CanvasScaler.ScreenMatchMode.MatchWidthOrHeight));
@@ -142,11 +143,12 @@ namespace Skybridge.Tests
         }
 
         [UnityTest]
-        public IEnumerator PicoHeadLockedHudKeepsTheFullToolSelectionBar()
+        public IEnumerator PicoWorldHudKeepsTheFullToolSelectionBarWithoutFollowingHead()
         {
             var hud = game.Hud;
             var originalParent = hud.transform.parent;
-            var picoCameraObject = new GameObject("PicoHeadLockedHudTestCamera");
+            var originalPose = hud.transform.position;
+            var picoCameraObject = new GameObject("PicoWorldHudTestCamera");
             var picoCamera = picoCameraObject.AddComponent<Camera>();
 
             try
@@ -161,20 +163,20 @@ namespace Skybridge.Tests
                 var commandRail = FindDescendant(hud.transform, "CommandRail") as RectTransform;
                 Assert.That(canvas.renderMode, Is.EqualTo(RenderMode.WorldSpace));
                 Assert.That(canvas.worldCamera, Is.EqualTo(picoCamera));
-                Assert.That(hud.transform.parent, Is.EqualTo(picoCamera.transform));
-                AssertVector3Approximately(new Vector3(0f, -0.18f, 0.92f), hud.transform.localPosition, "head-locked HUD local position");
+                Assert.That(hud.transform.parent, Is.EqualTo(game.XrWorldRoot));
+                AssertVector3Approximately(originalPose, hud.transform.position, "world HUD position");
                 AssertVector3Approximately(
-                    Vector3.one * (1.28f / 1280f),
-                    hud.transform.localScale,
-                    "head-locked HUD base scale");
+                    Vector3.one * (2.1f / 1280f),
+                    hud.transform.lossyScale,
+                    "world HUD base scale");
                 Assert.That(Vector3.Dot(hud.transform.forward, picoCamera.transform.forward), Is.GreaterThan(0.999f));
                 Assert.That(topbar, Is.Not.Null);
                 Assert.That(commandRail, Is.Not.Null);
-                AssertVector2Approximately(new Vector2(0f, 220f), topbar.anchoredPosition, "PICO topbar position");
-                AssertVector2Approximately(new Vector2(0f, 1f), commandRail.anchorMin, "PICO command rail anchor min");
-                AssertVector2Approximately(new Vector2(0f, 1f), commandRail.anchorMax, "PICO command rail anchor max");
-                AssertVector2Approximately(new Vector2(0f, 1f), commandRail.pivot, "PICO command rail pivot");
-                AssertVector2Approximately(new Vector2(14f, 150f), commandRail.anchoredPosition, "PICO command rail position");
+                AssertVector2Approximately(Vector2.zero, topbar.anchoredPosition, "original topbar position");
+                AssertVector2Approximately(new Vector2(1f, 1f), commandRail.anchorMin, "PICO command rail anchor min");
+                AssertVector2Approximately(new Vector2(1f, 1f), commandRail.anchorMax, "PICO command rail anchor max");
+                AssertVector2Approximately(new Vector2(1f, 1f), commandRail.pivot, "PICO command rail pivot");
+                Assert.That(commandRail.anchoredPosition.y, Is.LessThan(0f));
                 Assert.That(inventory, Is.Not.Null);
                 Assert.That(inventory.gameObject.activeSelf, Is.True);
                 foreach (var toolName in new[] { "Deck", "Ramp", "Pier", "Truss" })
@@ -185,9 +187,9 @@ namespace Skybridge.Tests
                 picoCamera.transform.SetPositionAndRotation(new Vector3(2f, 1.5f, -3f), Quaternion.Euler(0f, 35f, 0f));
                 yield return null;
                 AssertVector3Approximately(
-                    picoCamera.transform.TransformPoint(new Vector3(0f, -0.18f, 0.92f)),
+                    originalPose,
                     hud.transform.position,
-                    "head-locked HUD world position");
+                    "world HUD must stay fixed when the head moves");
             }
             finally
             {
@@ -267,7 +269,7 @@ namespace Skybridge.Tests
             Assert.That(icon, Is.Not.Null);
             Assert.That(icon.sprite, Is.Not.Null);
             Assert.That(icon.sprite.texture.GetPixels32().Count(pixel => pixel.a > 0), Is.GreaterThan(24));
-            var iconScreenPosition = RectTransformUtility.WorldToScreenPoint(null, icon.rectTransform.position);
+            var iconScreenPosition = RectTransformUtility.WorldToScreenPoint(game.Hud.HudCanvas.worldCamera, icon.rectTransform.position);
             Assert.That(iconScreenPosition.x, Is.InRange(0f, (float)Screen.width));
             Assert.That(iconScreenPosition.y, Is.InRange(0f, (float)Screen.height));
             Assert.That(icon.color.a, Is.GreaterThan(0.9f));
@@ -531,7 +533,7 @@ namespace Skybridge.Tests
                 game.World.GetComponentsInChildren<SkybridgePickable>(true)
                     .Where(candidate => candidate.Kind == PickKind.RoadTarget),
                 Is.Not.Empty.And.All.Matches<SkybridgePickable>(target =>
-                    target.transform.position.y > game.World.GridToWorld(new GridPoint(0, 0, 0)).y),
+                    game.World.transform.InverseTransformPoint(target.transform.position).y > game.World.GridToWorld(new GridPoint(0, 0, 0)).y),
                 "Changing layer through the real HUD event must replace the visible Y=0 target grid.");
             Assert.That(layerDown.interactable, Is.True);
 
@@ -546,7 +548,7 @@ namespace Skybridge.Tests
             Assert.That(targets, Has.Length.EqualTo(110));
             Assert.That(
                 targets.All(target => Mathf.Abs(
-                    target.transform.position.y -
+                    game.World.transform.InverseTransformPoint(target.transform.position).y -
                     (game.World.GridToWorld(new GridPoint(0, 0, 0)).y + 0.07f)) < 0.001f),
                 Is.True,
                 "LayerDown must regenerate the flat road target grid at Y=0.");
@@ -732,6 +734,25 @@ namespace Skybridge.Tests
                 AssertVector3Approximately(expectedGoalCenter, goalZone.center, $"{definition.Id} goal center");
                 AssertVector3Approximately(expectedGoalSize, goalZone.size, $"{definition.Id} goal size");
             }
+        }
+
+        private static Bounds BoundsInWorkspace(Transform model, Transform workspace)
+        {
+            var result = new Bounds();
+            var first = true;
+            foreach (var renderer in model.GetComponentsInChildren<Renderer>(true))
+            {
+                var bounds = renderer.localBounds;
+                for (var corner = 0; corner < 8; corner++)
+                {
+                    var local = bounds.center + Vector3.Scale(bounds.extents, new Vector3(
+                        (corner & 1) == 0 ? -1 : 1, (corner & 2) == 0 ? -1 : 1, (corner & 4) == 0 ? -1 : 1));
+                    var point = workspace.InverseTransformPoint(renderer.transform.TransformPoint(local));
+                    if (first) { result = new Bounds(point, Vector3.zero); first = false; }
+                    else result.Encapsulate(point);
+                }
+            }
+            return result;
         }
 
         private static Transform FindDescendant(Transform root, string name)

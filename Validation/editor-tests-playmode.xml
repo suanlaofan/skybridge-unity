@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="40" result="Passed" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:50Z" duration="21.1907925">
+  <test-suite type="TestSuite" id="1052" name="SkybridgeUnity" fullname="SkybridgeUnity" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:50Z" duration="21.190793" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1046" name="Skybridge.Tests.PlayMode.dll" fullname="Library/ScriptAssemblies/Skybridge.Tests.PlayMode.dll" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:50Z" duration="21.173981" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="1774" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1047" name="Skybridge" fullname="Skybridge" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:50Z" duration="21.169560" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1048" name="Tests" fullname="Skybridge.Tests" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:50Z" duration="21.149696" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="SkybridgeGamePlayModeTests" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" testcasecount="24" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:45Z" duration="15.883236" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1002" name="BootstrapCreatesPlayableLevelAndUi" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.BootstrapCreatesPlayableLevelAndUi" methodname="BootstrapCreatesPlayableLevelAndUi" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="2044080100" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:29Z" duration="0.103571" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="BootstrapUsesImportedIslandGateAndVehicleModels" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.BootstrapUsesImportedIslandGateAndVehicleModels" methodname="BootstrapUsesImportedIslandGateAndVehicleModels" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="2118992105" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:29Z" duration="0.121603" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1008" name="ClosingSuccessResultRestoresBuildAudioMode" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.ClosingSuccessResultRestoresBuildAudioMode" methodname="ClosingSuccessResultRestoresBuildAudioMode" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1706873842" result="Passed" start-time="2026-09-07 11:28:29Z" end-time="2026-09-07 11:28:30Z" duration="1.002595" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1012" name="DesktopHudSectionsKeepAllControlsInsideTheirPanels" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.DesktopHudSectionsKeepAllControlsInsideTheirPanels" methodname="DesktopHudSectionsKeepAllControlsInsideTheirPanels" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1248154814" result="Passed" start-time="2026-09-07 11:28:30Z" end-time="2026-09-07 11:28:30Z" duration="0.122645" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1006" name="EmptyBridgeIsRejectedWithoutStartingVehicle" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.EmptyBridgeIsRejectedWithoutStartingVehicle" methodname="EmptyBridgeIsRejectedWithoutStartingVehicle" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1006437199" result="Passed" start-time="2026-09-07 11:28:30Z" end-time="2026-09-07 11:28:30Z" duration="0.135078" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1013" name="EveryReferenceSolutionCompletesThroughRuntimeVehicleFlow" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.EveryReferenceSolutionCompletesThroughRuntimeVehicleFlow" methodname="EveryReferenceSolutionCompletesThroughRuntimeVehicleFlow" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1278808329" result="Passed" start-time="2026-09-07 11:28:30Z" end-time="2026-09-07 11:28:35Z" duration="4.995552" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.932 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.315 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1026" name="FailureAndGoalVolumesMatchThreeJsGeometry" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.FailureAndGoalVolumesMatchThreeJsGeometry" methodname="FailureAndGoalVolumesMatchThreeJsGeometry" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1425593864" result="Passed" start-time="2026-09-07 11:28:35Z" end-time="2026-09-07 11:28:36Z" duration="0.170669" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.932 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.315 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1025" name="FifthLevelFailureRestorePreservesValidatedTurningRoute" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.FifthLevelFailureRestorePreservesValidatedTurningRoute" methodname="FifthLevelFailureRestorePreservesValidatedTurningRoute" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1824586060" result="Passed" start-time="2026-09-07 11:28:36Z" end-time="2026-09-07 11:28:37Z" duration="1.789684" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1018" name="FifthLevelHudLayerButtonsRegenerateTargetsOnSelectedLayer" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.FifthLevelHudLayerButtonsRegenerateTargetsOnSelectedLayer" methodname="FifthLevelHudLayerButtonsRegenerateTargetsOnSelectedLayer" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1809117641" result="Passed" start-time="2026-09-07 11:28:37Z" end-time="2026-09-07 11:28:37Z" duration="0.140122" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1017" name="FifthLevelLayerBoundsAutoCorrectRampDirection" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.FifthLevelLayerBoundsAutoCorrectRampDirection" methodname="FifthLevelLayerBoundsAutoCorrectRampDirection" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="2021791130" result="Passed" start-time="2026-09-07 11:28:37Z" end-time="2026-09-07 11:28:38Z" duration="0.112335" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1010" name="FifthLevelTargetsSupportScreenSpaceSnapWithoutColliderHit" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.FifthLevelTargetsSupportScreenSpaceSnapWithoutColliderHit" methodname="FifthLevelTargetsSupportScreenSpaceSnapWithoutColliderHit" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1284806404" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.125568" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1004" name="HudUsesReferenceResolutionScalingForReadableUi" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.HudUsesReferenceResolutionScalingForReadableUi" methodname="HudUsesReferenceResolutionScalingForReadableUi" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="829121423" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.106060" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1009" name="HudUsesRenderableIconsAndAudioButtonEmitsOncePerClick" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.HudUsesRenderableIconsAndAudioButtonEmitsOncePerClick" methodname="HudUsesRenderableIconsAndAudioButtonEmitsOncePerClick" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="566993981" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.111504" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1011" name="IdlePickingPrefersExistingPieceOverTransparentBuildTarget" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.IdlePickingPrefersExistingPieceOverTransparentBuildTarget" methodname="IdlePickingPrefersExistingPieceOverTransparentBuildTarget" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1289926216" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.102337" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1014" name="PicoLikeTiltedScaledRootStillCompletesGoal" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PicoLikeTiltedScaledRootStillCompletesGoal" methodname="PicoLikeTiltedScaledRootStillCompletesGoal" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="751683874" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.102236" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1005" name="PicoWorldHudKeepsTheFullToolSelectionBarWithoutFollowingHead" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PicoWorldHudKeepsTheFullToolSelectionBarWithoutFollowingHead" methodname="PicoWorldHudKeepsTheFullToolSelectionBarWithoutFollowingHead" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1261198340" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.118301" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1023" name="PointerClickThresholdMatchesThreeJs" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PointerClickThresholdMatchesThreeJs" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:39Z" duration="0.254802" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1019" name="PointerClickThresholdMatchesThreeJs(0.0f,0.0f,True)" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PointerClickThresholdMatchesThreeJs(0.0f,0.0f,True)" methodname="PointerClickThresholdMatchesThreeJs" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="270742228" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.064632" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+              </test-case>
+              <test-case id="1020" name="PointerClickThresholdMatchesThreeJs(3.0f,4.0f,True)" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PointerClickThresholdMatchesThreeJs(3.0f,4.0f,True)" methodname="PointerClickThresholdMatchesThreeJs" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="721221101" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.056420" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+              </test-case>
+              <test-case id="1021" name="PointerClickThresholdMatchesThreeJs(5.01f,0.0f,False)" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PointerClickThresholdMatchesThreeJs(5.01f,0.0f,False)" methodname="PointerClickThresholdMatchesThreeJs" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1582066923" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:38Z" duration="0.057985" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+              </test-case>
+              <test-case id="1022" name="PointerClickThresholdMatchesThreeJs(8.0f,6.0f,False)" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PointerClickThresholdMatchesThreeJs(8.0f,6.0f,False)" methodname="PointerClickThresholdMatchesThreeJs" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1312107005" result="Passed" start-time="2026-09-07 11:28:38Z" end-time="2026-09-07 11:28:39Z" duration="0.058067" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-case id="1024" name="PointerStateMachineCommitsOnlyWorldClicksAndClearsOnFocusLoss" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.PointerStateMachineCommitsOnlyWorldClicksAndClearsOnFocusLoss" methodname="PointerStateMachineCommitsOnlyWorldClicksAndClearsOnFocusLoss" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="876733550" result="Passed" start-time="2026-09-07 11:28:39Z" end-time="2026-09-07 11:28:39Z" duration="0.101796" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1007" name="RunningTestCanRestartWithoutReturningToEditFlow" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.RunningTestCanRestartWithoutReturningToEditFlow" methodname="RunningTestCanRestartWithoutReturningToEditFlow" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="767589334" result="Passed" start-time="2026-09-07 11:28:39Z" end-time="2026-09-07 11:28:41Z" duration="2.494689" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1016" name="WeakSpanBreaksAtComputedJointInsteadOfNextRoadNode" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.WeakSpanBreaksAtComputedJointInsteadOfNextRoadNode" methodname="WeakSpanBreaksAtComputedJointInsteadOfNextRoadNode" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="1482494827" result="Passed" start-time="2026-09-07 11:28:41Z" end-time="2026-09-07 11:28:43Z" duration="1.875851" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1015" name="WeakSpanBreaksOnlyAfterRunAndRestoresExactLayout" fullname="Skybridge.Tests.SkybridgeGamePlayModeTests.WeakSpanBreaksOnlyAfterRunAndRestoresExactLayout" methodname="WeakSpanBreaksOnlyAfterRunAndRestoresExactLayout" classname="Skybridge.Tests.SkybridgeGamePlayModeTests" runstate="Runnable" seed="523820579" result="Passed" start-time="2026-09-07 11:28:43Z" end-time="2026-09-07 11:28:45Z" duration="1.776227" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1027" name="SkybridgeTutorialViewPlayModeTests" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-09-07 11:28:45Z" end-time="2026-09-07 11:28:46Z" duration="1.173094" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1033" name="AlternatingYawAndPitchDoesNotAccumulateRoll" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests.AlternatingYawAndPitchDoesNotAccumulateRoll" methodname="AlternatingYawAndPitchDoesNotAccumulateRoll" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" seed="466238105" result="Passed" start-time="2026-09-07 11:28:45Z" end-time="2026-09-07 11:28:45Z" duration="0.117169" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1034" name="ControllerViewMovesUiWithBridgeWhileHeadPoseRemainsFixed" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests.ControllerViewMovesUiWithBridgeWhileHeadPoseRemainsFixed" methodname="ControllerViewMovesUiWithBridgeWhileHeadPoseRemainsFixed" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" seed="1160484858" result="Passed" start-time="2026-09-07 11:28:45Z" end-time="2026-09-07 11:28:45Z" duration="0.120663" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1032" name="DefaultAndRecenterKeepBridgeLevelAndStructuresUpright" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests.DefaultAndRecenterKeepBridgeLevelAndStructuresUpright" methodname="DefaultAndRecenterKeepBridgeLevelAndStructuresUpright" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" seed="503896765" result="Passed" start-time="2026-09-07 11:28:45Z" end-time="2026-09-07 11:28:45Z" duration="0.130051" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1031" name="DefaultWorldUiRetainsMouseViewAndDirectTestDuringTutorial" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests.DefaultWorldUiRetainsMouseViewAndDirectTestDuringTutorial" methodname="DefaultWorldUiRetainsMouseViewAndDirectTestDuringTutorial" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" seed="849139841" result="Passed" start-time="2026-09-07 11:28:45Z" end-time="2026-09-07 11:28:45Z" duration="0.315005" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.63, 0.33, 0.64) scale=3.132 bottom=0.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.63, 0.33, 0.64) scale=3.132 bottom=0.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.12, 0.26, 0.19) scale=1.453 bottom=1.155 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.19, 0.11, 0.15) scale=1.035 bottom=1.161 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.63, 0.33, 0.64) scale=3.132 bottom=0.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.63, 0.33, 0.64) scale=3.132 bottom=0.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.12, 0.26, 0.19) scale=1.453 bottom=1.155 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.19, 0.11, 0.15) scale=1.035 bottom=1.161 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1029" name="PicoSimulatorControllerClicksAfterViewHeightChanges" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests.PicoSimulatorControllerClicksAfterViewHeightChanges" methodname="PicoSimulatorControllerClicksAfterViewHeightChanges" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" seed="1179664797" result="Passed" start-time="2026-09-07 11:28:45Z" end-time="2026-09-07 11:28:46Z" duration="0.111397" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1028" name="PicoSimulatorMouseWorksWithoutTrackedControllers" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests.PicoSimulatorMouseWorksWithoutTrackedControllers" methodname="PicoSimulatorMouseWorksWithoutTrackedControllers" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" seed="2029619771" result="Passed" start-time="2026-09-07 11:28:46Z" end-time="2026-09-07 11:28:46Z" duration="0.169781" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_SIMULATOR_INPUT: controller=; valid=False; tracked=False; state=None; available=False; trigger=False; mouse=(1846.18, 322.30); touch=False; rayOrigin=(0.00, 0.00, 0.00); rayDirection=(0.00, 0.00, 0.00); camera=(0.00, 1.60, 0.00)
+]]></output>
+            </test-case>
+            <test-case id="1030" name="PicoSimulatorTouchMappedMouseCommitsExactlyOnce" fullname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests.PicoSimulatorTouchMappedMouseCommitsExactlyOnce" methodname="PicoSimulatorTouchMappedMouseCommitsExactlyOnce" classname="Skybridge.Tests.SkybridgeTutorialViewPlayModeTests" runstate="Runnable" seed="573164803" result="Passed" start-time="2026-09-07 11:28:46Z" end-time="2026-09-07 11:28:46Z" duration="0.192258" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1035" name="SkybridgeXrPointerPlayModeTests" fullname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests" classname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-09-07 11:28:46Z" end-time="2026-09-07 11:28:47Z" duration="0.744569" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1037" name="LostTrackingCancelsCaptureAndRequiresFreshPress" fullname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests.LostTrackingCancelsCaptureAndRequiresFreshPress" methodname="LostTrackingCancelsCaptureAndRequiresFreshPress" classname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests" runstate="Runnable" seed="1927497241" result="Passed" start-time="2026-09-07 11:28:46Z" end-time="2026-09-07 11:28:46Z" duration="0.136607" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1039" name="RealRayPlacesExactlyOnceAndModalBlocksWorld" fullname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests.RealRayPlacesExactlyOnceAndModalBlocksWorld" methodname="RealRayPlacesExactlyOnceAndModalBlocksWorld" classname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests" runstate="Runnable" seed="47304514" result="Passed" start-time="2026-09-07 11:28:46Z" end-time="2026-09-07 11:28:46Z" duration="0.151750" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1038" name="ReleaseOverDifferentButtonCancelsClick" fullname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests.ReleaseOverDifferentButtonCancelsClick" methodname="ReleaseOverDifferentButtonCancelsClick" classname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests" runstate="Runnable" seed="1578629153" result="Passed" start-time="2026-09-07 11:28:46Z" end-time="2026-09-07 11:28:46Z" duration="0.142411" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1036" name="UiHoverAndReleaseSelectToolWithoutWorldPlacement" fullname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests.UiHoverAndReleaseSelectToolWithoutWorldPlacement" methodname="UiHoverAndReleaseSelectToolWithoutWorldPlacement" classname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests" runstate="Runnable" seed="924570526" result="Passed" start-time="2026-09-07 11:28:46Z" end-time="2026-09-07 11:28:47Z" duration="0.125687" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+]]></output>
+            </test-case>
+            <test-case id="1040" name="WorldPanelPoseRemainsFixedWhenCameraMoves" fullname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests.WorldPanelPoseRemainsFixedWhenCameraMoves" methodname="WorldPanelPoseRemainsFixedWhenCameraMoves" classname="Skybridge.Tests.SkybridgeXrPointerPlayModeTests" runstate="Runnable" seed="2010882767" result="Passed" start-time="2026-09-07 11:28:47Z" end-time="2026-09-07 11:28:47Z" duration="0.173633" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1041" name="SkybridgeXrTutorialPlayModeTests" fullname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests" classname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-07 11:28:47Z" end-time="2026-09-07 11:28:50Z" duration="3.329738" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1045" name="OptionalSelectionAndCancelDoNotBlockBuildingAndExitRestoresEntry" fullname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests.OptionalSelectionAndCancelDoNotBlockBuildingAndExitRestoresEntry" methodname="OptionalSelectionAndCancelDoNotBlockBuildingAndExitRestoresEntry" classname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests" runstate="Runnable" seed="1604504500" result="Passed" start-time="2026-09-07 11:28:47Z" end-time="2026-09-07 11:28:47Z" duration="0.112114" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1042" name="RealBasicPracticeCompletesAndRestoresOriginalBuilderHistoryAndScore" fullname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests.RealBasicPracticeCompletesAndRestoresOriginalBuilderHistoryAndScore" methodname="RealBasicPracticeCompletesAndRestoresOriginalBuilderHistoryAndScore" classname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests" runstate="Runnable" seed="1721873624" result="Passed" start-time="2026-09-07 11:28:47Z" end-time="2026-09-07 11:28:48Z" duration="0.984265" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1044" name="SpatialPracticeAdjustmentRequiresRealTransformAndCanReturnFromModal" fullname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests.SpatialPracticeAdjustmentRequiresRealTransformAndCanReturnFromModal" methodname="SpatialPracticeAdjustmentRequiresRealTransformAndCanReturnFromModal" classname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests" runstate="Runnable" seed="2080764888" result="Passed" start-time="2026-09-07 11:28:48Z" end-time="2026-09-07 11:28:48Z" duration="0.404396" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=2.417 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.25, 0.37, 0.13) scale=2.455 bottom=2.800 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.29, 0.17, 0.29) scale=4.459 bottom=0.627 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.29, 0.17, 0.29) scale=4.459 bottom=0.627 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.06, 0.16, 0.11) scale=2.455 bottom=0.793 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.11, 0.06, 0.07) scale=1.620 bottom=0.795 upDot=1.000
+]]></output>
+            </test-case>
+            <test-case id="1043" name="WeakBridgeStartsImmediatelyWithoutAnExtraConfirmation" fullname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests.WeakBridgeStartsImmediatelyWithoutAnExtraConfirmation" methodname="WeakBridgeStartsImmediatelyWithoutAnExtraConfirmation" classname="Skybridge.Tests.SkybridgeXrTutorialPlayModeTests" runstate="Runnable" seed="140129757" result="Passed" start-time="2026-09-07 11:28:48Z" end-time="2026-09-07 11:28:50Z" duration="1.812656" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(4.45, 2.55, 4.45) scale=4.459 bottom=-1.002 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.87, 2.45, 1.65) scale=2.455 bottom=1.550 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(1.62, 0.97, 1.04) scale=1.620 bottom=1.590 upDot=1.000
+SKYBRIDGE_ORIGINAL_HUD_TUTORIAL_READY: WorldSpace
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.67, 0.38, 0.67) scale=4.459 bottom=0.767 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.13, 0.37, 0.25) scale=2.455 bottom=1.150 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.24, 0.15, 0.16) scale=1.620 bottom=1.156 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.38, 0.23, 0.38) scale=1.649 bottom=0.937 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.38, 0.23, 0.38) scale=1.649 bottom=0.937 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.10, 0.12, 0.10) scale=0.649 bottom=1.266 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.10, 0.08, 0.10) scale=0.560 bottom=1.276 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.38, 0.23, 0.38) scale=1.649 bottom=0.937 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/Island/tripo_convert_a3c039d2-83f0-441c-a722-098cbe09a69e size=(0.38, 0.23, 0.38) scale=1.649 bottom=0.937 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/GoalGate/tripo_convert_02717a75-bd4c-451a-a5d2-ba9a7d107b7e size=(0.10, 0.12, 0.10) scale=0.649 bottom=1.266 upDot=1.000
+SKYBRIDGE_IMPORTED_MODEL SkybridgeModels/RescueVehicle/tripo_convert_72313d7f-4ed4-492b-a48d-6aa3ddb5ad59 size=(0.10, 0.08, 0.10) scale=0.560 bottom=1.276 upDot=1.000
+<b><color=#2EA3FF>MCP-FOR-UNITY</color></b>: [TestRunnerNoThrottle] Restored Interaction Mode after test run.
+Saving results to: editor-tests-playmode.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

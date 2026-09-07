@@ -1,0 +1,31 @@
+{
+  "result": "Succeeded",
+  "outputPath": "Builds/PICO/SkybridgePico.apk",
+  "platform": "Android",
+  "durationSeconds": 41.784318999999996,
+  "errors": 0,
+  "warnings": 9,
+  "buildCompletedUtc": "2026-09-07T11:31:15.0531160Z",
+  "apkBytes": 66299084,
+  "sha256": "8f1f5d5953c958cf7e88d4c1e9784ccc91388200b4b62c19ade4e852a851aa69",
+  "package": "com.skybridge.pico",
+  "version": "1.1.0",
+  "versionCode": 3,
+  "abis": [
+    "arm64-v8a"
+  ],
+  "signatureVerified": true,
+  "compiledFeatures": {
+    "SkybridgeTutorialDirector": true,
+    "UpdateXrDesktopInput": true,
+    "ConfigureWorldSpaceHud": true,
+    "XrPanView": true,
+    "FrameWorkspaceAtPlacement": true,
+    "ProcessXrSimulatorPointer": true
+  },
+  "deviceValidated": false,
+  "emulatorInstalled": true,
+  "emulatorLaunchValidated": true,
+  "emulatorUserAccepted": true,
+  "emulatorEvidence": "pico-simulator-acceptance.json"
+}

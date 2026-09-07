@@ -158,6 +158,13 @@ namespace Skybridge.Presentation
             reducedMotion = enabled;
         }
 
+        public void SetXrPresentation(bool enabled)
+        {
+            // The oversized desktop tabletop crosses the fixed XR workbench.
+            // Islands retain their own platforms; the decorative table has no game-rule role.
+            if (environmentRoot != null) environmentRoot.gameObject.SetActive(!enabled);
+        }
+
         public void LoadLevel(LevelDefinition definition)
         {
             level = definition ?? throw new ArgumentNullException(nameof(definition));
@@ -614,69 +621,98 @@ namespace Skybridge.Presentation
             EmitDust(breakPosition + Vector3.down * 0.12f, reducedMotion ? 4 : 12);
             Time.timeScale = 0.35f;
             MinimumBreakVehicleY = vehicle != null ? GetContentPosition(vehicle.transform).y : float.PositiveInfinity;
-            var dynamicObjects = new List<Rigidbody>();
+            // The broken pieces are visual effects with collisions disabled. Integrate their
+            // trajectories in content space so orbiting/scaling the workspace never alters the outcome.
+            var fallingVisuals = new List<FallingVisual>();
             foreach (var id in fallingPieceIds)
             {
                 if (!pieceObjects.TryGetValue(id, out var piece) || piece == null) continue;
-                var body = piece.GetComponent<Rigidbody>();
-                if (body == null) body = piece.AddComponent<Rigidbody>();
-                body.isKinematic = false;
-                body.detectCollisions = false;
-                body.mass = 1.4f;
-                body.AddForce((Vector3.down + Vector3.right * 0.18f) * 2.6f, ForceMode.Impulse);
-                body.AddTorque(new Vector3(0.6f, 0.2f, -0.8f), ForceMode.Impulse);
-                dynamicObjects.Add(body);
+                AddFallingVisual(fallingVisuals, piece, (Vector3.down + Vector3.right * 0.18f) * (2.6f / 1.4f), new Vector3(25, 12, -45));
             }
             if (vehicle != null)
-            {
-                var vehicleBody = vehicle.GetComponent<Rigidbody>();
-                if (vehicleBody == null) vehicleBody = vehicle.AddComponent<Rigidbody>();
-                vehicleBody.isKinematic = false;
-                vehicleBody.detectCollisions = false;
-                vehicleBody.mass = 2.2f;
-                vehicleBody.AddForce((Vector3.down + Vector3.forward * 0.08f) * 2.1f, ForceMode.Impulse);
-                vehicleBody.AddTorque(new Vector3(0.2f, 0.1f, -0.4f), ForceMode.Impulse);
-                dynamicObjects.Add(vehicleBody);
-            }
+                AddFallingVisual(fallingVisuals, vehicle, (Vector3.down + Vector3.forward * 0.08f) * (2.1f / 2.2f), new Vector3(15, 8, -30));
             var failureSent = false;
+            var previousVehiclePosition = vehicle != null ? GetContentPosition(vehicle.transform) : Vector3.zero;
             var slowMotionElapsed = 0f;
             while (slowMotionElapsed < TestTimings.BreakSlowMotionMilliseconds / 1000f)
             {
-                slowMotionElapsed += Time.unscaledDeltaTime;
+                slowMotionElapsed = Mathf.Min(slowMotionElapsed + Time.unscaledDeltaTime, TestTimings.BreakSlowMotionMilliseconds / 1000f);
+                UpdateFallingVisuals(fallingVisuals, slowMotionElapsed * 0.35f);
                 if (vehicle != null)
                 {
                     var vehiclePosition = GetContentPosition(vehicle.transform);
                     MinimumBreakVehicleY = Mathf.Min(MinimumBreakVehicleY, vehiclePosition.y);
-                    if (!failureSent && vehicleFailureZone.Contains(vehiclePosition))
+                    if (!failureSent && CrossesFailureVolume(previousVehiclePosition, vehiclePosition))
                     {
                         failureSent = true;
                         onFailureZoneEntered?.Invoke();
                     }
+                    previousVehiclePosition = vehiclePosition;
                 }
                 yield return null;
             }
             Time.timeScale = 1f;
             var elapsed = 0f;
-            // Keep the visible fall playback aligned with the Three.js scene:
-            // the 350 ms slow-motion lead-in is followed by a 1 s fall display.
-            // MaxFailureRecoveryMilliseconds is a safety budget, not an extra
-            // gameplay-visible delay.
-            var remainingRecoverySeconds = TestTimings.FallDisplayMilliseconds / 1000f;
-            while (elapsed < remainingRecoverySeconds)
+            var displaySeconds = TestTimings.FallDisplayMilliseconds / 1000f;
+            var recoverySeconds = TestTimings.MaxFailureRecoveryMilliseconds / 1000f;
+            while (elapsed < displaySeconds || !failureSent && elapsed < recoverySeconds)
             {
-                elapsed += Time.unscaledDeltaTime;
+                elapsed = Mathf.Min(elapsed + Time.unscaledDeltaTime, recoverySeconds);
+                UpdateFallingVisuals(fallingVisuals, slowMotionElapsed * 0.35f + elapsed);
                 if (vehicle != null)
                 {
                     var vehiclePosition = GetContentPosition(vehicle.transform);
                     MinimumBreakVehicleY = Mathf.Min(MinimumBreakVehicleY, vehiclePosition.y);
-                    if (!failureSent && vehicleFailureZone.Contains(vehiclePosition))
+                    if (!failureSent && CrossesFailureVolume(previousVehiclePosition, vehiclePosition))
                     {
                         failureSent = true;
                         onFailureZoneEntered?.Invoke();
                     }
+                    previousVehiclePosition = vehiclePosition;
                 }
                 yield return null;
             }
+        }
+
+        private sealed class FallingVisual
+        {
+            public Transform Transform;
+            public Vector3 Position, Velocity, AngularVelocity;
+            public Quaternion Rotation;
+        }
+
+        private void AddFallingVisual(List<FallingVisual> visuals, GameObject item, Vector3 velocity, Vector3 angularVelocity)
+        {
+            var body = item.GetComponent<Rigidbody>();
+            if (body != null) { body.isKinematic = true; body.detectCollisions = false; }
+            visuals.Add(new FallingVisual
+            {
+                Transform = item.transform, Position = GetContentPosition(item.transform),
+                Rotation = Quaternion.Inverse(transform.rotation) * item.transform.rotation,
+                Velocity = velocity, AngularVelocity = angularVelocity,
+            });
+        }
+
+        private void UpdateFallingVisuals(List<FallingVisual> visuals, float elapsed)
+        {
+            foreach (var item in visuals)
+            {
+                if (item.Transform == null) continue;
+                var local = item.Position + item.Velocity * elapsed + Vector3.down * (0.5f * Physics.gravity.magnitude * elapsed * elapsed);
+                item.Transform.SetPositionAndRotation(transform.TransformPoint(local),
+                    transform.rotation * Quaternion.Euler(item.AngularVelocity * elapsed) * item.Rotation);
+            }
+        }
+
+        // A fast fall can cross the shallow failure volume between two rendered frames.
+        // Test the swept segment in content coordinates, including scaled XR workspaces.
+        private bool CrossesFailureVolume(Vector3 previous, Vector3 current)
+        {
+            if (vehicleFailureZone.Contains(previous) || vehicleFailureZone.Contains(current)) return true;
+            var delta = current - previous;
+            return delta.sqrMagnitude > 0.000001f &&
+                   vehicleFailureZone.IntersectRay(new Ray(previous, delta), out var enter) &&
+                   enter >= 0f && enter <= delta.magnitude;
         }
 
         public bool IsVehicleFullyInGoal()
@@ -1210,6 +1246,16 @@ namespace Skybridge.Presentation
             {
                 model = Instantiate(sceneTemplate, parent, false);
                 model.name = "ImportedModel";
+                // Keep the gameplay wrapper canonical while preserving every authored mesh pose.
+                // A rotated wrapper plus a counter-rotated mesh is valid authoring, but testing
+                // only wrapper.up otherwise misreports an upright island as inverted.
+                var authoredRotation = model.transform.localRotation;
+                foreach (Transform child in model.transform)
+                {
+                    child.localPosition = authoredRotation * child.localPosition;
+                    child.localRotation = authoredRotation * child.localRotation;
+                }
+                model.transform.localRotation = Quaternion.identity;
                 model.SetActive(true);
                 foreach (var collider in model.GetComponentsInChildren<Collider>(true)) collider.enabled = false;
                 foreach (var body in model.GetComponentsInChildren<Rigidbody>(true))
@@ -1233,7 +1279,7 @@ namespace Skybridge.Presentation
                     return false;
                 }
 
-                var sceneUpDot = Vector3.Dot(model.transform.up, Vector3.up);
+                var sceneUpDot = Vector3.Dot(model.transform.up, transform.up);
                 Debug.Log($"SKYBRIDGE_SCENE_MODEL {resourcePath} size={sceneBounds.size} bottom={sceneBounds.min.y:0.000} upDot={sceneUpDot:0.000}");
                 if (sceneUpDot < 0.95f)
                 {
@@ -1341,7 +1387,8 @@ namespace Skybridge.Presentation
                 -bounds.center.z);
 
             var worldBounds = CalculateBounds(model);
-            var upDot = Vector3.Dot(model.transform.up, Vector3.up);
+            // Upright is relative to the bridge workspace, which the player can freely rotate.
+            var upDot = Vector3.Dot(model.transform.up, transform.up);
             Debug.Log($"SKYBRIDGE_IMPORTED_MODEL {resourcePath} size={worldBounds.size} scale={scale:0.000} bottom={worldBounds.min.y:0.000} upDot={upDot:0.000}");
             if (upDot < 0.95f)
             {
