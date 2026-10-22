@@ -207,7 +207,7 @@ namespace Skybridge.Tests
             yield return null;
             Assert.That(game.Phase, Is.EqualTo(GamePhase.Build));
             Assert.That(game.LastTestOutcome, Is.EqualTo(TestOutcome.Pending));
-            Assert.That(game.LastStatusMessage, Does.Contain("路径"));
+            Assert.That(game.LastStatusMessage, Does.Contain("path"));
             Assert.That(game.World.IsRunning, Is.False);
             Assert.That(FindDescendant(game.World.transform, "TargetIssueHighlight"), Is.Not.Null);
         }

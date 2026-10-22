@@ -28,7 +28,7 @@ namespace Skybridge.Tests
 
             Assert.That(result.Changed, Is.False);
             Assert.That(result.Valid, Is.False);
-            Assert.That(result.Message, Does.Contain("高差"));
+            Assert.That(result.Message, Does.Contain("height difference"));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Skybridge.Tests
             var preview = builder.Preview(BuildHit.Road(0));
 
             Assert.That(preview.Valid, Is.False);
-            Assert.That(preview.Message, Does.Contain("旋转方向"));
+            Assert.That(preview.Message, Does.Contain("rotation"));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Skybridge.Tests
             var preview = builder.Preview(BuildHit.Road(0));
 
             Assert.That(preview.Valid, Is.False);
-            Assert.That(preview.Message, Does.Contain("占用"));
+            Assert.That(preview.Message, Does.Contain("occupied"));
         }
 
         [Test]

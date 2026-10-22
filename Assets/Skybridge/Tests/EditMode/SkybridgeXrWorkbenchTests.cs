@@ -26,21 +26,21 @@ namespace Skybridge.Tests
         [Test] public void TutorialPreservesOriginalGameControls()
         {
             var top = Find("Topbar"); var dock = Find("BuildDock"); var rail = Find("CommandRail");
-            hud.ShowTutorialNote("教程", "放一块桥板。", "继续", () => {});
+            hud.ShowTutorialNote("Tutorial", "Place a deck.", "Continue", () => {});
             Assert.That(Find("Topbar"), Is.SameAs(top)); Assert.That(Find("BuildDock"), Is.SameAs(dock)); Assert.That(Find("CommandRail"), Is.SameAs(rail));
             foreach (var name in new[] { "Deck", "Ramp", "Pier", "Truss", "Test", "Undo", "Redo", "Camera" }) Assert.That(Find(name).gameObject.activeSelf, Is.True, name);
             Assert.That(hud.GetComponentsInChildren<Canvas>(true).Length, Is.EqualTo(1));
         }
         [Test] public void HidingTutorialKeepsOriginalDockVisible()
         {
-            hud.ShowTutorialNote("教程", "提示", "继续", () => {}); hud.HideTutorialNote();
+            hud.ShowTutorialNote("Tutorial", "Hint", "Continue", () => {}); hud.HideTutorialNote();
             Assert.That(hud.HasTutorialNote, Is.False); Assert.That(Find("BuildDock").gameObject.activeSelf, Is.True);
         }
         [Test] public void UpdatedTutorialActionsDoNotRetainOldCallbacks()
         {
             var old = 0; var current = 0;
-            hud.ShowTutorialNote("教程", "提示", "旧操作", () => old++);
-            hud.ShowTutorialNote("教程", "提示", "新操作", () => current++);
+            hud.ShowTutorialNote("Tutorial", "Hint", "Old action", () => old++);
+            hud.ShowTutorialNote("Tutorial", "Hint", "New action", () => current++);
             Find("TutorialPrimary").GetComponent<Button>().onClick.Invoke();
             Assert.That(old, Is.Zero); Assert.That(current, Is.EqualTo(1));
         }
@@ -59,7 +59,7 @@ namespace Skybridge.Tests
         }
         [Test] public void TrackingLossDisablesControlsWithoutLosingTutorial()
         {
-            hud.ShowTutorialNote("教程", "提示", "继续", () => {}); hud.SetXrTrackingAvailable(false);
+            hud.ShowTutorialNote("Tutorial", "Hint", "Continue", () => {}); hud.SetXrTrackingAvailable(false);
             Assert.That(Find("Deck").GetComponent<Button>().IsInteractable(), Is.False); Assert.That(hud.HasTutorialNote, Is.True);
             hud.SetXrTrackingAvailable(true); Assert.That(Find("Deck").GetComponent<Button>().IsInteractable(), Is.True);
         }

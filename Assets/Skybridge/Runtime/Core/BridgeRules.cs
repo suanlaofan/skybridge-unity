@@ -129,7 +129,7 @@ namespace Skybridge.Core
             var disconnectedIssue = path == null
                 ? new ValidationIssue(
                     ValidationIssueCode.DisconnectedPath,
-                    "起点到终点之间没有连续桥面路径。",
+                    "No continuous deck path from start to goal.",
                     point: level.StartAnchor)
                 : null;
             var traversalIssue = path != null ? FindPathTraversalIssue(level, path) : null;
@@ -315,7 +315,7 @@ namespace Skybridge.Core
                 {
                     return new ValidationIssue(
                         ValidationIssueCode.DuplicatePieceId,
-                        $"组件 ID {ids[index]} 重复。",
+                        $"Duplicate piece ID {ids[index]}.",
                         ids[index]);
                 }
             }
@@ -332,7 +332,7 @@ namespace Skybridge.Core
                 {
                     return new ValidationIssue(
                         ValidationIssueCode.InventoryExceeded,
-                        $"{GetPieceTypeToken(type)} 使用数量超过本关库存。");
+                        $"Too many {GetPieceTypeToken(type)} pieces for this level's inventory.");
                 }
             }
 
@@ -347,7 +347,7 @@ namespace Skybridge.Core
                 {
                     return new ValidationIssue(
                         ValidationIssueCode.UnsnappedRoad,
-                        "桥板尚未完全吸附到网格。",
+                        "A deck isn't fully snapped to the grid.",
                         road.Id,
                         road.From);
                 }
@@ -356,7 +356,7 @@ namespace Skybridge.Core
                 {
                     return new ValidationIssue(
                         ValidationIssueCode.InvalidDeckGeometry,
-                        "标准桥板必须水平连接相邻网格节点。",
+                        "Decks must link adjacent grid nodes at the same height.",
                         road.Id,
                         road.From);
                 }
@@ -365,7 +365,7 @@ namespace Skybridge.Core
                 {
                     return new ValidationIssue(
                         ValidationIssueCode.InvalidRampGeometry,
-                        "坡道必须前进一格且只升高或降低一格。",
+                        "Ramps must advance one cell and rise or drop exactly one level.",
                         road.Id,
                         road.From);
                 }
@@ -382,7 +382,7 @@ namespace Skybridge.Core
                 {
                     return new ValidationIssue(
                         ValidationIssueCode.WrongRampDirection,
-                        "坡道方向与车辆前进方向相反。",
+                        "The ramp faces against the vehicle's direction of travel.",
                         segment.Piece.Id,
                         segment.From);
                 }
@@ -405,7 +405,7 @@ namespace Skybridge.Core
                 {
                     return new ValidationIssue(
                         ValidationIssueCode.SharpTurn,
-                        "车辆路径包含无法通过的急转弯。",
+                        "The vehicle path has a turn too sharp to pass.",
                         current.Piece.Id,
                         current.From);
                 }
@@ -431,7 +431,7 @@ namespace Skybridge.Core
                     {
                         return new ValidationIssue(
                             ValidationIssueCode.ClearanceBlocked,
-                            "车辆路径侧向净空不足。",
+                            "Not enough side clearance on the vehicle path.",
                             road.Id,
                             point);
                     }
@@ -443,7 +443,7 @@ namespace Skybridge.Core
                     {
                         return new ValidationIssue(
                             ValidationIssueCode.ClearanceBlocked,
-                            "车辆路径上方净空不足。",
+                            "Not enough headroom on the vehicle path.",
                             road.Id,
                             point);
                     }

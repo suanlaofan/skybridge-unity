@@ -20,18 +20,18 @@ namespace Skybridge.UI
 
         private void BuildTutorialNotes()
         {
-            var entry = ButtonRect("TutorialHelp", transform, "教程 / 帮助", SkybridgePalette.Surface, SkybridgePalette.Mechanical, 13,
+            var entry = ButtonRect("TutorialHelp", transform, "Help", SkybridgePalette.Surface, SkybridgePalette.Mechanical, 13,
                 () => TutorialHelpRequested?.Invoke());
             SetRect(entry.GetComponent<RectTransform>(), new Vector2(14, -64), new Vector2(112, 32), new Vector2(0, 1));
             tutorialNote = Panel("TutorialNote", transform, SkybridgePalette.Surface, 6).GetComponent<RectTransform>();
             SetRect(tutorialNote, new Vector2(14, -104), new Vector2(570, 156), new Vector2(0, 1));
-            tutorialNoteTitle = Label("TutorialTitle", tutorialNote, "教程", 19, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleLeft);
+            tutorialNoteTitle = Label("TutorialTitle", tutorialNote, "Tutorial", 19, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleLeft);
             SetRect(tutorialNoteTitle.rectTransform, new Vector2(14, -8), new Vector2(542, 32), new Vector2(0, 1));
             tutorialNoteBody = Label("TutorialBody", tutorialNote, "", 17, FontStyle.Normal, SkybridgePalette.Mechanical, TextAnchor.UpperLeft);
             SetRect(tutorialNoteBody.rectTransform, new Vector2(14, -44), new Vector2(542, 58), new Vector2(0, 1));
-            tutorialPrimary = NoteButton("TutorialPrimary", "开始教程", 14, () => tutorialPrimaryAction?.Invoke(), true);
-            tutorialSecondary = NoteButton("TutorialSecondary", "跳过", 192, () => tutorialSecondaryAction?.Invoke(), false);
-            tutorialExtra = NoteButton("TutorialExtra", "提示", 370, () => tutorialExtraAction?.Invoke(), false);
+            tutorialPrimary = NoteButton("TutorialPrimary", "Start Tutorial", 14, () => tutorialPrimaryAction?.Invoke(), true);
+            tutorialSecondary = NoteButton("TutorialSecondary", "Skip", 192, () => tutorialSecondaryAction?.Invoke(), false);
+            tutorialExtra = NoteButton("TutorialExtra", "Hint", 370, () => tutorialExtraAction?.Invoke(), false);
             tutorialNote.gameObject.SetActive(false);
         }
         private Button NoteButton(string name, string label, float x, Action callback, bool primary)

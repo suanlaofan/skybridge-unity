@@ -62,37 +62,37 @@ namespace Skybridge.Game
         public LevelId PracticeLevelId => GetPracticeLevelId(Lesson);
         public int AssistanceLevel { get; private set; }
         public string StepId => IsComplete ? "Complete" : steps[stepIndex].ToString();
-        public string Progress => IsComplete ? "练习完成" : $"{stepIndex + 1} / {steps.Length}";
+        public string Progress => IsComplete ? "Practice complete" : $"{stepIndex + 1} / {steps.Length}";
         public bool RequiresPracticeReset => requireReset;
         public bool HasCompleted(int lesson) => progressStore.IsCompleted(lesson);
 
         public string Title => IsComplete
-            ? (Lesson == 5 ? "空间操作练习完成" : "你已经完成这项练习")
+            ? (Lesson == 5 ? "3D Practice Complete" : "You've Completed This Practice")
             : LessonName(Lesson) + " · " + StepTitle(steps[stepIndex]);
 
         public string Body
         {
             get
             {
-                if (IsComplete) return "选择“返回游戏”继续正式挑战，或从“教程 / 帮助”再练一次。正式桥梁与成绩将保持原样。";
-                if (requireReset) return "练习所需的辅助桥段已改变。请用“撤销 / 重做”恢复辅助桥段；也可以重播本项练习。";
+                if (IsComplete) return "Choose \"Back to Game\" to continue the real challenge, or practice again from \"Help\". Your real bridge and results stay unchanged.";
+                if (requireReset) return "The practice's helper bridge sections have changed. Use \"Undo / Redo\" to restore them, or replay this practice.";
                 var body = Lesson == 5 && steps[stepIndex] == Step.SelectDeck
-                    ? "本练习依次学习转向、换层、坡向与沙盘调整。先点底部材料栏上的“标准桥板”。"
+                    ? "This practice covers turning, changing layers, ramp direction and adjusting the workspace. First tap \"Deck\" in the bottom material bar."
                     : StepBody(steps[stepIndex]);
                 if (steps[stepIndex] == Step.ChangeRampDirection && previous != null && previous.RampDelta == -1)
-                    body = "当前已经是下坡。先切一次“上坡”，再点“下坡”，观察高低端方向的变化。";
+                    body = "The ramp is already set to Down. Switch to \"Up\" once, then tap \"Down\" and watch the high and low ends flip.";
                 if (Lesson == 4 && steps[stepIndex] == Step.CoverTrusses && previous != null)
                 {
                     var path = BridgeRules.FindRoadPath(previous.Layout.Roads, lastBuilder.Level.StartAnchor, lastBuilder.Level.GoalAnchor);
                     var covered = path == null ? 0 : path.Segments.Count(segment =>
                         previous.Layout.Trusses.Any(truss => truss.RoadPieceId == segment.Piece.Id &&
                             truss.Snapped && truss.ConnectedAtFrom && truss.ConnectedAtTo));
-                    body += $" 当前覆盖 {covered} / 5 段。";
+                    body += $" Covered: {covered} / 5 sections.";
                 }
                 // The world card displays one short instruction at a time; escalating help replaces text.
                 if (AssistanceLevel == 1) body = StepHint(steps[stepIndex]);
-                if (AssistanceLevel == 2) body = StepHint(steps[stepIndex]) + "\n指向目标，确认高亮，再扣下并释放一次扳机。";
-                if (AssistanceLevel >= 3) body = StepHint(steps[stepIndex]) + "\n可重试本步或跳过练习。跳过不会标记已掌握。";
+                if (AssistanceLevel == 2) body = StepHint(steps[stepIndex]) + "\nPoint at the target, check that it highlights, then pull and release the trigger once.";
+                if (AssistanceLevel >= 3) body = StepHint(steps[stepIndex]) + "\nYou can retry this step or skip the practice. Skipping won't mark it as mastered.";
                 return body;
             }
         }
@@ -451,32 +451,32 @@ namespace Skybridge.Game
             return string.Join("|", roads.Concat(piers).Concat(trusses).OrderBy(value => value, StringComparer.Ordinal));
         }
 
-        private static string LessonName(int lesson) => lesson == 2 ? "桥墩练习" : lesson == 3 ? "坡道练习" : lesson == 4 ? "桁架练习" : lesson == 5 ? "三维练习" : "基础练习";
+        private static string LessonName(int lesson) => lesson == 2 ? "Pier Practice" : lesson == 3 ? "Ramp Practice" : lesson == 4 ? "Truss Practice" : lesson == 5 ? "3D Practice" : "Basics";
 
         private static string StepTitle(Step step)
         {
             switch (step)
             {
-                case Step.SelectDeck: case Step.SelectDeckAgain: return "选择桥板";
-                case Step.PlaceFirstDeck: return "放下第一块";
-                case Step.SelectFirstDeck: return "选中已放桥板";
-                case Step.DeleteFirstDeck: return "删除并返还材料";
-                case Step.UndoDeletion: return "撤销删除";
-                case Step.ConnectGoal: return "连接对岸";
-                case Step.StartTest: return "测试";
-                case Step.AwaitSuccess: return "观察小车到达终点";
-                case Step.SelectPier: return "选择桥墩";
-                case Step.PlacePier: return "在中央支撑长桥";
-                case Step.SelectRamp: return "选择坡道";
-                case Step.PlaceRamp: return "接上高处终点";
-                case Step.SelectTruss: return "选择桁架";
-                case Step.CoverTrusses: return "连续覆盖整段桥面";
-                case Step.Rotate: return "旋转九十度";
-                case Step.PlaceTurnedDeck: return "沿新方向放置";
-                case Step.ChangeLayer: return "切换建造楼层";
-                case Step.ChangeRampDirection: return "切换下坡方向";
-                case Step.PlaceSpatialRamp: return "放下坡道并跟随楼层";
-                case Step.AdjustWorkspace: return "调整沙盘";
+                case Step.SelectDeck: case Step.SelectDeckAgain: return "Select a Deck";
+                case Step.PlaceFirstDeck: return "Place the First Deck";
+                case Step.SelectFirstDeck: return "Select the Placed Deck";
+                case Step.DeleteFirstDeck: return "Delete and Refund";
+                case Step.UndoDeletion: return "Undo the Delete";
+                case Step.ConnectGoal: return "Reach the Far Side";
+                case Step.StartTest: return "Test";
+                case Step.AwaitSuccess: return "Watch the Truck Arrive";
+                case Step.SelectPier: return "Select a Pier";
+                case Step.PlacePier: return "Support the Middle";
+                case Step.SelectRamp: return "Select a Ramp";
+                case Step.PlaceRamp: return "Reach the High Goal";
+                case Step.SelectTruss: return "Select a Truss";
+                case Step.CoverTrusses: return "Cover the Whole Deck";
+                case Step.Rotate: return "Rotate 90°";
+                case Step.PlaceTurnedDeck: return "Place in the New Direction";
+                case Step.ChangeLayer: return "Change Build Layer";
+                case Step.ChangeRampDirection: return "Set Ramp to Down";
+                case Step.PlaceSpatialRamp: return "Place Ramp, Follow the Layer";
+                case Step.AdjustWorkspace: return "Adjust the Workspace";
                 default: return string.Empty;
             }
         }
@@ -485,27 +485,27 @@ namespace Skybridge.Game
         {
             switch (step)
             {
-                case Step.SelectDeck: return "连接两座岛，让小车安全到达对岸。先点底部“标准桥板”。";
-                case Step.SelectDeckAgain: return "桥板与库存已恢复。切回“标准桥板”，继续搭桥。";
-                case Step.PlaceFirstDeck: return "指向起点旁第一格空位。看到“可放置”后，单击鼠标左键或扣一下右手扳机。";
-                case Step.SelectFirstDeck: return "再次点击已选材料取消选材，再点击刚放下的桥板。";
-                case Step.DeleteFirstDeck: return "点右侧工具栏的垃圾桶图标“删除”。材料会返还，随后我们会把它恢复。";
-                case Step.UndoDeletion: return "点“撤销”，恢复刚才的桥板与材料数量。";
-                case Step.ConnectGoal: return "继续用桥板连到对岸。道路应连续，支撑应安全。";
-                case Step.StartTest: return "道路已经连通、跨度安全。点“测试”，小车会自动出发。";
-                case Step.AwaitSuccess: return "观察小车安全驶入终点。需要修改时，可随时点“停止测试”返回建造。";
-                case Step.SelectPier: return "普通无支撑跨度最多三块桥板。这座桥有六块，先点“桥墩”。";
-                case Step.PlacePier: return "把桥墩安装在中央基础座，使六格桥分成两个三格安全跨度。";
-                case Step.SelectRamp: return "坡道连接一格高差。点“坡道”，注意预览中的高端、低端和方向。";
-                case Step.PlaceRamp: return "在现有道路缺口放一块上坡，接上高一格的桥面。中央桥墩已备好。";
-                case Step.SelectTruss: return "五格跨度需要完整连续的桁架。点“桁架”。";
-                case Step.CoverTrusses: return "逐块指向现有桥板安装桁架，覆盖全部五段并连接两端硬支撑。";
-                case Step.Rotate: return "点右侧工具栏的旋转箭头，看看朝向从 X 轴变到 Z 轴。";
-                case Step.PlaceTurnedDeck: return "沿新的 Z 方向，在当前层任意合法空位放下一块桥板。";
-                case Step.ChangeLayer: return "用楼层按钮把当前层切到 Y=1（也可用 2–9 层）。活动网格会随之变化。";
-                case Step.ChangeRampDirection: return "点“下坡”，让坡道从当前层连接到低一层。当前层须高于 Y=0。";
-                case Step.PlaceSpatialRamp: return "在合法空位放下一块下坡道。放置成功后，活动层会自动跟到低端。";
-                case Step.AdjustWorkspace: return "现在转换一次视角或缩放，观察桥梁。鼠标右键拖动 / 滚轮；手柄左摇杆旋转、右摇杆缩放。";
+                case Step.SelectDeck: return "Connect the two islands so the truck reaches the far side safely. First tap \"Deck\" at the bottom.";
+                case Step.SelectDeckAgain: return "Decks and inventory are restored. Switch back to \"Deck\" and keep building.";
+                case Step.PlaceFirstDeck: return "Point at the first empty cell next to the start. When you see \"Can place\", left-click or pull the right trigger once.";
+                case Step.SelectFirstDeck: return "Click the selected material again to deselect it, then click the deck you just placed.";
+                case Step.DeleteFirstDeck: return "Tap the trash-can \"Delete\" icon in the right toolbar. The material is refunded, and we'll restore it next.";
+                case Step.UndoDeletion: return "Tap \"Undo\" to bring back the deck and the material count.";
+                case Step.ConnectGoal: return "Keep laying decks to the far side. The road must be continuous and the supports safe.";
+                case Step.StartTest: return "The road is connected and the spans are safe. Tap \"Test\" and the truck sets off on its own.";
+                case Step.AwaitSuccess: return "Watch the truck drive safely into the goal. To make changes, tap \"Stop\" anytime to return to building.";
+                case Step.SelectPier: return "An unsupported span holds at most three decks. This bridge has six, so tap \"Pier\" first.";
+                case Step.PlacePier: return "Install the pier on the central foundation to split the six-cell bridge into two safe three-cell spans.";
+                case Step.SelectRamp: return "Ramps bridge a one-level height difference. Tap \"Ramp\" and note the high end, low end and direction in the preview.";
+                case Step.PlaceRamp: return "Place an up ramp in the gap in the road to reach the deck one level higher. The central pier is ready.";
+                case Step.SelectTruss: return "A five-cell span needs a full, continuous truss. Tap \"Truss\".";
+                case Step.CoverTrusses: return "Point at each existing deck to add a truss, covering all five sections and tying into the solid supports at both ends.";
+                case Step.Rotate: return "Tap a rotate arrow in the right toolbar and watch the direction change from the X axis to the Z axis.";
+                case Step.PlaceTurnedDeck: return "Place a deck along the new Z direction in any valid empty cell on the current layer.";
+                case Step.ChangeLayer: return "Use the layer buttons to switch the current layer to Y=1 (layers 2–9 also work). The active grid changes with it.";
+                case Step.ChangeRampDirection: return "Tap \"Down\" so the ramp links the current layer to the one below. The current layer must be above Y=0.";
+                case Step.PlaceSpatialRamp: return "Place a down ramp in a valid empty cell. Once it's placed, the active layer follows to the low end.";
+                case Step.AdjustWorkspace: return "Now rotate or zoom the view once to look at the bridge. Mouse: right-drag / scroll wheel. Controller: left stick rotates, right stick zooms.";
                 default: return string.Empty;
             }
         }
@@ -514,27 +514,27 @@ namespace Skybridge.Game
         {
             switch (step)
             {
-                case Step.SelectDeck: case Step.SelectDeckAgain: return "点底部材料栏的“标准桥板”按钮，选中后名称会高亮。";
-                case Step.PlaceFirstDeck: return "第一块应紧挨起点岛，沿对岸方向连接两个等高点。";
-                case Step.SelectFirstDeck: return "再次点击黄色选中标记的材料即可退出选材。选中桥板后，右侧删除按钮会启用。";
-                case Step.DeleteFirstDeck: return "只删除选中的那块；“撤销”可以恢复它。";
-                case Step.UndoDeletion: return "点右侧工具栏最上方的“撤销”箭头，恢复刚才的删除。";
-                case Step.ConnectGoal: return "沿起点到终点方向补齐道路，留意“可放置”预览。";
-                case Step.StartTest: return "点底部材料栏上的“测试”。小车会自动行驶。";
-                case Step.SelectPier: return "点“桥墩”，随后指向桥中间的基础座。";
-                case Step.PlacePier: return "中央基础座位于桥梁中点，完整支柱的顶部应接到桥面。";
-                case Step.SelectRamp: return "点“坡道”，确认预览显示连接高低两层的斜面。";
-                case Step.PlaceRamp: return "缺口在低处桥面与高处桥面之间；上坡高端朝向终点。";
-                case Step.SelectTruss: return "点“桁架”；它附着于已经放好的桥板。";
-                case Step.CoverTrusses: return "每块桥板都要覆盖；只有零散几块桁架不会提高整段安全跨度。";
-                case Step.Rotate: return "右侧两枚旋转箭头可改变朝向；点一次后应从 X 轴变为 Z 轴。";
-                case Step.PlaceTurnedDeck: return "选择桥板并朝 Z 轴方向，在当前活动层放一块等高桥板。";
-                case Step.ChangeLayer: return "当前层数显示在楼层按钮旁；到顶或到底时按钮会禁用。";
-                case Step.ChangeRampDirection: return "先到 Y=1 以上再选下坡；Y=0 不能继续向下。";
-                case Step.PlaceSpatialRamp: return "检查预览高低端。放置后当前层应减少一层。";
-                case Step.AdjustWorkspace: return "调整呈现不会改变桥梁规则或库存。可以随时恢复默认。";
-                case Step.AwaitSuccess: return "小车全部进入终点并稳定后才算成功；无需操纵车辆。";
-                default: return "只需右手指向和一次扳机确认；帮助与退出始终可用。";
+                case Step.SelectDeck: case Step.SelectDeckAgain: return "Tap the \"Deck\" button in the bottom material bar. Its name highlights when selected.";
+                case Step.PlaceFirstDeck: return "The first deck goes right next to the start island, linking two points of equal height toward the far side.";
+                case Step.SelectFirstDeck: return "Click the material with the yellow selection mark again to stop placing. With a deck selected, the Delete button on the right becomes active.";
+                case Step.DeleteFirstDeck: return "Delete only the selected piece; \"Undo\" can bring it back.";
+                case Step.UndoDeletion: return "Tap the \"Undo\" arrow at the top of the right toolbar to reverse the delete.";
+                case Step.ConnectGoal: return "Fill in the road from start to goal, watching for the \"Can place\" preview.";
+                case Step.StartTest: return "Tap \"Test\" next to the bottom material bar. The truck drives on its own.";
+                case Step.SelectPier: return "Tap \"Pier\", then point at the foundation in the middle of the bridge.";
+                case Step.PlacePier: return "The central foundation sits at the bridge's midpoint; the top of the full column should meet the deck.";
+                case Step.SelectRamp: return "Tap \"Ramp\" and check that the preview shows a slope linking the low and high levels.";
+                case Step.PlaceRamp: return "The gap is between the low deck and the high deck; the up ramp's high end faces the goal.";
+                case Step.SelectTruss: return "Tap \"Truss\"; it attaches to decks you've already placed.";
+                case Step.CoverTrusses: return "Cover every deck; a few scattered trusses won't make the whole span safe.";
+                case Step.Rotate: return "The two rotate arrows on the right change direction; one tap should switch from the X axis to the Z axis.";
+                case Step.PlaceTurnedDeck: return "Select a deck, face it along the Z axis, and place a level deck on the current active layer.";
+                case Step.ChangeLayer: return "The current layer shows next to the layer buttons; they're disabled at the top or bottom.";
+                case Step.ChangeRampDirection: return "Move to Y=1 or higher before choosing Down; you can't go below Y=0.";
+                case Step.PlaceSpatialRamp: return "Check the preview's high and low ends. After placing, the current layer drops by one.";
+                case Step.AdjustWorkspace: return "Adjusting the view doesn't change the bridge rules or inventory. You can restore the default anytime.";
+                case Step.AwaitSuccess: return "It only counts once the whole truck is inside the goal and stable; no need to steer it.";
+                default: return "Just point with your right hand and confirm with one trigger pull; Help and Exit are always available.";
             }
         }
     }

@@ -34,8 +34,8 @@ namespace Skybridge.Editor
         private const string ShaderAnchorPath = ResourcesFolder + "/SkybridgeShaderAnchor.mat";
         private const string WorldSpaceUiMaterialPath = ResourcesFolder + "/SkybridgeWorldSpaceUi.mat";
         private const string WorldSpaceUiShaderName = "UI/Default";
-        public const string InternalCandidateVersion = "1.1.0";
-        public const int InternalCandidateAndroidVersionCode = 3;
+        public const string InternalCandidateVersion = "1.1.1";
+        public const int InternalCandidateAndroidVersionCode = 4;
         public static BuildReport LastPicoAndroidBuildReport { get; private set; }
         private const string ProjectSettingsPath = "ProjectSettings/ProjectSettings.asset";
         private const string ModelAuthoringRootName = "SkybridgeModelAuthoring";
@@ -252,7 +252,7 @@ namespace Skybridge.Editor
             }
             if (PlayerSettings.bundleVersion != InternalCandidateVersion || PlayerSettings.Android.bundleVersionCode < InternalCandidateAndroidVersionCode)
             {
-                errors.Add("Android build must use the 1.1.0 internal candidate version and an increased bundle version code.");
+                errors.Add("Android build must use the " + InternalCandidateVersion + " internal candidate version and an increased bundle version code.");
             }
             ValidatePicoCameraRig(errors);
             if (errors.Count > 0) throw new BuildFailedException(string.Join(Environment.NewLine, errors));

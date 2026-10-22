@@ -278,7 +278,7 @@ namespace Skybridge.Game
                     if (!CanEdit() || string.IsNullOrEmpty(builder.SelectedPieceId)) break;
                     xrMovingSelection = true;
                     SyncBuildTargets();
-                    ShowStatus("指向新位置，确认后移动；取消会保留原件。", SkybridgePalette.Mechanical, 2f);
+                    ShowStatus("Point to a new spot and confirm to move it. Cancel keeps the original.", SkybridgePalette.Mechanical, 2f);
                     break;
                 case "delete": RemoveSelected(); break;
                 case "undo": Undo(); break;
@@ -385,7 +385,7 @@ namespace Skybridge.Game
         private void ConfirmDiscard(Action confirmed)
         {
             if (builder.GetLayout().AllPieces().Any())
-                xrWorkbench.ShowConfirm("清空当前桥梁？", "当前局内桥梁方案将清空，已经获得的成绩保留。", confirmed);
+                xrWorkbench.ShowConfirm("Clear the current bridge?", "This clears the bridge for this run. Results you have earned are kept.", confirmed);
             else { xrWorkbench.CloseModal(); confirmed(); }
         }
 
@@ -423,18 +423,18 @@ namespace Skybridge.Game
             {
                 var issue = analysis.Validation.Issues.FirstOrDefault();
                 HighlightIssue(issue?.PieceId);
-                ShowStatus(issue?.Message ?? "道路尚未连到终点。请查看高亮缺口。", SkybridgePalette.Invalid, 4f);
+                ShowStatus(issue?.Message ?? "The road doesn't reach the goal yet. Check the highlighted gap.", SkybridgePalette.Invalid, 4f);
                 return;
             }
             if (analysis.WeakPoints.Count > 0)
             {
-                var message = "存在薄弱跨度。普通跨度最多 3 块桥板，完整桁架最多 5 块；可以增加合法桥墩或连续桁架。";
+                var message = "Weak span. Plain spans hold up to 3 decks, full trusses up to 5. Add a valid pier or a continuous truss.";
                 world.PulseWarningJoint(analysis.WeakPoints[0].PathNodeIndex);
                 ShowStatus(message, SkybridgePalette.Warning, 4f);
                 if (start) StartCurrentTest();
                 return;
             }
-            ShowStatus("桥梁已连通，结构检查通过。可以开始通车。", SkybridgePalette.Valid, 3f);
+            ShowStatus("Bridge connected and structure check passed. Ready to run.", SkybridgePalette.Valid, 3f);
             if (start) StartCurrentTest();
         }
 
@@ -461,7 +461,7 @@ namespace Skybridge.Game
                 var slot = pickable.Kind == PickKind.RoadTarget ? builder.GetRoadSlots().FirstOrDefault(item => item.Index == pickable.Index) : null;
                 if (pickable.Kind == PickKind.Piece || !string.IsNullOrEmpty(slot?.RoadPieceId))
                 {
-                    ShowStatus("这里已有部件。再次点击已选材料取消选材，再点击部件进行编辑。", SkybridgePalette.Warning, 2f);
+                    ShowStatus("A part is already here. Click the selected piece again to deselect, then click the part to edit it.", SkybridgePalette.Warning, 2f);
                     return false;
                 }
             }
@@ -484,7 +484,7 @@ namespace Skybridge.Game
             xrPreviewKey = key;
             UpdateGhost(pickable);
             var preview = builder.Preview(PickToBuildHit(pickable));
-            var message = builder.ActiveTool.HasValue || xrMovingSelection ? (preview.Valid ? "可放置 · 扣一下扳机确认" : preview.Message) : "选择部件 · 扣一下扳机";
+            var message = builder.ActiveTool.HasValue || xrMovingSelection ? (preview.Valid ? "Can place · Pull trigger to confirm" : preview.Message) : "Select part · Pull trigger";
             xrWorkbench.SetPointerHint(message, !builder.ActiveTool.HasValue || preview.Valid);
         }
 
@@ -532,7 +532,7 @@ namespace Skybridge.Game
                 hud.ShowResult(BridgeRules.CalculateRating(level, cost, true), cost,
                     best.HasValue ? Mathf.RoundToInt((float)best.Value) : (int?)null, level.Number < LevelCatalog.All.Count);
             }
-            else ShowStatus("已返回正式游戏，原桥梁方案和撤销记录均保留。", SkybridgePalette.Valid, 3f);
+            else ShowStatus("Back in the game. Your bridge and undo history are kept.", SkybridgePalette.Valid, 3f);
         }
 
         private void ObserveXrTutorial(string action)
@@ -552,8 +552,8 @@ namespace Skybridge.Game
         {
             if (xrWorkbench == null) return;
             ObserveXrTutorial("failure");
-            xrWorkbench.ShowResult(LastTestOutcome == TestOutcome.Failure ? "桥梁断裂 · 方案已恢复" : "测试异常 · 方案已恢复",
-                LastTestOutcome == TestOutcome.Failure ? "薄弱跨度在车辆经过时断开。请增加合法桥墩或完整桁架，再开始通车。原方案与材料已保留。" : LastStatusMessage, false);
+            xrWorkbench.ShowResult(LastTestOutcome == TestOutcome.Failure ? "Bridge Broke · Restored" : "Test Error · Restored",
+                LastTestOutcome == TestOutcome.Failure ? "A weak span broke under the truck. Add a valid pier or a full truss, then run again. Your bridge and materials are kept." : LastStatusMessage, false);
         }
 
         private void DisposeXrPresentation()

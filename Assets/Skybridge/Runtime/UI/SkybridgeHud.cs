@@ -314,20 +314,20 @@ namespace Skybridge.UI
         {
             phaseLabel.text = phase switch
             {
-                GamePhase.Build => "搭建",
-                GamePhase.Validating => "检查",
-                GamePhase.TestPreparing => "准备",
-                GamePhase.VehicleRunning => "通车",
-                GamePhase.Breaking => "断裂",
-                GamePhase.VehicleFalling => "坠落",
-                GamePhase.RestoreSnapshot => "恢复",
-                GamePhase.Success => "完成",
-                _ => "载入",
+                GamePhase.Build => "Build",
+                GamePhase.Validating => "Check",
+                GamePhase.TestPreparing => "Ready",
+                GamePhase.VehicleRunning => "Run",
+                GamePhase.Breaking => "Break",
+                GamePhase.VehicleFalling => "Fall",
+                GamePhase.RestoreSnapshot => "Restore",
+                GamePhase.Success => "Done",
+                _ => "Load",
             };
             var testing = phase == GamePhase.TestPreparing || phase == GamePhase.VehicleRunning || phase == GamePhase.Breaking || phase == GamePhase.VehicleFalling || phase == GamePhase.RestoreSnapshot;
             var canEdit = GameSessionRules.CanEditBridge(phase);
             inventoryPanel.gameObject.SetActive(!testing);
-            testButtonText.text = testing ? "停止" : "测试";
+            testButtonText.text = testing ? "Stop" : "Test";
             SetButtonIcon(testButton, testing ? HudIcon.Pause : HudIcon.Play);
             SetButtonColors(
                 testButton,
@@ -381,9 +381,9 @@ namespace Skybridge.UI
         {
             resultTitle.text = medal switch
             {
-                Medal.Gold => "金牌",
-                Medal.Silver => "银牌",
-                _ => "铜牌",
+                Medal.Gold => "Gold",
+                Medal.Silver => "Silver",
+                _ => "Bronze",
             };
             resultMedal.GetComponent<Image>().color = medal switch
             {
@@ -445,9 +445,9 @@ namespace Skybridge.UI
             SetRect(mark.rectTransform, new Vector2(14f, -14f), new Vector2(30f, 30f), new Vector2(0f, 1f));
             var markInset = ImageRect("MarkInset", mark.rectTransform, SkybridgePalette.Road);
             SetRect(markInset.rectTransform, new Vector2(10f, -10f), new Vector2(9f, 9f), new Vector2(0f, 1f));
-            var title = Label("Title", brand, "空桥运输", 14, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleLeft);
+            var title = Label("Title", brand, "Skybridge", 14, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleLeft);
             SetRect(title.rectTransform, new Vector2(56f, -8f), new Vector2(150f, 23f), new Vector2(0f, 1f));
-            levelName = Label("LevelName", brand, "01 / 直接连接", 11, FontStyle.Normal, new Color(0.09f, 0.1f, 0.11f, 0.62f), TextAnchor.MiddleLeft);
+            levelName = Label("LevelName", brand, "01 / Direct Link", 11, FontStyle.Normal, new Color(0.09f, 0.1f, 0.11f, 0.62f), TextAnchor.MiddleLeft);
             SetRect(levelName.rectTransform, new Vector2(56f, -30f), new Vector2(180f, 18f), new Vector2(0f, 1f));
 
             tabs = EmptyRect("LevelTabs", topbar);
@@ -482,9 +482,9 @@ namespace Skybridge.UI
             budgetLayout.childForceExpandWidth = false;
             budgetLayout.childControlHeight = true;
             budgetLayout.childForceExpandHeight = true;
-            costValue = CreateBudgetCell(budget, "成本", "0", out _);
-            goldValue = CreateBudgetCell(budget, "金", "0", out var goldCell);
-            silverValue = CreateBudgetCell(budget, "银", "0", out _);
+            costValue = CreateBudgetCell(budget, "Cost", "0", out _);
+            goldValue = CreateBudgetCell(budget, "Gold", "0", out var goldCell);
+            silverValue = CreateBudgetCell(budget, "Silver", "0", out _);
             var goldStripe = ImageRect("GoldStripe", goldCell, SkybridgePalette.Road);
             goldStripe.rectTransform.anchorMin = new Vector2(0f, 1f);
             goldStripe.rectTransform.anchorMax = new Vector2(1f, 1f);
@@ -492,14 +492,14 @@ namespace Skybridge.UI
             goldStripe.rectTransform.sizeDelta = new Vector2(0f, 3f);
 
             utilities = EmptyRect("Utilities", topbar);
-            phaseLabel = Label("Phase", utilities, "搭建", 11, FontStyle.Bold, new Color(0.09f, 0.1f, 0.11f, 0.66f), TextAnchor.MiddleCenter);
-            audioButton = IconButton("Audio", utilities, HudIcon.Volume, "声音", () =>
+            phaseLabel = Label("Phase", utilities, "Build", 11, FontStyle.Bold, new Color(0.09f, 0.1f, 0.11f, 0.66f), TextAnchor.MiddleCenter);
+            audioButton = IconButton("Audio", utilities, HudIcon.Volume, "Sound", () =>
             {
                 muted = !muted;
                 SetButtonIcon(audioButton, muted ? HudIcon.VolumeMuted : HudIcon.Volume);
                 MutedChanged?.Invoke(muted);
             });
-            var settings = IconButton("Settings", utilities, HudIcon.Settings, "设置", () => settingsOverlay.gameObject.SetActive(true));
+            var settings = IconButton("Settings", utilities, HudIcon.Settings, "Settings", () => settingsOverlay.gameObject.SetActive(true));
             var utilityLayout = utilities.gameObject.AddComponent<HorizontalLayoutGroup>();
             utilityLayout.padding = new RectOffset(7, 10, 7, 7);
             utilityLayout.spacing = 4f;
@@ -509,6 +509,9 @@ namespace Skybridge.UI
             utilityLayout.childForceExpandHeight = false;
             utilityLayout.childAlignment = TextAnchor.MiddleCenter;
             phaseLabel.GetComponent<LayoutElement>().preferredWidth = 48f;
+            phaseLabel.resizeTextForBestFit = true;
+            phaseLabel.resizeTextMinSize = 8;
+            phaseLabel.resizeTextMaxSize = 11;
             audioButton.GetComponent<LayoutElement>().preferredWidth = 40f;
             settings.GetComponent<LayoutElement>().preferredWidth = 40f;
         }
@@ -529,13 +532,13 @@ namespace Skybridge.UI
             commandRailLayout.startAxis = GridLayoutGroup.Axis.Horizontal;
             commandRailLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             commandRailLayout.constraintCount = 1;
-            undoButton = IconButton("Undo", commandRail, HudIcon.Undo, "撤销", () => UndoRequested?.Invoke());
-            redoButton = IconButton("Redo", commandRail, HudIcon.Redo, "重做", () => RedoRequested?.Invoke());
-            rotateLeftButton = IconButton("RotateLeft", commandRail, HudIcon.RotateLeft, "向左旋转", () => RotateRequested?.Invoke(-1));
-            rotateRightButton = IconButton("RotateRight", commandRail, HudIcon.RotateRight, "向右旋转", () => RotateRequested?.Invoke(1));
-            deleteButton = IconButton("Delete", commandRail, HudIcon.Delete, "删除", () => DeleteRequested?.Invoke());
-            resetButton = IconButton("Reset", commandRail, HudIcon.Refresh, "重置桥梁", () => ResetRequested?.Invoke());
-            IconButton("Camera", commandRail, HudIcon.Crosshair, "复位镜头", () => CameraResetRequested?.Invoke());
+            undoButton = IconButton("Undo", commandRail, HudIcon.Undo, "Undo", () => UndoRequested?.Invoke());
+            redoButton = IconButton("Redo", commandRail, HudIcon.Redo, "Redo", () => RedoRequested?.Invoke());
+            rotateLeftButton = IconButton("RotateLeft", commandRail, HudIcon.RotateLeft, "Rotate left", () => RotateRequested?.Invoke(-1));
+            rotateRightButton = IconButton("RotateRight", commandRail, HudIcon.RotateRight, "Rotate right", () => RotateRequested?.Invoke(1));
+            deleteButton = IconButton("Delete", commandRail, HudIcon.Delete, "Delete", () => DeleteRequested?.Invoke());
+            resetButton = IconButton("Reset", commandRail, HudIcon.Refresh, "Reset bridge", () => ResetRequested?.Invoke());
+            IconButton("Camera", commandRail, HudIcon.Crosshair, "Reset camera", () => CameraResetRequested?.Invoke());
         }
 
         private void BuildBuildDock()
@@ -560,12 +563,12 @@ namespace Skybridge.UI
             inventoryLayout.childForceExpandWidth = false;
             inventoryLayout.childControlHeight = true;
             inventoryLayout.childForceExpandHeight = false;
-            CreateComponentButton(PieceType.Deck, "标准桥板", SkybridgePalette.Road);
-            CreateComponentButton(PieceType.Ramp, "坡道桥板", SkybridgePalette.RoadEdge);
-            CreateComponentButton(PieceType.Pier, "桥墩", SkybridgePalette.Truss);
-            CreateComponentButton(PieceType.Truss, "桁架", SkybridgePalette.Truss);
+            CreateComponentButton(PieceType.Deck, "Deck", SkybridgePalette.Road);
+            CreateComponentButton(PieceType.Ramp, "Ramp", SkybridgePalette.RoadEdge);
+            CreateComponentButton(PieceType.Pier, "Pier", SkybridgePalette.Truss);
+            CreateComponentButton(PieceType.Truss, "Truss", SkybridgePalette.Truss);
 
-            testButton = ButtonRect("Test", buildDock, "测试", SkybridgePalette.Road, SkybridgePalette.Mechanical, 13, () => TestRequested?.Invoke());
+            testButton = ButtonRect("Test", buildDock, "Test", SkybridgePalette.Road, SkybridgePalette.Mechanical, 13, () => TestRequested?.Invoke());
             var testRect = testButton.GetComponent<RectTransform>();
             testRect.anchorMin = new Vector2(1f, 0f);
             testRect.anchorMax = new Vector2(1f, 1f);
@@ -576,7 +579,7 @@ namespace Skybridge.UI
             testButtonText.rectTransform.offsetMin = new Vector2(28f, 0f);
             AddButtonIcon(testButton, HudIcon.Play, 18f, new Vector2(-25f, 0f));
 
-            restartButton = IconButton("RestartTest", buildDock, HudIcon.Refresh, "重新开始", () => RestartTestRequested?.Invoke());
+            restartButton = IconButton("RestartTest", buildDock, HudIcon.Refresh, "Restart", () => RestartTestRequested?.Invoke());
             var restartRect = restartButton.GetComponent<RectTransform>();
             restartRect.anchorMin = new Vector2(1f, 0f);
             restartRect.anchorMax = new Vector2(1f, 1f);
@@ -603,18 +606,18 @@ namespace Skybridge.UI
             layout.childForceExpandHeight = true;
             layout.childControlWidth = true;
             layout.childForceExpandWidth = false;
-            heightLabel = Label("HeightLabel", volumeControls, "高度", 9, FontStyle.Bold, new Color(0.09f, 0.1f, 0.11f, 0.62f), TextAnchor.MiddleCenter);
+            heightLabel = Label("HeightLabel", volumeControls, "Layer", 9, FontStyle.Bold, new Color(0.09f, 0.1f, 0.11f, 0.62f), TextAnchor.MiddleCenter);
             heightLabel.GetComponent<LayoutElement>().preferredWidth = 28f;
-            layerDownButton = SmallIconButton("LayerDown", volumeControls, HudIcon.ChevronDown, "下一层", () => LayerChangeRequested?.Invoke(-1), 30f);
+            layerDownButton = SmallIconButton("LayerDown", volumeControls, HudIcon.ChevronDown, "Layer down", () => LayerChangeRequested?.Invoke(-1), 30f);
             layerValue = Label("Layer", volumeControls, "Y 00", 11, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleCenter);
             layerValue.GetComponent<LayoutElement>().preferredWidth = 46f;
-            layerUpButton = SmallIconButton("LayerUp", volumeControls, HudIcon.ChevronUp, "上一层", () => LayerChangeRequested?.Invoke(1), 30f);
+            layerUpButton = SmallIconButton("LayerUp", volumeControls, HudIcon.ChevronUp, "Layer up", () => LayerChangeRequested?.Invoke(1), 30f);
             var divider = ImageRect("Divider", volumeControls, new Color(0.09f, 0.1f, 0.11f, 0.18f));
             divider.gameObject.AddComponent<LayoutElement>().preferredWidth = 1f;
-            slopeLabel = Label("SlopeLabel", volumeControls, "坡向", 9, FontStyle.Bold, new Color(0.09f, 0.1f, 0.11f, 0.62f), TextAnchor.MiddleCenter);
+            slopeLabel = Label("SlopeLabel", volumeControls, "Slope", 9, FontStyle.Bold, new Color(0.09f, 0.1f, 0.11f, 0.62f), TextAnchor.MiddleCenter);
             slopeLabel.GetComponent<LayoutElement>().preferredWidth = 28f;
-            rampDownButton = ModeButton("RampDown", volumeControls, "下坡", HudIcon.ArrowDownRight, "坡道下降一格", () => RampDeltaRequested?.Invoke(-1), 54f);
-            rampUpButton = ModeButton("RampUp", volumeControls, "上坡", HudIcon.ArrowUpRight, "坡道上升一格", () => RampDeltaRequested?.Invoke(1), 54f);
+            rampDownButton = ModeButton("RampDown", volumeControls, "Down", HudIcon.ArrowDownRight, "Ramp down one level", () => RampDeltaRequested?.Invoke(-1), 54f);
+            rampUpButton = ModeButton("RampUp", volumeControls, "Up", HudIcon.ArrowUpRight, "Ramp up one level", () => RampDeltaRequested?.Invoke(1), 54f);
         }
 
         private void BuildStatus()
@@ -632,6 +635,10 @@ namespace Skybridge.UI
             stripe.rectTransform.sizeDelta = new Vector2(4f, 0f);
             statusText = Label("Text", statusPanel, string.Empty, 12, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleCenter);
             SetStretch(statusText.rectTransform, 8f, 4f, 8f, 4f);
+            // English messages run longer; shrink to fit the fixed-height status bar instead of truncating.
+            statusText.resizeTextForBestFit = true;
+            statusText.resizeTextMinSize = 8;
+            statusText.resizeTextMaxSize = 12;
             statusPanel.gameObject.SetActive(false);
         }
 
@@ -643,7 +650,7 @@ namespace Skybridge.UI
             panel.anchorMin = panel.anchorMax = new Vector2(0.5f, 0.5f);
             panel.sizeDelta = new Vector2(380f, 386f);
 
-            var close = IconButton("Close", panel, HudIcon.Close, "关闭结果", () => CloseResultRequested?.Invoke());
+            var close = IconButton("Close", panel, HudIcon.Close, "Close results", () => CloseResultRequested?.Invoke());
             SetRect(close.GetComponent<RectTransform>(), new Vector2(-10f, -10f), new Vector2(40f, 40f), new Vector2(1f, 1f));
             close.GetComponent<LayoutElement>().ignoreLayout = true;
 
@@ -660,7 +667,7 @@ namespace Skybridge.UI
             var ribbonRight = ImageRect("RibbonRight", medalBorder.transform, SkybridgePalette.Accent);
             SetRect(ribbonRight.rectTransform, new Vector2(-9f, -28f), new Vector2(22f, 34f), new Vector2(1f, 0f));
 
-            resultTitle = Label("Title", panel, "金牌", 23, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleCenter);
+            resultTitle = Label("Title", panel, "Gold", 23, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleCenter);
             resultTitle.rectTransform.anchorMin = resultTitle.rectTransform.anchorMax = new Vector2(0.5f, 1f);
             resultTitle.rectTransform.anchoredPosition = new Vector2(0f, -148f);
             resultTitle.rectTransform.sizeDelta = new Vector2(300f, 38f);
@@ -677,9 +684,9 @@ namespace Skybridge.UI
             divider.rectTransform.anchorMin = new Vector2(0.5f, 0f);
             divider.rectTransform.anchorMax = new Vector2(0.5f, 1f);
             divider.rectTransform.sizeDelta = new Vector2(1f, 0f);
-            var currentLabel = Label("CurrentLabel", metrics, "本次成本", 10, FontStyle.Normal, new Color(0.09f, 0.1f, 0.11f, 0.55f), TextAnchor.MiddleCenter);
+            var currentLabel = Label("CurrentLabel", metrics, "Run Cost", 10, FontStyle.Normal, new Color(0.09f, 0.1f, 0.11f, 0.55f), TextAnchor.MiddleCenter);
             SetRect(currentLabel.rectTransform, new Vector2(0f, -8f), new Vector2(160f, 24f), new Vector2(0f, 1f));
-            var bestLabel = Label("BestLabel", metrics, "最佳成本", 10, FontStyle.Normal, new Color(0.09f, 0.1f, 0.11f, 0.55f), TextAnchor.MiddleCenter);
+            var bestLabel = Label("BestLabel", metrics, "Best Cost", 10, FontStyle.Normal, new Color(0.09f, 0.1f, 0.11f, 0.55f), TextAnchor.MiddleCenter);
             bestLabel.rectTransform.anchorMin = bestLabel.rectTransform.anchorMax = new Vector2(0.5f, 1f);
             bestLabel.rectTransform.pivot = new Vector2(0f, 1f);
             bestLabel.rectTransform.anchoredPosition = new Vector2(0f, -8f);
@@ -692,7 +699,7 @@ namespace Skybridge.UI
             resultBest.rectTransform.anchoredPosition = new Vector2(0f, 7f);
             resultBest.rectTransform.sizeDelta = new Vector2(160f, 42f);
 
-            nextButton = ButtonRect("Next", panel, "下一关", SkybridgePalette.Mechanical, SkybridgePalette.Environment, 12, () => NextLevelRequested?.Invoke());
+            nextButton = ButtonRect("Next", panel, "Next Level", SkybridgePalette.Mechanical, SkybridgePalette.Environment, 12, () => NextLevelRequested?.Invoke());
             var nextRect = nextButton.GetComponent<RectTransform>();
             nextRect.anchorMin = nextRect.anchorMax = new Vector2(0.5f, 0f);
             nextRect.pivot = new Vector2(0.5f, 0f);
@@ -713,13 +720,13 @@ namespace Skybridge.UI
             var panel = Panel("SettingsPanel", settingsOverlay, SkybridgePalette.Surface, 6f).GetComponent<RectTransform>();
             panel.anchorMin = panel.anchorMax = new Vector2(0.5f, 0.5f);
             panel.sizeDelta = new Vector2(380f, 174f);
-            var title = Label("Title", panel, "设置", 16, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleLeft);
+            var title = Label("Title", panel, "Settings", 16, FontStyle.Bold, SkybridgePalette.Mechanical, TextAnchor.MiddleLeft);
             SetRect(title.rectTransform, new Vector2(18f, -9f), new Vector2(250f, 40f), new Vector2(0f, 1f));
             var headerLine = ImageRect("HeaderLine", panel, new Color(0.09f, 0.1f, 0.11f, 0.18f));
             SetRect(headerLine.rectTransform, new Vector2(0f, -58f), new Vector2(380f, 1f), new Vector2(0f, 1f));
-            reducedMotionToggle = CreateToggle(panel, "减少动态镜头", new Vector2(24f, -75f), value => ReducedMotionChanged?.Invoke(value));
-            autoFocusToggle = CreateToggle(panel, "测试时自动聚焦", new Vector2(24f, -128f), value => AutoFocusChanged?.Invoke(value));
-            var close = IconButton("Close", panel, HudIcon.Close, "关闭设置", CloseSettings);
+            reducedMotionToggle = CreateToggle(panel, "Reduce camera motion", new Vector2(24f, -75f), value => ReducedMotionChanged?.Invoke(value));
+            autoFocusToggle = CreateToggle(panel, "Auto-focus during tests", new Vector2(24f, -128f), value => AutoFocusChanged?.Invoke(value));
+            var close = IconButton("Close", panel, HudIcon.Close, "Close settings", CloseSettings);
             SetRect(close.GetComponent<RectTransform>(), new Vector2(-10f, -9f), new Vector2(40f, 40f), new Vector2(1f, 1f));
             close.GetComponent<LayoutElement>().ignoreLayout = true;
             settingsOverlay.gameObject.SetActive(false);
@@ -1305,7 +1312,7 @@ namespace Skybridge.UI
                 if (header != null) header.sizeDelta = new Vector2(settingsWidth, header.sizeDelta.y);
                 var title = settingsPanel.Find("Title") as RectTransform;
                 if (title != null) title.sizeDelta = new Vector2(Mathf.Max(1f, settingsWidth - 72f), title.sizeDelta.y);
-                foreach (var rowName in new[] { "减少动态镜头", "测试时自动聚焦" })
+                foreach (var rowName in new[] { "Reduce camera motion", "Auto-focus during tests" })
                 {
                     var row = settingsPanel.Find(rowName) as RectTransform;
                     if (row == null) continue;

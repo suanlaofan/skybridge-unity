@@ -316,7 +316,7 @@ namespace Skybridge.Core
             {
                 if (hit.Kind != BuildHitKind.Foundation)
                 {
-                    return InvalidPreview(type.Value, "桥墩只能安装在基础座。", null, null);
+                    return InvalidPreview(type.Value, "Piers can only go on a foundation.", null, null);
                 }
 
                 var foundation = ElementAtOrDefault(GetFoundationSlots(), hit.FoundationIndex);
@@ -329,19 +329,19 @@ namespace Skybridge.Core
                     type,
                     null,
                     hit.FoundationIndex,
-                    occupiedByOther ? "基础座已被占用。" : hasInventory ? string.Empty : "桥墩库存不足。");
+                    occupiedByOther ? "This foundation is already occupied." : hasInventory ? string.Empty : "No piers left.");
             }
 
             if (hit.Kind != BuildHitKind.Road && hit.Kind != BuildHitKind.Truss)
             {
-                return InvalidPreview(type.Value, "请选择桥梁网格。", null, null);
+                return InvalidPreview(type.Value, "Select a bridge grid cell.", null, null);
             }
 
             if (type == PieceType.Truss)
             {
                 if (hit.Kind != BuildHitKind.Truss)
                 {
-                    return InvalidPreview(type.Value, "桁架必须安装在桥板下方。", null, null);
+                    return InvalidPreview(type.Value, "Trusses must go under a deck.", null, null);
                 }
 
                 var road = layout.Roads.FirstOrDefault(candidate => candidate.Id == hit.RoadPieceId);
@@ -352,12 +352,12 @@ namespace Skybridge.Core
                 var hasInventory = movingPiece != null || GetInventoryRemaining().Truss > 0;
                 var valid = road != null && !occupiedByOther && hasInventory;
                 var message = road == null
-                    ? "桁架必须安装在桥板下方。"
+                    ? "Trusses must go under a deck."
                     : occupiedByOther
-                        ? "该桥板已有桁架。"
+                        ? "This deck already has a truss."
                         : hasInventory
                             ? string.Empty
-                            : "桁架库存不足。";
+                            : "No trusses left.";
                 return new BuildPreview(
                     valid,
                     type,
@@ -371,14 +371,14 @@ namespace Skybridge.Core
 
             if (hit.Kind != BuildHitKind.Road)
             {
-                return InvalidPreview(type.Value, "请选择桥梁网格。", null, null);
+                return InvalidPreview(type.Value, "Select a bridge grid cell.", null, null);
             }
 
             var slotIndex = hit.SlotIndex;
             var slot = ElementAtOrDefault(GetRoadSlots(), slotIndex);
             if (slot == null)
             {
-                return InvalidPreview(type.Value, "超出可搭建网格。", slotIndex, null);
+                return InvalidPreview(type.Value, "Outside the buildable grid.", slotIndex, null);
             }
 
             var occupiedRoad = slot.RoadPieceId != null && slot.RoadPieceId != movingPiece?.Id;
@@ -416,31 +416,31 @@ namespace Skybridge.Core
             string roadMessage;
             if (!slot.InBounds)
             {
-                roadMessage = "超出可搭建网格。";
+                roadMessage = "Outside the buildable grid.";
             }
             else if (!orientationMatchesEdge)
             {
-                roadMessage = "组件旋转方向与当前网格边不一致。";
+                roadMessage = "Piece rotation doesn't match this grid edge.";
             }
             else if (occupiedRoad)
             {
-                roadMessage = "该网格已被桥板占用。";
+                roadMessage = "This grid edge is already occupied by a deck.";
             }
             else if (!geometryMatches)
             {
                 roadMessage = type == PieceType.Ramp
-                    ? "坡道必须连接一格高差。"
-                    : "标准桥板只能连接等高节点。";
+                    ? "Ramps must span a one-level height difference."
+                    : "Decks can only link nodes at the same height.";
             }
             else if (type == PieceType.Ramp && !directionMatchesPath)
             {
-                roadMessage = "坡道方向与道路前进方向不一致。";
+                roadMessage = "The ramp direction doesn't match the road direction.";
             }
             else
             {
                 roadMessage = hasRoadInventory
                     ? string.Empty
-                    : type == PieceType.Deck ? "桥板库存不足。" : "坡道库存不足。";
+                    : type == PieceType.Deck ? "No decks left." : "No ramps left.";
             }
 
             return new BuildPreview(validRoad, type, slotIndex, null, roadMessage, from: from, to: to);
@@ -489,7 +489,7 @@ namespace Skybridge.Core
                     activeLayer = selectedPier.Top.Y;
                 }
 
-                return new BuildActionResult(false, hitPieceId, "已选择组件。", true);
+                return new BuildActionResult(false, hitPieceId, "Piece selected.", true);
             }
 
             var preview = Preview(hit);
@@ -520,7 +520,7 @@ namespace Skybridge.Core
             }
 
             selectedPieceId = null;
-            return new BuildActionResult(true, null, "组件已锁定。", true);
+            return new BuildActionResult(true, null, "Piece placed.", true);
         }
 
         public int GetPieceCost(PieceType type)

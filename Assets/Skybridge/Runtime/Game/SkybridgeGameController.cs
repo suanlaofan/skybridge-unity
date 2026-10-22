@@ -235,7 +235,7 @@ namespace Skybridge.Game
             if (!initialized) return false;
             if (!force && !SaveDataService.IsLevelUnlocked(saveData, levelId))
             {
-                ShowStatus("该关卡尚未解锁。", SkybridgePalette.Invalid, 1.8f);
+                ShowStatus("This level is still locked.", SkybridgePalette.Invalid, 1.8f);
                 audioEngine.PlayInvalid();
                 return false;
             }
@@ -361,7 +361,7 @@ namespace Skybridge.Game
                 world.AnimatePieceRemoval(truss.Id);
             }
             audioEngine.PlayDelete();
-            ShowStatus("组件已解锁。", SkybridgePalette.Mechanical, 1.1f);
+            ShowStatus("Piece removed.", SkybridgePalette.Mechanical, 1.1f);
             SyncAll();
             ObserveXrTutorial("delete");
         }
@@ -370,7 +370,7 @@ namespace Skybridge.Game
         {
             if (!CanEdit() || !builder.Reset()) return;
             audioEngine.PlayDelete();
-            ShowStatus("桥梁已重置。", SkybridgePalette.Mechanical, 1.1f);
+            ShowStatus("Bridge reset.", SkybridgePalette.Mechanical, 1.1f);
             SyncAll();
         }
 
@@ -421,7 +421,7 @@ namespace Skybridge.Game
             RestoreWorldFromBuilder();
             SetPhase(GamePhase.Build);
             audioEngine.SetTestMode(false);
-            ShowStatus("测试已停止。", SkybridgePalette.Mechanical, 1.1f);
+            ShowStatus("Test stopped.", SkybridgePalette.Mechanical, 1.1f);
             ObserveXrTutorial("stop");
         }
 
@@ -445,7 +445,7 @@ namespace Skybridge.Game
                 var issue = analysis.Validation.Issues.FirstOrDefault();
                 SetPhase(GamePhase.Build);
                 audioEngine.PlayInvalid();
-                ShowStatus(issue?.Message ?? "桥面尚未连通。", SkybridgePalette.Invalid, 2.6f);
+                ShowStatus(issue?.Message ?? "The deck isn't connected yet.", SkybridgePalette.Invalid, 2.6f);
                 HighlightIssue(issue?.PieceId);
                 testRoutine = null;
                 yield break;
@@ -475,7 +475,7 @@ namespace Skybridge.Game
             SetPhase(GamePhase.VehicleRunning);
             ObserveXrTutorial("test");
             ShowStatus(
-                weakPoint != null ? "结构可测试，检测到薄弱跨度。" : "结构通过检查。",
+                weakPoint != null ? "Ready to test, but a weak span was detected." : "Structure check passed.",
                 weakPoint != null ? SkybridgePalette.Warning : SkybridgePalette.Valid,
                 1.8f);
 
@@ -513,7 +513,7 @@ namespace Skybridge.Game
                 if (Time.realtimeSinceStartup - lastProgressAt >= StallTimeoutSeconds)
                 {
                     world.StopVehicle();
-                    yield return RestoreRuntimeFailure(token, "测试已恢复，请重新启动。");
+                    yield return RestoreRuntimeFailure(token, "Test restored. Please start it again.");
                     testRoutine = null;
                     yield break;
                 }
@@ -534,7 +534,7 @@ namespace Skybridge.Game
             }
 
             if (world.IsVehicleFullyInGoal()) CompleteSuccess();
-            else yield return RestoreRuntimeFailure(token, "车辆未完整进入终点，方案已恢复。");
+            else yield return RestoreRuntimeFailure(token, "The truck didn't fully reach the goal. Bridge restored.");
             testRoutine = null;
         }
 
@@ -542,7 +542,7 @@ namespace Skybridge.Game
         {
             SetPhase(GamePhase.Breaking);
             audioEngine.PlayBreak();
-            ShowStatus("中央接头断开。", SkybridgePalette.Warning, 1.5f);
+            ShowStatus("The center joint broke.", SkybridgePalette.Warning, 1.5f);
             var fallingIds = new HashSet<string> { weakPoint.BeforePieceId, weakPoint.AfterPieceId };
             foreach (var truss in snapshot.Trusses)
             {
@@ -570,7 +570,7 @@ namespace Skybridge.Game
             SetPhase(GamePhase.Build);
             audioEngine.SetTestMode(false);
             ShowStatus(
-                LastTestOutcome == TestOutcome.Failure ? "方案已恢复。" : "测试未进入失败区，方案已恢复。",
+                LastTestOutcome == TestOutcome.Failure ? "Bridge restored." : "Test ended before the failure zone. Bridge restored.",
                 LastTestOutcome == TestOutcome.Failure ? SkybridgePalette.Mechanical : SkybridgePalette.Invalid,
                 LastTestOutcome == TestOutcome.Failure ? 1.25f : 2.2f);
             XrShowRestoredResult();
@@ -619,7 +619,7 @@ namespace Skybridge.Game
                 level.Number < LevelCatalog.All.Count);
             TestFinished?.Invoke(LastTestOutcome);
             ObserveXrTutorial("success");
-            xrWorkbench?.ShowResult(XrIsTutorialActive ? "练习通车成功" : "运输成功", $"小车已安全到达对岸。材料消耗：{cost}", true);
+            xrWorkbench?.ShowResult(XrIsTutorialActive ? "Practice Run Complete" : "Delivery Complete", $"The truck made it safely across. Materials used: {cost}", true);
         }
 
         private void CloseResult()

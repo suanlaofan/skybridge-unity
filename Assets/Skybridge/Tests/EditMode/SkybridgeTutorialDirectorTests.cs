@@ -319,7 +319,7 @@ namespace Skybridge.Tests
             Assert.That(builder.Undo(), Is.True);
             Observe("undo");
             Assert.That(tutorial.RequiresPracticeReset, Is.True);
-            Assert.That(tutorial.Body, Does.Contain("重做"));
+            Assert.That(tutorial.Body, Does.Contain("Redo"));
             Assert.That(builder.GetLayout().Roads, Is.Empty);
             Assert.That(builder.Redo(), Is.True);
             Observe("redo");
